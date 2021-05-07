@@ -6,6 +6,7 @@ static t_class *helloworld_class;
 
 void helloworld_bang(__attribute__((unused)) t_helloworld *x) {
     post("Hello world!!");
+    post("Hello world2!!");
 }
 
 void *helloworld_new(void) {

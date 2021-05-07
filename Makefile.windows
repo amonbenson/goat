@@ -9,10 +9,10 @@ STRIP = x86_64-w64-mingw32-strip
 #CC = i686-w64-mingw32-gcc
 #STRIP = i686-w64-mingw32-strip
 
-# location of pd.dll
+# setup windows specific variables
 PDINCLUDEDIR = /mnt/c/Program Files/Pd/src
 PDBINDIR = /mnt/c/Program Files/Pd/bin
-PDLIBDIR =
+PDLIBDIR = $(shell wslpath $$(cmd.exe /c echo %userprofile%\\Documents\\Pd\\externals 2>/dev/null))
 
 # use the project makefile
 include Makefile
