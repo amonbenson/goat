@@ -1,0 +1,18 @@
+# use the Mingw compiler
+system = Windows
+target.arch = x86_64
+CC = x86_64-w64-mingw32-gcc
+STRIP = x86_64-w64-mingw32-strip
+
+# for 32 bit externals use:
+#target.arch = i686
+#CC = i686-w64-mingw32-gcc
+#STRIP = i686-w64-mingw32-strip
+
+# location of pd.dll
+PDINCLUDEDIR = /mnt/c/Program Files/Pd/src
+PDBINDIR = /mnt/c/Program Files/Pd/bin
+PDLIBDIR =
+
+# use the project makefile
+include Makefile

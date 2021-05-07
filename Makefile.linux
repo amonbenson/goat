@@ -1,0 +1,10 @@
+# use the default compiler but force Linux system
+system = Linux
+
+# external installation directory
+PDINCLUDEDIR = /usr/include/pd
+PDBINDIR =
+PDLIBDIR = /usr/local/lib/pd-externals
+
+# use the project makefile
+include Makefile
