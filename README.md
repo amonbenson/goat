@@ -16,7 +16,7 @@ If you don't have WSL already enabled, follow the instructions [here](https://do
 - [C/C++ Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools-extension-pack)
 - [Task Shell Input](https://marketplace.visualstudio.com/items?itemName=augustocdias.tasks-shell-input) (needed for debugging)
 
-Open up VSCode and connect to your WSL distribution (`CTRL+Shift+P` > `Remote-WSL: New WSL Window`). Then press `CTRL+ö` to bring up a linux bash Terminal. Here we will enter the following commands to install all required new packages:
+Open up VSCode and connect to your WSL distribution (<kbd>CTRL</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> > `Remote-WSL: New WSL Window`). Then press <kbd>CTRL</kbd>+<kbd>ö</kbd> to bring up a linux bash Terminal. Here we will enter the following commands to install all required new packages:
 ```
 sudo apt update -y && sudo apt upgrade -y
 
@@ -43,7 +43,7 @@ There are two makefiles in the project:
 - `Makefile` is the main one, where all sources are listed, the library name is set and pd-lib-builder is included.
 - `Makefile.wsl` overwrites the compiler and pd path definitions, so that the MinGW toolchain is used. Depending on your Pd install location and if you are on a 32 bit system, you might need to change those values. (See [pd-lib-builder paths](https://github.com/pure-data/pd-lib-builder#paths) and `Makefile.wsl` for more information)
 
-To build a linux external, in the integrated Terminal (`CTRL+ö`) type:
+To build a linux external, in the integrated Terminal (<kbd>CTRL</kbd>+<kbd>ö</kbd>) type:
 ```
 make clean all
 ```
@@ -68,6 +68,6 @@ What we can do however, is to start pure data directly withing WSL. For this to 
 [Download](https://sourceforge.net/projects/vcxsrv/) and install the Windows X-Server "VcXsrv". After a restart, make sure you have VcXsrv running in the background and open up VSCode.
 
 ### Starting the debugger
-Press `F5` to launch the debugger. If everything goes well, this should automatically build an ubuntu external with debug flags (`make clean alldebug`), get the ip address of your host machine to set the `DISPLAY` environment variable and finally launch pure data.
+Press <kbd>F5</kbd> to launch the debugger. If everything goes well, this should automatically build an ubuntu external with debug flags (`make clean alldebug`), get the ip address of your host machine to set the `DISPLAY` environment variable and finally launch pure data.
 
 You can now set breakpoints in your project. Keep in mind, that breakpoints will stay greyed out until the external's shared library is loaded, e. g. until you add your first "helloworld" object box in pd.
