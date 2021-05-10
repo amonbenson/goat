@@ -29,9 +29,7 @@ mkdir your-project-name
 
 cd your-project-name
 
-git clone https://github.com/schlegelflegel/pd-vscode-wsl .
-
-git submodule init
+git clone -j8 --recurse-submodules https://github.com/schlegelflegel/pd-vscode-wsl .
 
 code .
 ```
