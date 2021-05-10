@@ -23,7 +23,7 @@ sudo apt update -y && sudo apt upgrade -y
 sudo apt install -y build-essential mingw-w64 gdb make puredata
 ```
 
-Next we can setup our project folder
+Next we can setup the project folder:
 ```
 mkdir your-project-name
 
@@ -41,9 +41,9 @@ VSCode will open up in a new window and might ask you to install the recommended
 ## Building
 There are two makefiles in the project:
 - `Makefile` is the main one, where all sources are listed, the library name is set and pd-lib-builder is included.
-- `Makefile.wsl` overwrites the compiler and pd path definitions, so that the MinGW toolchain is used. Depending on your Pd install location and if you are on a 32 bit system, you might need to change those values. (See [pd-lib-builder](https://github.com/pure-data/pd-lib-builder#paths) and `Makefile.wsl` for more information)
+- `Makefile.wsl` overwrites the compiler and pd path definitions, so that the MinGW toolchain is used. Depending on your Pd install location and if you are on a 32 bit system, you might need to change those values. (See [pd-lib-builder paths](https://github.com/pure-data/pd-lib-builder#paths) and `Makefile.wsl` for more information)
 
-To build a linux external, use:
+To build a linux external, in the integrated Terminal (`CTRL+ö`) type:
 ```
 make clean all
 ```
@@ -62,7 +62,7 @@ To change the installation path, update the `PDLIBDIR` variable in `Makefile.wsl
 ## Debugging
 Debugging is a bit more complex with this setup and I didn't manage to get the debugger working with the Windows Pure Data installation (If anyone does, let me know :D).
 
-What we can do however, is to start pure data directly withing WSL. For this to work, we need to install an X-Server on windows to have the GUI showing up and we won't have any audio output (when debugging with breakpoints and stuff, audio output wouldn't make much sense anyway).
+What we can do however, is to start pure data directly withing WSL. For this to work, we need to install an X-Server on windows to have the GUI showing up and we won't have any audio output (when debugging with breakpoints and stuff, realtime audio output wouldn't make much sense anyway).
 
 ### Installing VcXsrv
 [Download](https://sourceforge.net/projects/vcxsrv/) and install the Windows X-Server "VcXsrv". After a restart, make sure you have VcXsrv running in the background and open up VSCode.
