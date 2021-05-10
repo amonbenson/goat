@@ -39,7 +39,7 @@ VSCode will open up in a new window and might ask you to install the recommended
 ## Building
 There are two makefiles in the project:
 - `Makefile` is the main one, where all sources are listed, the library name is set and pd-lib-builder is included.
-- `Makefile.wsl` overwrites the compiler and pd path definitions, so that the MinGW toolchain is used. Depending on your Pd install location and if you are on a 32 bit system, you might need to change those values. (See [pd-lib-builder paths](https://github.com/pure-data/pd-lib-builder#paths) and `Makefile.wsl` for more information)
+- `Makefile.wsl` overwrites the compiler and Pd path definitions, so that the MinGW toolchain is used. Depending on your Pd install location and if you are on a 32 bit system, you might need to change those values. (See [pd-lib-builder paths](https://github.com/pure-data/pd-lib-builder#paths) and `Makefile.wsl` for more information)
 
 To build a linux external, in the integrated Terminal (<kbd>CTRL</kbd>+<kbd>ö</kbd>) type:
 ```
@@ -58,9 +58,9 @@ make -f Makefile.wsl clean install
 To change the installation path, update the `PDLIBDIR` variable in `Makefile.wsl`
 
 ## Debugging
-Debugging is a bit more complex with this setup and I didn't manage to get the debugger working with the Windows Pure Data installation (If anyone does, let me know :D).
+Debugging is a bit more complex with this setup and I didn't manage to get the debugger working with the Windows Pure Data Installation (If anyone does, let me know :D).
 
-What we can do however, is to start pure data directly withing WSL. For this to work, we need to install an X-Server on windows to have the GUI showing up and we won't have any audio output (when debugging with breakpoints and stuff, realtime audio output wouldn't make much sense anyway).
+What we can do however, is to start Ubuntu version of Pure Data directly withing WSL. For this to work, we need to install an X-Server on windows to have the GUI showing up and we won't have any audio output (when debugging with breakpoints and stuff, realtime audio output wouldn't make much sense anyway).
 
 ### Installing VcXsrv
 [Download](https://uni-tuebingen.de/fakultaeten/wirtschafts-und-sozialwissenschaftliche-fakultaet/faecher/fachbereich-wirtschaftswissenschaft/wirtschaftswissenschaft/fb-wiwi/einrichtungen-wirtschaftswissenschaft/wiwi-it/services/services/computing-asp/tools/x-server/vcxsrv/) and install the Windows X-Server "VcXsrv".
@@ -68,6 +68,6 @@ What we can do however, is to start pure data directly withing WSL. For this to 
 Start the "XLaunch" Application. Select **"Multiple windows"** and **Display number 0**. Click next twice and leave all the default settings. Now the X server is running in the background and waiting for clients.
 
 ### Starting the debugger
-Back in your VSCode project, press <kbd>F5</kbd> to launch the debugger. If everything goes well, this should automatically build an ubuntu external with debug flags (`make clean alldebug`), get the ip address of your host machine to set the `DISPLAY` environment variable and finally launch pure data.
+Back in your VSCode project, press <kbd>F5</kbd> to launch the debugger. If everything goes well, this should automatically build an ubuntu external with debug flags (`make clean alldebug`), get the ip address of your host machine to set the `DISPLAY` environment variable and finally launch Pure Data.
 
-You can now set breakpoints in your project. Keep in mind, that breakpoints will stay greyed out until the external's shared library is loaded, e. g. until you add your first "helloworld" object box in pd.
+You can now set breakpoints in your project. Keep in mind, that breakpoints will stay greyed out until the external's shared library is loaded, e. g. until you add your first "helloworld" object box in Pd.
