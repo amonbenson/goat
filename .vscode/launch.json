@@ -11,6 +11,16 @@
                 "${workspaceFolder}",
                 "-noaudio"
             ],
+            "environment": [
+                {
+                    "name": "DISPLAY",
+                    "value": "${input:hostip}:0"
+                },
+                {
+                    "name": "LIBGL_ALWAYS_INDIRECT",
+                    "value": "1"
+                }
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "externalConsole": false,
@@ -23,6 +33,17 @@
                 }
             ],
             "preLaunchTask": "Debug Build"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "hostip",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null",
+                "useSingleResult": "true"
+            }
         }
     ]
 }
