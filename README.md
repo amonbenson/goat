@@ -60,7 +60,7 @@ To change the installation path, update the `PDLIBDIR` variable in `Makefile.wsl
 ## Debugging
 Debugging is a bit more complex with this setup and I didn't manage to get the debugger working with the Windows Pure Data Installation (If anyone does, let me know :D).
 
-What we can do however, is to start Ubuntu version of Pure Data directly withing WSL. For this to work, we need to install an X-Server on windows to have the GUI showing up and we won't have any audio output (when debugging with breakpoints and stuff, realtime audio output wouldn't make much sense anyway).
+What we can do however, is to start the Ubuntu version of Pure Data directly withing WSL. For this to work, we need to install an X-Server on windows to have the GUI showing up and we won't have any audio output (when debugging with breakpoints and stuff, realtime audio output wouldn't make much sense anyway).
 
 ### Installing VcXsrv
 [Download](https://uni-tuebingen.de/fakultaeten/wirtschafts-und-sozialwissenschaftliche-fakultaet/faecher/fachbereich-wirtschaftswissenschaft/wirtschaftswissenschaft/fb-wiwi/einrichtungen-wirtschaftswissenschaft/wiwi-it/services/services/computing-asp/tools/x-server/vcxsrv/) and install the Windows X-Server "VcXsrv".
