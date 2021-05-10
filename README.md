@@ -63,9 +63,11 @@ Debugging is a bit more complex with this setup and I didn't manage to get the d
 What we can do however, is to start pure data directly withing WSL. For this to work, we need to install an X-Server on windows to have the GUI showing up and we won't have any audio output (when debugging with breakpoints and stuff, realtime audio output wouldn't make much sense anyway).
 
 ### Installing VcXsrv
-[Download](https://uni-tuebingen.de/fakultaeten/wirtschafts-und-sozialwissenschaftliche-fakultaet/faecher/fachbereich-wirtschaftswissenschaft/wirtschaftswissenschaft/fb-wiwi/einrichtungen-wirtschaftswissenschaft/wiwi-it/services/services/computing-asp/tools/x-server/vcxsrv/) and install the Windows X-Server "VcXsrv". After a restart, make sure you have VcXsrv running in the background and open up VSCode.
+[Download](https://uni-tuebingen.de/fakultaeten/wirtschafts-und-sozialwissenschaftliche-fakultaet/faecher/fachbereich-wirtschaftswissenschaft/wirtschaftswissenschaft/fb-wiwi/einrichtungen-wirtschaftswissenschaft/wiwi-it/services/services/computing-asp/tools/x-server/vcxsrv/) and install the Windows X-Server "VcXsrv".
+
+Start the "XLaunch" Application. Select **"Multiple windows"** and **Display number 0**. Click next twice and leave all the default settings. Now the X server is running in the background and waiting for clients.
 
 ### Starting the debugger
-Press <kbd>F5</kbd> to launch the debugger. If everything goes well, this should automatically build an ubuntu external with debug flags (`make clean alldebug`), get the ip address of your host machine to set the `DISPLAY` environment variable and finally launch pure data.
+Back in your VSCode project, press <kbd>F5</kbd> to launch the debugger. If everything goes well, this should automatically build an ubuntu external with debug flags (`make clean alldebug`), get the ip address of your host machine to set the `DISPLAY` environment variable and finally launch pure data.
 
 You can now set breakpoints in your project. Keep in mind, that breakpoints will stay greyed out until the external's shared library is loaded, e. g. until you add your first "helloworld" object box in pd.
