@@ -1,6 +1,7 @@
 {
     "recommendations": [
-        "ms-vscode.cpptools",
-        "augustocdias.tasks-shell-input"
+        "ms-vscode.cpptools-extension-pack",
+        "augustocdias.tasks-shell-input",
+        "ms-vscode-remote.remote-wsl"
     ]
 }
