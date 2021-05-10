@@ -12,9 +12,9 @@ If you don't have WSL already enabled, follow the instructions [here](https://do
 
 ### VSCode
 [Download](https://code.visualstudio.com/download) VSCode and install the following extensions:
-- [Remote - WSL](vscode:extension/ms-vscode-remote.remote-wsl)
-- [C/C++ Extension Pack](vscode:extension/ms-vscode.cpptools-extension-pack)
-- [Task Shell Input](vscode:extension/augustocdias.tasks-shell-input) (needed for debugging)
+- [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)
+- [C/C++ Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools-extension-pack)
+- [Task Shell Input](https://marketplace.visualstudio.com/items?itemName=augustocdias.tasks-shell-input) (needed for debugging)
 
 Open up VSCode and connect to your WSL distribution (`CTRL+Shift+P` > `Remote-WSL: New WSL Window`). Then press `CTRL+ö` to bring up a linux bash Terminal. Here we will enter the following commands to install all required new packages:
 ```
