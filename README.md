@@ -63,7 +63,7 @@ Debugging is a bit more complex with this setup and I didn't manage to get the d
 What we can do however, is to start pure data directly withing WSL. For this to work, we need to install an X-Server on windows to have the GUI showing up and we won't have any audio output (when debugging with breakpoints and stuff, realtime audio output wouldn't make much sense anyway).
 
 ### Installing VcXsrv
-[Download](https://sourceforge.net/projects/vcxsrv/) and install the Windows X-Server "VcXsrv". After a restart, make sure you have VcXsrv running in the background and open up VSCode.
+[Download](https://uni-tuebingen.de/fakultaeten/wirtschafts-und-sozialwissenschaftliche-fakultaet/faecher/fachbereich-wirtschaftswissenschaft/wirtschaftswissenschaft/fb-wiwi/einrichtungen-wirtschaftswissenschaft/wiwi-it/services/services/computing-asp/tools/x-server/vcxsrv/) and install the Windows X-Server "VcXsrv". After a restart, make sure you have VcXsrv running in the background and open up VSCode.
 
 ### Starting the debugger
 Press <kbd>F5</kbd> to launch the debugger. If everything goes well, this should automatically build an ubuntu external with debug flags (`make clean alldebug`), get the ip address of your host machine to set the `DISPLAY` environment variable and finally launch pure data.
