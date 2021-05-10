@@ -14,7 +14,7 @@
             "environment": [
                 {
                     "name": "DISPLAY",
-                    "value": "${input:hostip}:0"
+                    "value": "${input:wslhost}:0"
                 },
                 {
                     "name": "LIBGL_ALWAYS_INDIRECT",
@@ -37,7 +37,7 @@
     ],
     "inputs": [
         {
-            "id": "hostip",
+            "id": "wslhost",
             "type": "command",
             "command": "shellCommand.execute",
             "args": {
