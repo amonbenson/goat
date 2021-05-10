@@ -1,12 +1,11 @@
 # pd-vscode-wsl
-## General Info
-In this tutorial I will go over the installation and setup process to compile Pure Data externals for Windows or Linux using the Windows Subsystem for Linux (WSL).
+This repository is intended as a starting point for compiling Pure Data externals for Windows or Linux using WSL (Windows Subsystem for Linux), VSCode and the MinGW W64 cross compiler.
 
-If you don't have any experience with WSL or VSCode, I'd **not** recommend you this method, because it involves quite a few more steps than just using a (real or virtual) Linux Machine. On the upside, you will be able to compile both linux and windows externals while using your existing WSL setup.
+If you don't have any experience with WSL or VSCode, I'd **not** recommend you this method, because it involves quite a few more steps than just using a (real or virtual) Linux Machine. On the other hand, you will be able to compile both linux and windows externals while using your existing WSL setup.
 
 ## Installation
 ### WSL
-If you don't have WSL enabled already, follow the instructions [here](https://docs.microsoft.com/de-de/windows/wsl/install-win10). We will use [Ubuntu 20.04 LTS](https://www.microsoft.com/en-us/p/ubuntu-2004-lts/9n6svws3rx71), though other Ubuntu distributions should work too)
+If you don't have WSL already enabled, follow the instructions [here](https://docs.microsoft.com/de-de/windows/wsl/install-win10). We will use [Ubuntu 20.04 LTS](https://www.microsoft.com/en-us/p/ubuntu-2004-lts/9n6svws3rx71), though other Ubuntu distributions should work too.
 
 ### Pure Data
 [Download](https://puredata.info/downloads/pure-data) the Windows Installer Version of Pure Data.
