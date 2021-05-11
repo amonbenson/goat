@@ -68,6 +68,6 @@ What we can do however, is to start the Ubuntu version of Pure Data directly wit
 Start the "XLaunch" Application. Select **"Multiple windows"** and **Display number 0**. Click next twice and leave all the default settings. Now the X server is running in the background and waiting for clients.
 
 ### Starting the debugger
-Back in your VSCode project, press <kbd>F5</kbd> to launch the debugger. If everything goes well, this should automatically build an ubuntu external with debug flags (`make clean alldebug`), get the ip address of your host machine to set the `DISPLAY` environment variable and finally launch Pure Data. If Pure Data won't show up, make sure you've started the X-Server *before* opening VSCode and try restarting your PC.
+Back in your VSCode project, press <kbd>F5</kbd> to launch the debugger. If everything goes well, this should automatically build an ubuntu external with debug flags (`make clean alldebug`), get the ip address of your host machine to set the `DISPLAY` environment variable and finally launch Pure Data. If Pure Data cannot connect to the display, try restarting your PC and wait for XLaunch to start *before* opening VSCode.
 
 You can now set breakpoints in your project. Keep in mind, that breakpoints will stay greyed out until the external's shared library is loaded, e. g. until you add your first "helloworld" object box in Pd.
