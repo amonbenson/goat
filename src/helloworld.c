@@ -20,7 +20,6 @@ void helloworld_setup(void) {
         0,
         sizeof(t_helloworld),
         CLASS_DEFAULT,
-        0,
         0);
 
     class_addbang(helloworld_class, helloworld_bang); 
