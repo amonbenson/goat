@@ -65,7 +65,7 @@ What we can do however, is to start the Ubuntu version of Pure Data directly wit
 ### Installing VcXsrv
 [Download](https://uni-tuebingen.de/fakultaeten/wirtschafts-und-sozialwissenschaftliche-fakultaet/faecher/fachbereich-wirtschaftswissenschaft/wirtschaftswissenschaft/fb-wiwi/einrichtungen-wirtschaftswissenschaft/wiwi-it/services/services/computing-asp/tools/x-server/vcxsrv/) and install the Windows X-Server "VcXsrv".
 
-Start the "XLaunch" Application. Select **"Multiple windows"** and **Display number 0**. Click next twice and leave all the default settings. Now the X server is running in the background and waiting for clients.
+Start the "XLaunch" Application. Select **"Multiple windows"** and **Display number 0**. Click next twice and leave all the default settings. At this point you should restart your PC. Then wait for the X-Server to start automatically in the background (see the X-symbol in the notification area) and only then open up VSCode again.
 
 ### Starting the debugger
 Back in your VSCode project, press <kbd>F5</kbd> to launch the debugger. If everything goes well, this should automatically build an ubuntu external with debug flags (`make clean alldebug`), get the ip address of your host machine to set the `DISPLAY` environment variable and finally launch Pure Data. If Pure Data cannot connect to the display, try restarting your PC and wait for XLaunch to start *before* opening VSCode.
