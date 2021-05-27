@@ -57,6 +57,8 @@ make -f Makefile.wsl clean install
 ```
 To change the installation path, update the `PDLIBDIR` variable in `Makefile.wsl`
 
+I noticed that some of the signal examples have the wrong naming convention (`rtap_osc.c` instead of `rtap_osc~.c`) which will prevent Pure Data from loading them. When compiling signal externals the c file must end with a tilde symbol `~` and all class methods in that file must include the suffix `_tilde`.
+
 ## Debugging
 Debugging is a bit more complex with this setup and I didn't manage to get the debugger working with the Windows Pure Data Installation (If anyone does, let me know :D).
 
