@@ -1,5 +1,5 @@
 #include "goat~.h"
-#include <string.h>
+#include "mem.h"
 
 
 static t_class *goat_tilde_class;
