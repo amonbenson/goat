@@ -14,11 +14,12 @@ include pd-lib-builder/Makefile.pdlibbuilder
 alldebug: c.flags += -O0 -DDEBUG
 alldebug: cxx.flags += -O0 -DDEBUG
 
+# create the documentation
 docs:
 	mkdir -p docs
 	doxygen
 
-# add a target to clean the docs directory
+# clean the documentation directory
 .PHONY: clean_docs
 clean: clean_docs
 clean_docs:
