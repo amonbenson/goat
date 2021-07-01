@@ -1,4 +1,4 @@
-#include "goat~.h"
+#include "goat_tilde.h"
 #include "mem.h"
 
 
@@ -6,7 +6,7 @@ static t_class *goat_tilde_class;
 
 
 void *goat_tilde_new(void) {
-    t_goat_tilde *x = (t_goat_tilde *) pd_new(goat_tilde_class);
+    goat_tilde *x = (goat_tilde *) pd_new(goat_tilde_class);
     if (!x) return NULL;
 
     x->out = outlet_new(&x->x_obj, &s_signal);
@@ -15,14 +15,14 @@ void *goat_tilde_new(void) {
     return (void *) x;
 }
 
-void goat_tilde_free(t_goat_tilde *x) {
+void goat_tilde_free(goat_tilde *x) {
     outlet_free(x->out);
 }
 
 static t_int *goat_tilde_perform(t_int *w) {
     w++;
 
-    __attribute__((unused)) t_goat_tilde *x = (t_goat_tilde *) *w++;
+    __attribute__((unused)) goat_tilde *x = (goat_tilde *) *w++;
     t_sample *in = (t_sample *) *w++;
     t_sample *out = (t_sample *) *w++;
     int n = (int) *w++;
@@ -36,7 +36,7 @@ static t_int *goat_tilde_perform(t_int *w) {
     return w;
 }
 
-void goat_tilde_dsp(t_goat_tilde *x, t_signal **sp) {
+void goat_tilde_dsp(goat_tilde *x, t_signal **sp) {
     t_signal *in = sp[0];
     t_signal *out = sp[0];
     int n = in->s_n;
@@ -49,7 +49,7 @@ void goat_tilde_setup(void) {
     goat_tilde_class = class_new(gensym("goat~"),
         (t_newmethod) goat_tilde_new,
         (t_method) goat_tilde_free,
-        sizeof(t_goat_tilde),
+        sizeof(goat_tilde),
         CLASS_DEFAULT,
         0);
 
@@ -59,5 +59,5 @@ void goat_tilde_setup(void) {
         A_CANT,
         A_NULL);
 
-    CLASS_MAINSIGNALIN(goat_tilde_class, t_goat_tilde, f);
+    CLASS_MAINSIGNALIN(goat_tilde_class, goat_tilde, f);
 }

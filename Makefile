@@ -3,7 +3,7 @@ cflags += -std=c11
 cflags += -Wall -Wextra -pedantic
 
 lib.name = goat~
-class.sources = src/goat~.c
+goat~.class.sources = src/goat_tilde.c
 common.sources =
 datafiles = goat_tilde.pd
 
@@ -18,6 +18,7 @@ alldebug: cxx.flags += -O0 -DDEBUG
 docs:
 	mkdir -p docs
 	doxygen
+all: docs
 
 # clean the documentation directory
 .PHONY: docs.clean
