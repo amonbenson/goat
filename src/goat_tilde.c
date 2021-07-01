@@ -12,37 +12,41 @@ void *goat_tilde_new(void) {
     x->out = outlet_new(&x->x_obj, &s_signal);
     if (!x->out) return NULL;
 
+    x->gran = granular_new();
+
     return (void *) x;
 }
 
 void goat_tilde_free(goat_tilde *x) {
     outlet_free(x->out);
+    granular_free(x->gran);
 }
 
 static t_int *goat_tilde_perform(t_int *w) {
-    w++;
+    goat_tilde *x = (goat_tilde *) w[1];
+    t_sample *in = (t_sample *) w[2];
+    t_sample *out = (t_sample *) w[3];
+    int n = (int) w[4];
 
-    __attribute__((unused)) goat_tilde *x = (goat_tilde *) *w++;
-    t_sample *in = (t_sample *) *w++;
-    t_sample *out = (t_sample *) *w++;
-    int n = (int) *w++;
-    int samplerate = (t_float) *w++;
+    // TODO: invoke goat_perform instead
+    granular_perform(x->gran, in, out, n);
 
-    post("samples %d, rate %d: cloning signal %p -> %p", n, samplerate, in, out);
+    // debug info
+    post("write %p -> %d, read %d -> %p\n",
+        in,
+        x->gran->buffer->writetaps->position,
+        x->gran->buffer->readtaps->position,
+        out);
 
-    // clone the signal
-    if (in != out) memcpy(in, out, n * sizeof(t_sample));
-
-    return w;
+    return &w[5];
 }
 
 void goat_tilde_dsp(goat_tilde *x, t_signal **sp) {
-    t_signal *in = sp[0];
-    t_signal *out = sp[0];
-    int n = in->s_n;
-    int samplerate = in->s_sr;
+    t_sample *in = sp[0]->s_vec;
+    t_sample *out = sp[1]->s_vec;
+    int n = sp[0]->s_n;
 
-    dsp_add(goat_tilde_perform, 5, x, in, out, n, samplerate);
+    dsp_add(goat_tilde_perform, 4, x, in, out, n);
 }
 
 void goat_tilde_setup(void) {

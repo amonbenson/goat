@@ -1,6 +1,8 @@
 {
     "files.associations": {
-        "Makefile.*": "makefile"
+        "*.h": "c",
+        "Makefile.*": "makefile",
+        "random": "c"
     },
     "editor.rulers": [120]
 }

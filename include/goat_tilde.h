@@ -13,6 +13,8 @@
 
 #include "m_pd.h"
 
+#include "granular.h"
+
 
 /**
  * @struct goat_tilde
@@ -23,6 +25,8 @@
 typedef struct {
     t_object x_obj; /**< parent Pure Data object */
     t_float *f; /**< fallback field for the main signal inlet */
+
+    granular *gran; /* TODO: create an intermediate "goat struct", which will contain the granular and all its modulators */
 
     t_outlet *out; /**< main signal outlet */
 } goat_tilde;

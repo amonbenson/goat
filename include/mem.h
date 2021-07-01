@@ -20,6 +20,7 @@
     #include "ext.h"
     #include "ext_obex.h"
 #else
+    #include <stdlib.h>
     #include <string.h>
 #endif
 

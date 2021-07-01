@@ -1,10 +1,10 @@
 cflags += -Iinclude
 cflags += -std=c11
-cflags += -Wall -Wextra -pedantic
+cflags += -Wall -Wextra
 
 lib.name = goat~
 goat~.class.sources = src/goat_tilde.c
-common.sources =
+common.sources = src/util/circbuf.c src/granular/granular.c
 datafiles = goat_tilde.pd
 
 # use pd-lib-builder
