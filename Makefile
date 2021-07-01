@@ -20,7 +20,7 @@ docs:
 	doxygen
 
 # clean the documentation directory
-.PHONY: clean_docs
-clean: clean_docs
-clean_docs:
+.PHONY: docs.clean
+clean: docs.clean
+docs.clean:
 	rm -rf docs
