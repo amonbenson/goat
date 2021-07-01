@@ -5,3 +5,6 @@
 *.pd_darwin
 *.pd_linux
 *.dll
+
+# documentation (perhabs an automatic generation at commit / push would be appropiate
+docs
