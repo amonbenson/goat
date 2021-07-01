@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "Makefile.*": "makefile"
-    }
+    },
+    "editor.rulers": [120]
 }
