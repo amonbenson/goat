@@ -9,7 +9,8 @@
             "args": [
                 "-path",
                 "${workspaceFolder}",
-                "-noaudio"
+                "-noaudio",
+                "*.pd"
             ],
             "environment": [
                 {
