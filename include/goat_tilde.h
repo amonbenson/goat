@@ -26,30 +26,30 @@ typedef struct {
     t_object x_obj; /**< parent Pure Data object */
     t_float *f; /**< fallback field for the main signal inlet */
 
-    granular *gran; /* TODO: create an intermediate "goat struct", which will contain the granular and all its modulators */
+    granular *gran; /**< @todo create an intermediate "goat struct", which will contain the granular and all its modulators */
 
     t_outlet *out; /**< main signal outlet */
 } goat_tilde;
 
 
 /**
- * @related goat_tilde
+ * @memberof goat_tilde
  * @brief creates a new goat_tilde object
  * 
- * @return void* a pointer to the new object or NULL if the creation failed
+ * @return void* a pointer to the new object or `NULL` if the creation failed
  */
 void *goat_tilde_new(void);
 
 /**
- * @related goat_tilde
+ * @memberof goat_tilde
  * @brief frees an existing goat_tilde object and all of its subclasses
  * 
- * @param x the goat object to be freed. Must not be NULL
+ * @param x the goat object to be freed. Must not be `NULL`
  */
 void goat_tilde_free(goat_tilde *x);
 
 /**
- * @related goat_tilde
+ * @memberof goat_tilde
  * @brief sets up the dsp tree for a given goat_tilde object
  * 
  * @param x the goat object

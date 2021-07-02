@@ -3,7 +3,7 @@
 #include "mem.h"
 
 
-granular *granular_new() {
+granular *granular_new(void) {
     granular *g = malloc(sizeof(granular));
     if (!g) return NULL;
 
@@ -24,7 +24,7 @@ void granular_free(granular *g) {
 }
 
 void granular_perform(granular *g, float *in, float *out, int n) {
-    // TODO: do something useful
+    /// @todo this is just placeholder / demo code
     circbuf_write_block(g->buffer, in, n);
     circbuf_read_block(g->buffer, g->buffer->readtaps, out, n);
 }

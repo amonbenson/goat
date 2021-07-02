@@ -5,7 +5,7 @@
 #include "util.h"
 
 
-circbuf_readtap *circbuf_readtap_new() {
+circbuf_readtap *circbuf_readtap_new(void) {
     circbuf_readtap *tap = malloc(sizeof(circbuf_readtap));
     if (tap == NULL) return NULL;
 
@@ -129,7 +129,7 @@ void circbuf_write_block(circbuf *cb, float *src, size_t n) {
 }
 
 float circbuf_read_interp(circbuf *cb, circbuf_readtap *tap) {
-    // TODO: use some interpolation
+    /// @todo use some interpolation
 
     float sample = cb->data[(int) tap->position];
 
@@ -145,7 +145,6 @@ void circbuf_read_block(circbuf *cb, circbuf_readtap *tap, float *dst, size_t n)
             n, cb->size);
     }
 
-    // TODO: when using interpolation, it is propably faster to store the previous value than to call
-    // circbuf_read_interp each time
+    /// @todo when using interpolation, it is propably faster to store the previous value than to call @ref circbuf_read_interp each time
     while (n--) *dst++ = circbuf_read_interp(cb, tap);
 }

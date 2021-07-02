@@ -28,7 +28,7 @@ static t_int *goat_tilde_perform(t_int *w) {
     t_sample *out = (t_sample *) w[3];
     int n = (int) w[4];
 
-    // TODO: invoke goat_perform instead
+    /// @todo invoke goat_perform instead
     granular_perform(x->gran, in, out, n);
 
     // debug info
