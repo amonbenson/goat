@@ -34,13 +34,23 @@ typedef struct {
  * A buffer can have any number of read taps. They may have a different position and reading speed each.
  * Multiple read taps can be linked together as a single linked list.
  */
-typedef struct circbuf_readtap {
+struct circbuf_readtap {
     float position; /**< interpolated buffer position of this tap */
     float speed; /**< speed at which the data is read */
     void *userdata; /**< optional pointer to a user data section. Before freeing, this must be set to `NULL` */
 
     struct circbuf_readtap *next; /**< reference to the next read tap or `NULL`, if this is the last one in the chain */
-} circbuf_readtap;
+};
+
+/**
+ * @cond Doxygen_Suppress
+ * this suppression is kind of a workaround, because Doxygen doesn't seem to handle
+ * the self reference of struct `circbuf_readtap *next` very well
+ */
+typedef struct circbuf_readtap circbuf_readtap;
+/**
+ * @endcond
+ */
 
 /**
  * @struct circbuf
