@@ -32,9 +32,9 @@ static t_int *goat_tilde_perform(t_int *w) {
     granular_perform(x->gran, in, out, n);
 
     // debug info
-    post("write %p -> %d, read %d -> %p\n",
+    post("write %p -> %d, read %f -> %p\n",
         in,
-        x->gran->buffer->writetaps->position,
+        x->gran->buffer->writetap.position,
         x->gran->buffer->readtaps->position,
         out);
 

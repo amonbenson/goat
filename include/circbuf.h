@@ -3,38 +3,42 @@
 #include <stddef.h>
 
 
-typedef struct _circbuf_tap {
+typedef struct _circbuf_writetap {
     size_t position;
     void *userdata;
+} circbuf_writetap;
 
-    struct _circbuf_tap *next;
-} circbuf_tap;
+typedef struct _circbuf_readtap {
+    float position;
+    float speed;
+    void *userdata;
+
+    struct _circbuf_readtap *next;
+} circbuf_readtap;
 
 typedef struct {
     float *data;
     size_t size;
 
-    circbuf_tap *writetaps;
-    circbuf_tap *readtaps;
+    circbuf_writetap writetap;
+    circbuf_readtap *readtaps;
 } circbuf;
 
 
-circbuf_tap *circbuf_tap_new();
+circbuf_readtap *circbuf_readtap_new();
 
-void circbuf_tap_free(circbuf_tap *tap);
+void circbuf_readtap_free(circbuf_readtap *tap);
 
 
 circbuf *circbuf_new(size_t size);
 
 void circbuf_free(circbuf *cb);
 
-circbuf_tap *circbuf_writetap_add(circbuf *cb);
-void circbuf_writetap_remove(circbuf *cb, circbuf_tap *tap);
-circbuf_tap *circbuf_writetap_get(circbuf *cb, int index);
+circbuf_readtap *circbuf_readtap_add(circbuf *cb);
+void circbuf_readtap_remove(circbuf *cb, circbuf_readtap *tap);
+circbuf_readtap *circbuf_readtap_get(circbuf *cb, int index);
 
-circbuf_tap *circbuf_readtap_add(circbuf *cb);
-void circbuf_readtap_remove(circbuf *cb, circbuf_tap *tap);
-circbuf_tap *circbuf_readtap_get(circbuf *cb, int index);
+void circbuf_write_block(circbuf *cb, float *src, size_t n);
 
-void circbuf_write_block(circbuf *cb, circbuf_tap *tap, float *src, int n);
-void circbuf_read_block(circbuf *cb, circbuf_tap *tap, float *dst, int n);
+float circbuf_read_interp(circbuf *cb, circbuf_readtap *tap);
+void circbuf_read_block(circbuf *cb, circbuf_readtap *tap, float *dst, size_t n);

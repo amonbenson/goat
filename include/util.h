@@ -21,5 +21,4 @@
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) > (b) ? (a) : (b))
 
-#define fastmod(n, m) ((n) & ((m) - 1)) // fast modulo function if m is a power of two
 #define is_pwrtwo(n) ((n) != 0 && !((n) & ((n) - 1)))

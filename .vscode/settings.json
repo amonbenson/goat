@@ -4,5 +4,5 @@
         "Makefile.*": "makefile",
         "random": "c"
     },
-    "editor.rulers": [120]
+    "editor.rulers": [100]
 }
