@@ -18,7 +18,6 @@ alldebug: cxx.flags += -O0 -DDEBUG
 docs:
 	mkdir -p docs
 	doxygen
-all: docs
 
 # clean the documentation directory
 .PHONY: docs.clean
