@@ -1,6 +1,6 @@
-#include "granular.h"
+#include "granular/granular.h"
 
-#include "mem.h"
+#include "util/mem.h"
 
 
 granular *granular_new(void) {

@@ -1,5 +1,6 @@
 #include "goat_tilde.h"
-#include "mem.h"
+#include "goat.h"
+#include "util/mem.h"
 
 
 static t_class *goat_tilde_class;
@@ -12,14 +13,14 @@ void *goat_tilde_new(void) {
     x->out = outlet_new(&x->x_obj, &s_signal);
     if (!x->out) return NULL;
 
-    x->gran = granular_new();
+    x->g = goat_new();
 
     return (void *) x;
 }
 
 void goat_tilde_free(goat_tilde *x) {
     outlet_free(x->out);
-    granular_free(x->gran);
+    goat_free(x->g);
 }
 
 static t_int *goat_tilde_perform(t_int *w) {
@@ -28,14 +29,14 @@ static t_int *goat_tilde_perform(t_int *w) {
     t_sample *out = (t_sample *) w[3];
     int n = (int) w[4];
 
-    /// @todo invoke goat_perform instead
-    granular_perform(x->gran, in, out, n);
+    // invoke the main algorithm
+    goat_perform(x->g, in, out, n);
 
     // debug info
     post("write %p -> %d, read %f -> %p\n",
         in,
-        x->gran->buffer->writetap.position,
-        x->gran->buffer->readtaps->position,
+        x->g->gran->buffer->writetap.position,
+        x->g->gran->buffer->readtaps->position,
         out);
 
     return &w[5];

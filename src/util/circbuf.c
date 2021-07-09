@@ -1,8 +1,8 @@
-#include "circbuf.h"
+#include "util/circbuf.h"
 
 #include <stdio.h>
-#include "mem.h"
-#include "util.h"
+#include "util/mem.h"
+#include "util/util.h"
 
 
 circbuf_readtap *circbuf_readtap_new(void) {

@@ -4,7 +4,7 @@ cflags += -Wall -Wextra
 
 lib.name = goat~
 goat~.class.sources = src/goat_tilde.c
-common.sources = src/util/circbuf.c src/granular/granular.c
+common.sources = src/goat.c src/util/circbuf.c src/granular/granular.c
 datafiles = goat_tilde.pd
 
 # use pd-lib-builder
