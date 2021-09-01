@@ -1,7 +1,22 @@
 #N canvas 746 283 450 300 12;
-#X obj 209 136 goat~;
-#X obj 171 185 dac~;
-#X obj 139 100 phasor~ 100;
+#X obj 349 183 goat~;
+#X obj 224 228 dac~;
+#X obj 30 77 phasor~ 100;
+#X obj 30 46 osc~ 200;
+#X obj 224 150 readsf~;
+#X msg 271 125 1;
+#X obj 205 11 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 270 57 t b b;
+#X msg 304 125 0;
+#X msg 223 102 open Radiohead-reconer_piano.wav;
 #X connect 0 0 1 1;
-#X connect 2 0 0 0;
-#X connect 2 0 1 0;
+#X connect 4 0 0 0;
+#X connect 4 0 1 0;
+#X connect 4 1 6 0;
+#X connect 5 0 4 0;
+#X connect 6 0 7 0;
+#X connect 7 0 5 0;
+#X connect 7 1 9 0;
+#X connect 8 0 4 0;
+#X connect 9 0 4 0;

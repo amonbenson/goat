@@ -1,6 +1,7 @@
 /**
  * @file granular.h
  * @author Amon Benson (amonkbenson@gmail.com)
+ *         zeyu yang   (zeyuuyang42@gmail.com)
  * @brief Granular Synthesizer
  * @version 0.1
  * @date 2021-07-01
@@ -12,6 +13,11 @@
 #pragma once
 
 #include "util/circbuf.h"
+// #include "util/drywet.h"
+#include "graintable/graintable.h"
+#include "scheduler/scheduler.h"
+#include "evelopbuf/evelopbuf.h"
+#include "synthesizer/synthesizer.h"
 
 
 /**
@@ -22,7 +28,10 @@
  * It does also contain functions to manipulate the delay (grain size, etc.)
  */
 typedef struct {
-    circbuf *buffer; /**< circular buffer used to sample the grains */
+    circbuf *buffer;     /**< circular buffer used to sample the grains */
+    graintable *grains;  /**< queue used to store the registed grains' information */
+    evelopbuf *evelopes;  /**< buffer to store all generated evelops */
+    synthesizer *synth;   /**< arrange and combine grains to get final output stream */ 
 } granular;
 
 /**
@@ -50,4 +59,4 @@ void granular_free(granular *g);
  * @param out the output buffer where data is written to
  * @param n the number of samples to be processed. This is also the size of the input and output buffers
  */
-void granular_perform(granular *g, float *in, float *out, int n);
+void granular_perform(granular *g, scheduler *s, float *in, float *out, int n);

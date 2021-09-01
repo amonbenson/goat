@@ -12,13 +12,18 @@
 #pragma once
 
 #include "granular/granular.h"
+#include "scheduler/scheduler.h"
 
+#include "params.h"
 
 /**
  * @brief Main GOAT class
  */
 typedef struct goat {
-    granular *gran; /**< the granular instance */
+    granular *gran;     /**< the granular instance */
+    scheduler *schdur;  /**< the scheduler instance */
+    // analyzer *anlyz;    /**< the analyzer instance */
+    // transformer *trans; /**< the transformer instance */
 } goat;
 
 

@@ -33,11 +33,11 @@ static t_int *goat_tilde_perform(t_int *w) {
     goat_perform(x->g, in, out, n);
 
     // debug info
-    post("write %p -> %d, read %f -> %p\n",
-        in,
-        x->g->gran->buffer->writetap.position,
-        x->g->gran->buffer->readtaps->position,
-        out);
+    // post("write %p -> %d, read %f -> %p\n",
+    //     in,
+    //     x->g->gran->buffer->writetap.position,
+    //     x->g->gran->buffer->readtaps->position,
+    //     out);
 
     return &w[5];
 }
