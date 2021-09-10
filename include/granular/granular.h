@@ -3,7 +3,7 @@
  * @author Amon Benson (amonkbenson@gmail.com)
  *         zeyu yang   (zeyuuyang42@gmail.com)
  * @brief Granular Synthesizer
- * @version 0.1
+ * @version 0.2
  * @date 2021-07-01
  * 
  * @copyright Copyright (c) 2021
@@ -13,7 +13,6 @@
 #pragma once
 
 #include "util/circbuf.h"
-// #include "util/drywet.h"
 #include "graintable/graintable.h"
 #include "scheduler/scheduler.h"
 #include "evelopbuf/evelopbuf.h"

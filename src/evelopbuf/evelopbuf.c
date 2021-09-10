@@ -1,19 +1,12 @@
-#include "evelopbuf/evelopbuf.h"
-
-
-
 #include <stdio.h>
 #include <math.h>
 #include "util/mem.h"
 #include "util/util.h"
 
-
-
-
+#include "evelopbuf/evelopbuf.h"
 
 
 evelope *evelope_new(evelope* ep, int type, int length, float amplitude, int attacksamples, int releasesamples){
-
    switch (type){
       case 0:
          ep = evelope_gen_no_evelope(ep, type, length, amplitude); // only for debugging
@@ -38,7 +31,7 @@ evelope *evelope_new(evelope* ep, int type, int length, float amplitude, int att
 void evelope_free(evelope* ep){
    free(ep->data);
    free(ep);
-   post("evelope free!");
+   // post("evelope free!");
 }
 
 
@@ -153,7 +146,7 @@ evelopbuf *evelopbuf_new(int size){
    eb->size = size;
    eb->front = 0;
    eb->rear = 0;
-   post("evelopbuf newed!");
+   // post("evelopbuf newed!");
 
    return eb;
 }
@@ -170,7 +163,7 @@ void evelopbuf_free(evelopbuf *eb){
     // free the buffer itself
    free(eb->data);
    free(eb);
-   post("evelopbuf freed!");
+   // post("evelopbuf freed!");
 }
 
 
@@ -191,17 +184,15 @@ void evelopbuf_add_evelope(evelopbuf *eb, int type, int length){
    evelope* ep = NULL;
 
    if (evelopbuf_is_full(eb) == 1){
-      ep = evelopbuf_pop_evelope(eb, ep);   // remove the earliest added evelop to move space for a new one
-      evelope_free(ep);
-      // eb->rear = (eb->rear+ 1) % eb->size;      
+      ep = evelopbuf_pop_evelope(eb, ep);   // remove the earliest added evelope to move space for a new one
+      evelope_free(ep);    
    }
    ep = evelope_new(ep, type, length, 0.99, 512, 512); // todo move this parameters to scheduler
    // ep = evelope_new(ep, type, length, amplitude, attacksamples, releasesamples);
    eb->data[eb->rear] = ep;     
    eb->rear = (eb->rear+ 1) % eb->size;
-   post("front: %d | rear : %d", eb->front, eb->rear);
+   // post("front: %d | rear : %d", eb->front, eb->rear);
 }
-
 
 
 evelope *evelopbuf_check_evelope(evelopbuf *eb, int type, int length){
@@ -232,12 +223,3 @@ int evelopbuf_is_empty(evelopbuf *eb){
 int evelopbuf_get_len(evelopbuf *eb){
    return (eb->rear - eb->front + eb->size)%eb->size;
 }
-
-
-
-
-
-         // post("statue of ep: \n type: %d | length: %d",ep->type, ep->length);
-         // for(int i=0;i<length;i++){
-         //    post("sample No.%d: %f", i, ep->data[i]);
-         // }

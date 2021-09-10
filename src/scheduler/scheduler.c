@@ -4,8 +4,6 @@
 #include "util/mem.h"
 #include "util/util.h"
 
-
-
 scheduler *scheduler_new(void){
     scheduler *sd = malloc(sizeof(scheduler));
     if (!sd) return NULL;

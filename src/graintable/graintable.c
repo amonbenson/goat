@@ -6,7 +6,6 @@
 #include "util/util.h"
 
 grain *grain_new(circbuf *cb, int position, int duration, int timeout, int evelope){
-
     grain *gn = malloc(sizeof(grain));
     if (!gn) return NULL;
 
@@ -21,6 +20,12 @@ grain *grain_new(circbuf *cb, int position, int duration, int timeout, int evelo
     gn->energy = -1.0;
 
     return gn;
+}
+
+
+void grain_free(grain *gn){
+    // post("grain freed!");
+    free(gn);
 }
 
 
@@ -53,16 +58,9 @@ void grain_update_feature(grain *gn, float value, int feature){
 }
 
 
-void grain_free(grain *gn){
-    post("grain freed!");
-    free(gn);
-}
-
 
 
 graintable *graintable_new(int size){
-
-
     graintable *gt = malloc(sizeof(graintable));
     if (!gt) return NULL;
 
@@ -70,7 +68,7 @@ graintable *graintable_new(int size){
     gt->size = size;
     gt->front = 0;
     gt->rear = 0;
-    post("graintable newed!");
+    // post("graintable newed!");
     return gt;
 }
 
@@ -86,7 +84,7 @@ void graintable_free(graintable *gt){
     // free the buffer itself
     free(gt->data);
     free(gt);
-    post("graintable freed!");
+    // post("graintable freed!");
 }
 
 
@@ -111,11 +109,8 @@ void graintable_add_grain(graintable *gt, circbuf *cb, int grainsize, int evelop
     timeout  = cb->size - grainsize;
 
     gn = grain_new(cb, position, grainsize, timeout, evelope);
-    // grain_post_feature(gn);
     gt->data[gt->rear]= gn;               
     gt->rear = (gt->rear+ 1) % gt->size;    
-    // post("front: %d",gt->front);
-    // post("rear: %d",gt->rear);
 }
 
 

@@ -1,8 +1,8 @@
 /**
- * @file grains.h
- * @author zeyu yang (zeyuyang42@163.com)
- * @brief ***********
- * @version 0.1
+ * @file synthesizer.h
+ * @author zeyu yang (zeyuuyang42@gmail.com)
+ * @brief the final overlap & add processing that writes all active grains into out stream
+ * @version 0.2
  * @date 2021-08-24
  * 
  * @copyright Copyright (c) 2021
@@ -23,84 +23,100 @@
 #include "graintable/graintable.h"
 #include "evelopbuf/evelopbuf.h"
 
-
-
+/**
+ * @struct activategrain
+ * @brief activategrain class contains data of activate grain
+ * 
+ * The activategrain class contains samples and basic parameters of an activate grain 
+ * And other behaviour controll parameters
+ */
 typedef struct {
-    float *data;
-    int pos;
-    int length;
-    int repeat; /**< wether use this grain repeatly defalut 0 for no-repeat (remove after written into out stream)*/
+    float *data;   /**< The stored activate grain data itself */
+    int pos;       /**< The position to read this activate grain */
+    int length;    /**< The position to read this activate grain */
+    int repeat;    /**< Wether use this grain repeatly */
 } activategrain, *p_activategrain;
 
 
-// *
-//  * @struct synthesizer
-//  * @brief circular buffer class
-//  * 
-//  * The circular buffer class contains a data array, the buffer size and references to the corresponding
-//  * read and write taps.
+/**
+ * @struct synthesizer
+ * @brief synthesizer class contains all activate grain objects
+ * 
+ * The synthesizer class contains all active grain and write them to the dsp out stream at each routine
+ */
 typedef struct {
-
     p_activategrain *data; /**< The stored data itself */
-    int length;        
-
+    int length;            /**< The size of synthesizer */
 } synthesizer;
 
+
 /**
- * @struct circbuf
- * @brief circular buffer class
+ * @memberof activategrain
+ * @brief creates a activategrain object
  * 
- * The circular buffer class contains a data array, the buffer size and references to the corresponding
- * read and write taps.
+ * This method creates an activategrain object
+ * 
+ * @param gn the grain object contains information for activation
+ * @param ep the grain object contains evelope
+ * @param repeat whether remove this activate grain after reading throught it 
+ * 
+ * @return activategrain* a reference to the activategrain object or `NULL` if failed
  */
 activategrain *activategrain_new(grain* gn, evelope* ep, int repeat);
 
-
 /**
- * @struct circbuf
- * @brief circular buffer class
+ * @memberof activategrain
+ * @brief frees an activategrain object
  * 
- * The circular buffer class contains a data array, the buffer size and references to the corresponding
- * read and write taps.
+ * This method frees an activategrain object
+ * 
+ * @param ag the activategrain object to be freed
  */
 void activategrain_free(activategrain *ag);
 
 
 /**
- * @struct circbuf
- * @brief circular buffer class
+ * @memberof synthesizer
+ * @brief creates a synthesizer object
  * 
- * The circular buffer class contains a data array, the buffer size and references to the corresponding
- * read and write taps.
+ * This method creates a synthesizer object
+ * 
+ * @param length the number of maximun simulteneuly activate grains
+ * 
+ * @return synthesizer* a reference to the synthesizer object or `NULL` if failed
  */
 synthesizer *synthesizer_new(int length);
 
-
 /**
- * @struct circbuf
- * @brief circular buffer class
+ * @memberof synthesizer
+ * @brief frees a synthesizer object
  * 
- * The circular buffer class contains a data array, the buffer size and references to the corresponding
- * read and write taps.
+ * This method frees a synthesizer object
+ * 
+ * @param syn the synthesizer object to be freed
  */
 void synthesizer_free(synthesizer *syn);
 
-
 /**
- * @struct circbuf
- * @brief circular buffer class
+ * @memberof synthesizer
+ * @brief active a grain
  * 
- * The circular buffer class contains a data array, the buffer size and references to the corresponding
- * read and write taps.
+ * This method active a grain by reading it from buffer and mupltiply with the evelope
+ * 
+ * @param syn the synthesizer object that stores activate grains
+ * @param gn the grain object contains information for activation
+ * @param ep the grain object contains evelope
  */
 void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep);
 
-
 /**
- * @struct circbuf
- * @brief circular buffer class
+ * @memberof synthesizer
+ * @brief write out stream
  * 
- * The circular buffer class contains a data array, the buffer size and references to the corresponding
- * read and write taps.
+ * This method writes activate grains to out stream at each dsp routine
+ * 
+ * @param syn the synthesizer object that stores activate grains
+ * @param out the output buffer to be writen
+ * @param n number of samples to write
  */
 void synthesizer_write_output(synthesizer *syn, float *out, int n);
