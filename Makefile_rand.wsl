@@ -17,4 +17,4 @@ PDLIBDIR = $(shell wslpath $$(cmd.exe /c echo %userprofile%\\Documents\\Pd\\exte
 #PDBINDIR = /mnt/c/Program Files (x86)/Pd/bin
 
 # use the project makefile
-include Makefile2
+include Makefile_rand

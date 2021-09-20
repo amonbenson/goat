@@ -9,11 +9,6 @@
 
 
 
-
-
-
-
-
 void rand_setDist(t_rand *x, float mu, float sigma){
     x->mu=mu;
     x->sigma=sigma;
