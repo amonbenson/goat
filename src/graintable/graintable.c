@@ -5,10 +5,7 @@
 #include "util/mem.h"
 #include "util/util.h"
 
-grain *grain_new(circbuf *cb, int position, int duration, int timeout, int evelope){
-    grain *gn = malloc(sizeof(grain));
-    if (!gn) return NULL;
-
+grain *grain_init(grain *gn, circbuf *cb, int position, int duration, int timeout, int evelope){
     gn->buffer = cb;
 
     gn->position = position;
@@ -20,12 +17,6 @@ grain *grain_new(circbuf *cb, int position, int duration, int timeout, int evelo
     gn->energy = -1.0;
 
     return gn;
-}
-
-
-void grain_free(grain *gn){
-    // post("grain freed!");
-    free(gn);
 }
 
 
@@ -76,13 +67,6 @@ graintable *graintable_new(int size){
 
 
 void graintable_free(graintable *gt){
-    // free every grain in the table
-    grain* gn = NULL; // tmp grain saver
-    while (graintable_is_empty(gt) == 0){
-        gn = graintable_pop_grain(gt, gn);   
-        grain_free(gn);
-    }
-
     // free the buffer itself
     free(gt->data);
     free(gt);
@@ -105,13 +89,11 @@ void graintable_add_grain(graintable *gt, circbuf *cb, int grainsize, int evelop
         return;
     }
     int position, timeout;
-    grain *gn;
 
     position = ((int)cb->writetap.position - grainsize) % cb->size;
     timeout  = cb->size - grainsize;
 
-    gn = grain_new(cb, position, grainsize, timeout, evelope);
-    gt->data[gt->rear]= gn;               
+    grain_init(&gt->data[gt->rear], cb, position, grainsize, timeout, evelope);       
     gt->rear = (gt->rear+ 1) % gt->size;    
 }
 
@@ -120,9 +102,8 @@ grain *graintable_pop_grain(graintable *gt, grain *gn){
     if (graintable_is_empty(gt) == 1){
         return NULL;
     }
-    gn = gt->data[gt->front]; 
-      
-    gt->data[gt->front] = NULL;
+    gn = &gt->data[gt->front]; 
+
     // grain_post_feature(gn);
     gt->front = (gt->front + 1) % gt->size;
     return gn;
@@ -139,20 +120,19 @@ void graintable_check_grain(graintable *gt, __attribute__((unused)) grain *gn, i
         error("graintable_check_grain: trying to check a grain out of current table range\n");
         return;
     }
-    gn = gt->data[gt->front+delay];
 }
 
 
 void graintable_update_timeout(graintable *gt, int n){
     for (int i = 0; i < graintable_get_len(gt); i++){
-        grain_update_timeout(gt->data[(gt->front+i) % gt->size], n);
+        grain_update_timeout(&gt->data[(gt->front+i) % gt->size], n);
     }
 }
 
 
 void graintable_print_all(graintable *gt){
     for (int i = 0; i < graintable_get_len(gt); i++){
-        grain_post_feature(gt->data[(gt->front+i) % gt->size]);
+        grain_post_feature(&gt->data[(gt->front+i) % gt->size]);
     }
 }
 
