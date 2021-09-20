@@ -6,22 +6,6 @@
 #include "util/mem.h"
 #include "util/util.h"
 
-
-// typedef struct {
-//     float *data;
-//     int pos;
-//     int length;
-//     int repeat; 
-// } activategrain, *p_activategrain;
-
-// typedef struct {
-
-//     p_activategrain *data; 
-//     int length;        
-
-// } synthesizer;
-
-
 activategrain *activategrain_new(grain* gn, evelope* ep, int repeat){
 
     activategrain *ag = malloc(sizeof(activategrain));
@@ -46,12 +30,12 @@ activategrain *activategrain_new(grain* gn, evelope* ep, int repeat){
 
 void activategrain_free(activategrain *ag){
     if (!ag) {
-        post("grain already freed!");
+        // post("grain already freed!");
         return; 
     }
     free(ag->data);
     free(ag);
-    post("activategrain freed!");
+    // post("activategrain freed!");
 }
 
 
@@ -76,17 +60,10 @@ void synthesizer_free(synthesizer *syn){
     }
     free(syn->data);
     free(syn);
-    post("synthesizer freed!");
+    // post("synthesizer freed!");
 }
 
 
-/**
- * @struct circbuf
- * @brief circular buffer class
- * 
- * The circular buffer class contains a data array, the buffer size and references to the corresponding
- * read and write taps.
- */
 void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep){
     activategrain *ag = activategrain_new(gn, ep, 0); // set repeat to 0
     if (!ag) return;

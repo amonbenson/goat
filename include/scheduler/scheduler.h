@@ -1,11 +1,13 @@
 /**
  * @file scheduler.h
- * @author zeyu yang (zeyuyang42@163.com)
- * @brief scheduler is a instance that store all user adjustable configs, like gran_size, inter_onset. 
- *        granular polls the statue in scheduler at certain polling rate to get configs for grain arragment.
- *        At version 0.1 all configs are temporarily constant, but little randomness will be involved for justifying the correctness of current granular
- *        functions for adjusting all configs with a human friendly method will come at version 0.2
- * @version 0.1
+ * @author zeyu yang (zeyuuyang42@gmail.com)
+ * @brief scheduler is a instance that store all user adjustable configs
+ *        like the size of grains, inter onset between grains. 
+ *        granular polls the statue in scheduler to get configs for grain arragment.
+ *        At version 0.1 all configs are temporarily constant
+ *        but little randomness will be involved for justifying the correctness of current granular structre
+ *        functions for adjusting all configs with a human-friendly method will be added at upcoming version 
+ * @version 0.2
  * @date 2021-08-29
  * 
  * @copyright Copyright (c) 2021
@@ -16,11 +18,10 @@
 
 #include <stdio.h>
 #include <stdlib.h> // for the rand function
-#include <time.h>   //for seed
+#include <time.h>   // for seed
 
 #include "util/mem.h"
 #include "util/util.h"
-// #include "util/circbuf.h"
 
 #include "m_pd.h" // add for post function, remove this after debuging
 
@@ -29,22 +30,20 @@
 
 /**
  * @struct scheduler
- * @brief circular buffer class
+ * @brief scheduler class
  * 
- * The circular buffer class contains a data array, the buffer size and references to the corresponding
- * read and write taps.
+ * The scheduler class contains all user adjustable configs
  */
 typedef struct {
     // configs from pd
-    int streamsize; // 64 samples for now 
-    int samplerate; // 44100 samples for now 
+    int streamsize;     /**< 64 samples for now, puredata default*/
+    int samplerate;     /**< 44100 samples for now, puredata default */
 
     // basic user adjustable configs
     int gransize;       /**< the size of sampled grains also for corresponding evelope*/
     int interonset;     /**< the onset difference between two grains that been sampled */
     int maxinteronset;  /**< the maximun onset difference between two grains to be synthesized */
     int mininteronset;  /**< the minimun onset difference between two grains to be synthesized */
-        // evelop related
     int eveloptype;     /**< type of evelop used for grain generation procedure */
 
 
@@ -64,46 +63,56 @@ typedef struct {
 
 
 /**
- * @struct scheduler
- * @brief new a scheduler instance
+ * @memberof scheduler
+ * @brief creates a scheduler object
  * 
- * Chose a random number between maxinteronset and mininteronset as the interonset of next grain
+ * This method creates a scheduler object contains all the adjustable configs that needed for grain arragment
+ * 
+ * @return scheduler* a reference to the scheduler object or `NULL` if failed
  */
 scheduler *scheduler_new(void);
 
-
 /**
- * @struct scheduler
- * @brief get the next interonset 
+ * @memberof scheduler
+ * @brief frees a scheduler object
  * 
- * Chose a random number between maxinteronset and mininteronset as the interonset of next grain
+ * This method frees a scheduler object
+ * 
+ * @param sd the scheduler object to be freed
  */
 void scheduler_free(scheduler *sd);
 
-
 /**
- * @struct scheduler
+ * @memberof scheduler
  * @brief get the next interonset 
  * 
- * Chose a random number between maxinteronset and mininteronset as the interonset of next grain
+ * This method choses a random number between maxinteronset and mininteronset as the interonset of next grain
+ * 
+ * @param max the maximum interonset
+ * @param min the minimum interonset
+ * @param slot the allowed slot interonset (must sample as interger of new samples of dsp routine)
+ * 
+ * @return int the length of next interonset 
  */
 int scheduler_get_next_interonset(int max, int min, int slot); 
 
-
 /**
- * @struct scheduler
+ * @memberof scheduler
  * @brief update configs at each dsp routin
  * 
+ * This method updates the configs at each dsp routine
+ * Configs could change automaticly or under user's adjustion
  * 
+ * @param sd the scheduler object to be processed
  */
 void scheduler_perform(scheduler *sd);
 
-
-
 /**
- * @struct scheduler
- * @brief update configs for controlling ot fetch and synth process
+ * @memberof scheduler
+ * @brief update configs for controlling the fetch and synth process
  * 
+ * This method updates the counter(fetchgrain/synthgrain) at each dsp routine
  * 
+ * @param sd the scheduler object to be processed
  */
 void scheduler_update_counter(scheduler *sd);

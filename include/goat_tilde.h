@@ -1,6 +1,6 @@
 /**
  * @file goat_tilde.h
- * @author Amon Benson
+ * @author Amon Benson (amonkbenson@gmail.com)
  * @brief G.O.A.T Pure Data External
  * @version 0.1
  * @date 2021-07-01
@@ -10,11 +10,9 @@
 
 #pragma once
 
-
 #include "m_pd.h"
 
 #include "goat.h"
-
 
 /**
  * @struct goat_tilde

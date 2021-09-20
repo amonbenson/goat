@@ -3,7 +3,6 @@
 #include "util/mem.h"
 #include "params.h"
 
-
 granular *granular_new(void) {
     granular *g = malloc(sizeof(granular));
     if (!g) return NULL;
@@ -45,6 +44,7 @@ void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
 
     // Delayline load input stream
     circbuf_write_block(g->buffer, in, n); //load input stream into circbuf constantly @todo add parameter to stop and continue loading 
+    
     // sample new grain and add into graintable
     if (s->fetchgrain == 0){
         graintable_add_grain(g->grains, g->buffer, s->gransize, 0);
@@ -56,8 +56,6 @@ void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
 
     // fetch grain to synthesis output
     if (s->synthgrain == 0){
-        // either pop the front grain or check a random valid grain are supported. choose under stratgy in scheduler
-        // for now only a simple version applied: choose the first valid(not overwritten) grain
         // gn = graintable_check_grain(g->grains, gn, 0); // set delay to 0 is actully fetch the same grain except won't move it out
         do{
             gn = graintable_pop_grain(g->grains, gn);
@@ -69,5 +67,4 @@ void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
     }
 
     synthesizer_write_output(g->synth, out, n);
-    // circbuf_read_block(g->buffer, g->buffer->readtaps, out, n);
 }
