@@ -13,6 +13,7 @@
 
 #include "granular/granular.h"
 #include "scheduler/scheduler.h"
+#include "control/manager.h"
 
 #include "params.h"
 
@@ -20,6 +21,7 @@
  * @brief Main GOAT class
  */
 typedef struct goat {
+    control_manager *mgr; /**< the control manager */
     granular *gran;     /**< the granular instance */
     scheduler *schdur;  /**< the scheduler instance */
     // analyzer *anlyz;    /**< the analyzer instance */

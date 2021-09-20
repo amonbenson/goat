@@ -4,7 +4,7 @@ cflags += -Wall -Wextra
 
 lib.name = goat~
 goat~.class.sources = src/goat_tilde.c
-common.sources = src/goat.c src/util/circbuf.c src/granular/granular.c src/graintable/graintable.c src/scheduler/scheduler.c src/evelopbuf/evelopbuf.c src/synthesizer/synthesizer.c
+common.sources = $(filter-out $(goat~.class.sources), $(wildcard src/*.c src/**/*.c))
 datafiles = goat_tilde.pd Radiohead-reconer_piano.wav
 
 # use pd-lib-builder

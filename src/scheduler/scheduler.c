@@ -4,7 +4,7 @@
 #include "util/mem.h"
 #include "util/util.h"
 
-scheduler *scheduler_new(void){
+scheduler *scheduler_new(control_manager *mgr) {
     scheduler *sd = malloc(sizeof(scheduler));
     if (!sd) return NULL;
 
@@ -13,11 +13,11 @@ scheduler *scheduler_new(void){
     sd->samplerate = 44100;
 
     // basic user adjustable configs
-    sd->gransize = 2048;  
+    sd->gransize = control_manager_parameter_add(mgr, "gransize", 2048, 128, 2048);
     sd->interonset = 1024;
-    sd->maxinteronset = 2048;  
-    sd->mininteronset = 1024;  
-    sd->eveloptype = 3;    
+    sd->maxinteronset = 2048;
+    sd->mininteronset = 1024;
+    sd->eveloptype = 3;
 
     sd->fetchgrain = 2048; // initial: gransize, at least enough of a single grain
     sd->synthgrain = 2048; // initial: max(mininteronset,gransize)

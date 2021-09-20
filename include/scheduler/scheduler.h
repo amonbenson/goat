@@ -26,6 +26,7 @@
 #include "m_pd.h" // add for post function, remove this after debuging
 
 #include "params.h"
+#include "control/manager.h"
 
 
 /**
@@ -40,7 +41,7 @@ typedef struct {
     int samplerate;     /**< 44100 samples for now, puredata default */
 
     // basic user adjustable configs
-    int gransize;       /**< the size of sampled grains also for corresponding evelope*/
+    control_parameter *gransize;  /**< the size of sampled grains also for corresponding evelope*/
     int interonset;     /**< the onset difference between two grains that been sampled */
     int maxinteronset;  /**< the maximun onset difference between two grains to be synthesized */
     int mininteronset;  /**< the minimun onset difference between two grains to be synthesized */
@@ -70,7 +71,7 @@ typedef struct {
  * 
  * @return scheduler* a reference to the scheduler object or `NULL` if failed
  */
-scheduler *scheduler_new(void);
+scheduler *scheduler_new(control_manager *mgr);
 
 /**
  * @memberof scheduler
