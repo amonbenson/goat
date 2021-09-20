@@ -38,7 +38,7 @@ typedef struct {
     float frequency; /**< fundamental frequency of a grain. set to -1 if grain isn't assumed as monophonic or pitch detection is disabled*/
     float energy;    /**< simple framewise energy set to -1 if energy detection is disabled*/
 
-}grain, *p_grain;
+} grain;
 
 
 /**
@@ -46,7 +46,7 @@ typedef struct {
  * @brief data structure stores grain objects
  */
 typedef struct{
-    p_grain *data;   /**< The stored data itself */
+    grain *data;     /**< The stored data itself */
     int size;        /**< The buffer size */
     int front;       /**< The indicator to the front position */
     int rear;        /**< The indicator to the rear position */
@@ -56,29 +56,20 @@ typedef struct{
 
 /**
  * @memberof grain
- * @brief generate grain 
+ * @brief intialize grain 
  * 
- * This method creates a new grain object
+ * This method initializes a grain object
  * 
+ * @param gn the grain to be initialized. Must not be `NULL`
  * @param cb the circle buffer object as the source of grains
  * @param position absolute start position of a grain at buffer
  * @param duration length of a grain in sample
  * @param timeout statue mark to tell if a grain still valid
  * @param evelope type of evelope to be applied on this grain
  * 
- * @return grain* a reference to the grain object or `NULL` if failed
+ * @return grain* a reference to the grain object
  */
-grain *grain_new(circbuf *cb, int position, int duration, int  timeout, int evelope);
-
-/**
- * @memberof grain
- * @brief frees a grain structure
- * 
- * This method frees a grain object
- * 
- * @param gn the grain object to be freed
- */
-void grain_free(grain *gn);
+grain *grain_init(grain *gn, circbuf *cb, int position, int duration, int  timeout, int evelope);
 
 /**
  * @memberof grain

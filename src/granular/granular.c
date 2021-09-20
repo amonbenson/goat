@@ -63,7 +63,6 @@ void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
 
         ep = evelopbuf_check_evelope(g->evelopes, gn->evelope, gn->duration);
         synthesizer_active_grain(g->synth, gn, ep);
-        grain_free(gn);
     }
 
     synthesizer_write_output(g->synth, out, n);
