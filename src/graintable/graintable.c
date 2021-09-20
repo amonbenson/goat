@@ -50,8 +50,10 @@ void grain_update_feature(grain *gn, float value, int feature){
     switch(feature){
         case 0: //frequency
             gn->frequency = value;
+            break;
         case 1: //energy
             gn->energy = value;
+            break;
         default:
             fprintf(stderr, "grain_update_feature: unsupported feature type, please check it again!");
     }
@@ -132,7 +134,7 @@ int graintable_get_len(graintable *gt){
 }
 
 
-void graintable_check_grain(graintable *gt, grain *gn, int delay){
+void graintable_check_grain(graintable *gt, __attribute__((unused)) grain *gn, int delay){
     if (graintable_get_len(gt) <=  delay || delay < 0){
         error("graintable_check_grain: trying to check a grain out of current table range\n");
         return;
