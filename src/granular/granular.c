@@ -47,7 +47,8 @@ void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
     
     // sample new grain and add into graintable
     if (s->fetchgrain == 0){
-        graintable_add_grain(g->grains, g->buffer, control_parameter_as_int(s->gransize), 0);
+        printf("gransize %d\n", param(int, s->gransize));
+        graintable_add_grain(g->grains, g->buffer, param(int, s->gransize), 0);
     }
     // post("graintable length: %d",graintable_get_len(g->grains));
 

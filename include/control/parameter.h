@@ -3,7 +3,11 @@
 #include "control/modulator.h"
 #include <stddef.h>
 
+
+
 #define CONTROL_NUM_SLOTS 3
+
+#define param(type, ...) control_parameter_get_ ## type(__VA_ARGS__)
 
 
 typedef struct control_parameter_slot {
@@ -37,6 +41,6 @@ void control_parameter_remove_modulator(control_parameter *p, size_t slot);
 void control_parameter_set_amount(control_parameter *p, size_t slot, float amount);
 
 
-float control_parameter_as_float(control_parameter *p);
+float control_parameter_get_float(control_parameter *p);
 
-int control_parameter_as_int(control_parameter *p);
+int control_parameter_get_int(control_parameter *p);

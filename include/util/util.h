@@ -48,3 +48,8 @@
  * @brief checks if @a n is a power of two. @a n must be unsigned.
  */
 #define is_pwrtwo(n) ((n) != 0 && !((n) & ((n) - 1)))
+
+
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846264338327950288
+#endif

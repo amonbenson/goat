@@ -10,8 +10,8 @@
 
 
 typedef struct control_manager {
-    control_parameter *params;
-    control_modulator *mods;
+    control_parameter *parameters;
+    control_modulator *modulators;
 } control_manager;
 
 
@@ -27,11 +27,17 @@ control_parameter *control_manager_parameter_add(control_manager *mgr,
 
 void control_manager_parameter_remove(control_manager *mgr, control_parameter *p);
 
+control_parameter *control_manager_parameter_by_name(control_manager *mgr, const char *name);
+
+
 control_modulator *control_manager_modulator_add(control_manager *mgr,
     const char *name,
-    control_modulator_perform_method perform_method);
+    control_modulator_perform_method perform_method,
+    size_t subclass_size);
 
 void control_manager_modulator_remove(control_manager *mgr, control_modulator *m);
+
+control_modulator *control_manager_modulator_by_name(control_manager *mgr, const char *name);
 
 
 void control_manager_perform(control_manager *mgr, float *in, int n);

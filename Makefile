@@ -4,7 +4,8 @@ cflags += -Wall -Wextra
 
 lib.name = goat~
 goat~.class.sources = src/goat_tilde.c
-common.sources = $(filter-out $(goat~.class.sources), $(wildcard src/*.c src/**/*.c))
+common.sources = $(filter-out $(goat~.class.sources), $(shell find "src" -name "*.c"))
+$(info common.sources: $(common.sources))
 datafiles = goat_tilde.pd Radiohead-reconer_piano.wav
 
 # use pd-lib-builder

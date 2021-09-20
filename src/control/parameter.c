@@ -58,10 +58,10 @@ void control_parameter_set_amount(control_parameter *p,
 }
 
 
-float control_parameter_as_float(control_parameter *p) {
+float control_parameter_get_float(control_parameter *p) {
     return p->value;
 }
 
-int control_parameter_as_int(control_parameter *p) {
+int control_parameter_get_int(control_parameter *p) {
     return (int) p->value;
 }

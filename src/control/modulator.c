@@ -2,8 +2,10 @@
 #include <stdlib.h>
 
 
-control_modulator *control_modulator_new(const char *name, control_modulator_perform_method perform_method) {
-    control_modulator *m = (control_modulator *) malloc(sizeof(control_modulator));
+control_modulator *control_modulator_new(const char *name,
+        control_modulator_perform_method perform_method,
+        size_t subclass_size) {
+    control_modulator *m = (control_modulator *) malloc(subclass_size);
     if (m == NULL) return NULL;
 
     m->name = name;
