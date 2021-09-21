@@ -1,5 +1,6 @@
 #include "goat_tilde.h"
 #include "goat.h"
+#include "control/manager.h"
 #include "util/mem.h"
 
 
@@ -21,6 +22,66 @@ void *goat_tilde_new(void) {
 void goat_tilde_free(goat_tilde *x) {
     outlet_free(x->out);
     goat_free(x->g);
+}
+
+static control_parameter *goat_tilde_validate_parameter(goat_tilde *x, const char *name) {
+    control_parameter *param = control_manager_parameter_by_name(x->g->mgr, name);
+    if (param == NULL) error("goat~: unknown parameter '%s'", name);
+    return param;
+}
+
+static control_modulator *goat_tilde_validate_modulator(goat_tilde *x, const char *name) {
+    control_modulator *mod = control_manager_modulator_by_name(x->g->mgr, name);
+    if (mod == NULL) error("goat~: unknown modulator '%s'", name);
+    return mod;
+}
+
+static int goat_tilde_validate_slot(int slot) {
+    if (slot < 0 || slot >= CONTROL_NUM_SLOTS) {
+        error("goat~: slot %d out of range", slot);
+        return -1;
+    }
+    return slot;
+}
+
+void goat_tilde_param_offset(goat_tilde *x, t_symbol *paramname, t_float value) {
+    control_parameter *param;
+
+    if ((param = goat_tilde_validate_parameter(x, paramname->s_name)) == NULL) return;
+
+    control_parameter_offset(param, value);
+}
+
+void goat_tilde_param_amount(goat_tilde *x, t_symbol *paramname, t_float fslot, t_float value) {
+    control_parameter *param;
+    int slot;
+
+    if ((param = goat_tilde_validate_parameter(x, paramname->s_name)) == NULL) return;
+    if ((slot = goat_tilde_validate_slot(fslot)) == -1) return;
+
+    control_parameter_amount(param, slot, value);
+}
+
+void goat_tilde_param_attach(goat_tilde *x, t_symbol *paramname, t_float fslot, t_symbol *modname) {
+    control_parameter *param;
+    control_modulator *mod;
+    int slot;
+
+    if ((param = goat_tilde_validate_parameter(x, paramname->s_name)) == NULL) return;
+    if ((mod = goat_tilde_validate_modulator(x, modname->s_name)) == NULL) return;
+    if ((slot = goat_tilde_validate_slot(fslot)) == -1) return;
+
+    control_parameter_attach(param, slot, mod);
+}
+
+void goat_tilde_param_detach(goat_tilde *x, t_symbol *paramname, t_float fslot) {
+    control_parameter *param;
+    int slot;
+
+    if ((param = goat_tilde_validate_parameter(x, paramname->s_name)) == NULL) return;
+    if ((slot = goat_tilde_validate_slot(fslot)) == -1) return;
+
+    control_parameter_detach(param, slot);
 }
 
 static t_int *goat_tilde_perform(t_int *w) {
@@ -57,12 +118,38 @@ void goat_tilde_setup(void) {
         sizeof(goat_tilde),
         CLASS_DEFAULT,
         0);
+    
+    class_addmethod(goat_tilde_class,
+        (t_method) goat_tilde_param_offset,
+        gensym("param-offset"),
+        A_SYMBOL,
+        A_FLOAT,
+        A_NULL);
+    class_addmethod(goat_tilde_class,
+        (t_method) goat_tilde_param_amount,
+        gensym("param-amount"),
+        A_SYMBOL,
+        A_FLOAT,
+        A_FLOAT,
+        A_NULL);
+    class_addmethod(goat_tilde_class,
+        (t_method) goat_tilde_param_attach,
+        gensym("param-attach"),
+        A_SYMBOL,
+        A_FLOAT,
+        A_SYMBOL,
+        A_NULL);
+    class_addmethod(goat_tilde_class,
+        (t_method) goat_tilde_param_detach,
+        gensym("param-detach"),
+        A_SYMBOL,
+        A_FLOAT,
+        A_NULL);
 
     class_addmethod(goat_tilde_class,
         (t_method) goat_tilde_dsp,
         gensym("dsp"),
         A_CANT,
         A_NULL);
-
     CLASS_MAINSIGNALIN(goat_tilde_class, goat_tilde, f);
 }

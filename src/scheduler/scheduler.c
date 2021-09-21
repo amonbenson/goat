@@ -13,7 +13,7 @@ scheduler *scheduler_new(control_manager *mgr) {
     sd->samplerate = 44100;
 
     // basic user adjustable configs
-    sd->gransize = control_manager_parameter_add(mgr, "gransize", 2048, 128, 4096);
+    sd->gransize = control_manager_parameter_add(mgr, "grainsize", 2048, 128, 4096);
     sd->interonset = 1024;
     sd->maxinteronset = 1024;
     sd->mininteronset = 1024;

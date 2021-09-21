@@ -46,6 +46,8 @@ void *goat_tilde_new(void);
  */
 void goat_tilde_free(goat_tilde *x);
 
+void goat_tilde_setparam(goat_tilde *x, t_symbol *s, t_float f);
+
 /**
  * @memberof goat_tilde
  * @brief sets up the dsp tree for a given goat_tilde object

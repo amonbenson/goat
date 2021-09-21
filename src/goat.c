@@ -21,11 +21,11 @@ goat *goat_new(void) {
     if (!g->schdur) return NULL;   
 
     // TODO: testing
-    control_parameter *gransize = control_manager_parameter_by_name(g->mgr, "gransize");
+    control_parameter *grainsize = control_manager_parameter_by_name(g->mgr, "grainsize");
 
-    gransize->offset = 2000.0f;
-    control_parameter_add_modulator(gransize, 0, &g->modbank->lfo1->super);
-    control_parameter_set_amount(gransize, 0, 2000.0f);    
+    control_parameter_offset(grainsize, 2000.0f);
+    control_parameter_attach(grainsize, 0, &g->modbank->lfo1->super);
+    control_parameter_amount(grainsize, 0, 2000.0f);
 
     return g;
 }

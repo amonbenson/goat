@@ -34,11 +34,13 @@ control_parameter *control_parameter_new(const char *name, float default_value, 
 void control_parameter_free(control_parameter *p);
 
 
-void control_parameter_add_modulator(control_parameter *p, size_t slot, control_modulator *mod);
+void control_parameter_attach(control_parameter *p, size_t slot, control_modulator *mod);
 
-void control_parameter_remove_modulator(control_parameter *p, size_t slot);
+void control_parameter_detach(control_parameter *p, size_t slot);
 
-void control_parameter_set_amount(control_parameter *p, size_t slot, float amount);
+void control_parameter_amount(control_parameter *p, size_t slot, float amount);
+
+void control_parameter_offset(control_parameter *p, float offset);
 
 
 float control_parameter_get_float(control_parameter *p);

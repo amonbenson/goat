@@ -29,11 +29,11 @@ void control_parameter_free(control_parameter *p) {
 
 static int control_parameter_validate_slot(size_t slot) {
     int valid = slot < CONTROL_NUM_SLOTS;
-    if (!valid) fprintf(stderr, "control_parameter_add_modulator: slot %" PRI_SIZE_T " out of range\n", slot);
+    if (!valid) fprintf(stderr, "control_parameter_attach: slot %" PRI_SIZE_T " out of range\n", slot);
     return valid;
 }
 
-void control_parameter_add_modulator(control_parameter *p,
+void control_parameter_attach(control_parameter *p,
         size_t slot,
         control_modulator *mod) {
     if (!control_parameter_validate_slot(slot)) return;
@@ -42,19 +42,23 @@ void control_parameter_add_modulator(control_parameter *p,
     p->slots[slot].mod = mod;
 }
 
-void control_parameter_remove_modulator(control_parameter *p,
+void control_parameter_detach(control_parameter *p,
         size_t slot) {
     if (!control_parameter_validate_slot(slot)) return;
 
     p->slots[slot].mod = NULL;
 }
 
-void control_parameter_set_amount(control_parameter *p,
+void control_parameter_amount(control_parameter *p,
         size_t slot,
         float amount) {
     if (!control_parameter_validate_slot(slot)) return;
 
     p->slots[slot].amount = amount;
+}
+
+void control_parameter_offset(control_parameter *p, float offset) {
+    p->offset = offset;
 }
 
 
