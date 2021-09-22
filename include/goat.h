@@ -14,7 +14,7 @@
 #include "goat_config.h"
 #include "granular/granular.h"
 #include "scheduler/scheduler.h"
-#include "control/modulator_bank.h"
+#include "modulators/modulator_bank.h"
 #include "control/manager.h"
 
 #include "params.h"

@@ -1,4 +1,4 @@
-#include "control/modulators/lfo/lfo.h"
+#include "modulators/lfo/lfo.h"
 
 #include <stdio.h>
 #include <math.h>

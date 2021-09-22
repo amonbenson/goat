@@ -1,4 +1,4 @@
-#include "control/modulator_bank.h"
+#include "modulators/modulator_bank.h"
 
 
 modulator_bank *modulator_bank_new(control_manager *mgr) {

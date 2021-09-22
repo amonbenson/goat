@@ -1,5 +1,5 @@
 #pragma once
-#include "control/modulators/lfo/lfo.h"
+#include "modulators/lfo/lfo.h"
 
 
 #define MODBANK_NUM_LFOS 4
