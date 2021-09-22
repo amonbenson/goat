@@ -38,7 +38,6 @@ void control_parameter_attach(control_parameter *p,
         control_modulator *mod) {
     if (!control_parameter_validate_slot(slot)) return;
 
-    if (slot >= CONTROL_NUM_SLOTS) return;
     p->slots[slot].mod = mod;
 }
 

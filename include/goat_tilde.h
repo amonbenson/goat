@@ -46,7 +46,48 @@ void *goat_tilde_new(void);
  */
 void goat_tilde_free(goat_tilde *x);
 
-void goat_tilde_setparam(goat_tilde *x, t_symbol *s, t_float f);
+/**
+ * @memberof goat_tilde
+ * @brief updateds a parameter offset
+ * 
+ * @param x the goat object
+ * @param paramname the name of the parameter to be updated
+ * @param value the offset value to be updated
+ */
+void goat_tilde_param_offset(goat_tilde *x, t_symbol *paramname, t_float value);
+
+/**
+ * @memberof goat_tilde
+ * @brief updateds a parameter slot's amount of influence
+ * 
+ * @param x the goat object
+ * @param paramname the name of the parameter to be updated
+ * @param fslot the slot to be updated
+ * @param value the amount to be updated
+ */
+void goat_tilde_param_amount(goat_tilde *x, t_symbol *paramname, t_float fslot, t_float value);
+
+/**
+ * @memberof goat_tilde
+ * @brief connects a modulator to a parameter.
+ * Any other modulator on that slot will be disconnected.
+ * 
+ * @param x the goat object
+ * @param paramname the name of the parameter to be updated
+ * @param fslot the slot to be updated
+ * @param modname the name of the modulator to be connected
+ */
+void goat_tilde_param_attach(goat_tilde *x, t_symbol *s, int argc, t_atom *argv);
+
+/**
+ * @memberof goat_tilde
+ * @brief disconnects a modulator from a parameter
+ * 
+ * @param x the goat object
+ * @param paramname the name of the parameter to be updated
+ * @param fslot the slot to be updated
+ */
+void goat_tilde_param_detach(goat_tilde *x, t_symbol *paramname, t_float fslot);
 
 /**
  * @memberof goat_tilde

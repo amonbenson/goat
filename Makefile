@@ -16,12 +16,28 @@ alldebug: c.flags += -O0 -DDEBUG
 alldebug: cxx.flags += -O0 -DDEBUG
 
 # create the documentation
+DOXYGEN=doxygen
+DOXYGEN_DIR=docs
+.PHONY: docs docs.clean
+
 docs:
-	mkdir -p docs
-	doxygen
+	mkdir -p $(DOXYGEN_DIR)
+	$(DOXYGEN)
 
 # clean the documentation directory
-.PHONY: docs.clean
 clean: docs.clean
 docs.clean:
-	rm -rf docs
+	rm -rf $(DOXYGEN_DIR)
+
+# valgrind command for leak checks
+VG=valgrind
+VG_LOG="valgrind.log"
+VG_FLAGS=--log-file="$(VG_LOG)" --leak-check=full --show-reachable=yes --track-origins=yes -s
+.PHONY: valgrind valgrind.clean
+
+valgrind: alldebug
+	$(VG) $(VG_FLAGS) pd -noaudio *.pd
+
+clean: valgrind.clean
+valgrind.clean:
+	rm -f $(VG_LOG)

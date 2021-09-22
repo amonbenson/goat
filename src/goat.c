@@ -20,13 +20,6 @@ goat *goat_new(void) {
     g->schdur = scheduler_new(g->mgr);
     if (!g->schdur) return NULL;   
 
-    // TODO: testing
-    control_parameter *grainsize = control_manager_parameter_by_name(g->mgr, "grainsize");
-
-    control_parameter_offset(grainsize, 2000.0f);
-    control_parameter_attach(grainsize, 0, &g->modbank->lfo1->super);
-    control_parameter_amount(grainsize, 0, 2000.0f);
-
     return g;
 }
 

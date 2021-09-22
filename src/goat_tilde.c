@@ -26,13 +26,13 @@ void goat_tilde_free(goat_tilde *x) {
 
 static control_parameter *goat_tilde_validate_parameter(goat_tilde *x, const char *name) {
     control_parameter *param = control_manager_parameter_by_name(x->g->mgr, name);
-    if (param == NULL) error("goat~: unknown parameter '%s'", name);
+    if (param == NULL) error("goat~: unknown parameter %s", name);
     return param;
 }
 
 static control_modulator *goat_tilde_validate_modulator(goat_tilde *x, const char *name) {
     control_modulator *mod = control_manager_modulator_by_name(x->g->mgr, name);
-    if (mod == NULL) error("goat~: unknown modulator '%s'", name);
+    if (mod == NULL) error("goat~: unknown modulator %s", name);
     return mod;
 }
 
@@ -62,24 +62,38 @@ void goat_tilde_param_amount(goat_tilde *x, t_symbol *paramname, t_float fslot, 
     control_parameter_amount(param, slot, value);
 }
 
-void goat_tilde_param_attach(goat_tilde *x, t_symbol *paramname, t_float fslot, t_symbol *modname) {
+void goat_tilde_param_attach(goat_tilde *x, __attribute__((unused)) t_symbol *s, int argc, t_atom *argv) {
     control_parameter *param;
     control_modulator *mod;
     int slot;
+
+    t_symbol *paramname = atom_getsymbolarg(0, argc, argv);
+    float fslot = atom_getfloatarg(1, argc, argv);
+    t_symbol *modname = atom_getsymbolarg(2, argc, argv);
 
     if ((param = goat_tilde_validate_parameter(x, paramname->s_name)) == NULL) return;
     if ((mod = goat_tilde_validate_modulator(x, modname->s_name)) == NULL) return;
     if ((slot = goat_tilde_validate_slot(fslot)) == -1) return;
 
+    if (param->slots[slot].mod == mod) {
+        error("goat~: already attached");
+        return;
+    }
+
     control_parameter_attach(param, slot, mod);
 }
 
-void goat_tilde_param_detach(goat_tilde *x, t_symbol *paramname, t_float fslot) {
+void goat_tilde_param_detach(goat_tilde *x, t_symbol *paramname, t_floatarg fslot) {
     control_parameter *param;
     int slot;
 
     if ((param = goat_tilde_validate_parameter(x, paramname->s_name)) == NULL) return;
     if ((slot = goat_tilde_validate_slot(fslot)) == -1) return;
+
+    if (param->slots[slot].mod == NULL) {
+        error("goat~: already detached");
+        return;
+    }
 
     control_parameter_detach(param, slot);
 }
@@ -118,7 +132,7 @@ void goat_tilde_setup(void) {
         sizeof(goat_tilde),
         CLASS_DEFAULT,
         0);
-    
+
     class_addmethod(goat_tilde_class,
         (t_method) goat_tilde_param_offset,
         gensym("param-offset"),
@@ -132,12 +146,12 @@ void goat_tilde_setup(void) {
         A_FLOAT,
         A_FLOAT,
         A_NULL);
+    // there seems to be a bug in pure data where this specific arrangement of arguments causes
+    // Pd to crash when reading the second symbol. Therefore, we add another DEFSYM which isn't used.
     class_addmethod(goat_tilde_class,
         (t_method) goat_tilde_param_attach,
         gensym("param-attach"),
-        A_SYMBOL,
-        A_FLOAT,
-        A_SYMBOL,
+        A_GIMME,
         A_NULL);
     class_addmethod(goat_tilde_class,
         (t_method) goat_tilde_param_detach,
