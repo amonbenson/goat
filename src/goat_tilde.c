@@ -44,12 +44,12 @@ static int goat_tilde_validate_slot(int slot) {
     return slot;
 }
 
-void goat_tilde_param_offset(goat_tilde *x, t_symbol *paramname, t_float value) {
+void goat_tilde_param_set(goat_tilde *x, t_symbol *paramname, t_float value) {
     control_parameter *param;
 
     if ((param = goat_tilde_validate_parameter(x, paramname->s_name)) == NULL) return;
 
-    control_parameter_offset(param, value);
+    control_parameter_set(param, value);
 }
 
 void goat_tilde_param_amount(goat_tilde *x, t_symbol *paramname, t_float fslot, t_float value) {
@@ -117,6 +117,26 @@ static t_int *goat_tilde_perform(t_int *w) {
     return &w[5];
 }
 
+void goat_tilde_param_post(goat_tilde *x) {
+    control_parameter *param;
+    int i;
+
+    post("PARAMETERS:");
+    LL_FOREACH(x->g->mgr->parameters, param) {
+        startpost("    %s: %.2f <- %.2f",
+            param->name,
+            control_parameter_get_float(param));
+        for (i = 0; i < CONTROL_NUM_SLOTS; i++) {
+            if (param->slots[i].mod) {
+                startpost(" + %s * %.2f",
+                    param->slots[i].mod->name,
+                    param->slots[i].amount);
+            }
+        }
+        endpost();
+    }
+}
+
 void goat_tilde_dsp(goat_tilde *x, t_signal **sp) {
     t_sample *in = sp[0]->s_vec;
     t_sample *out = sp[1]->s_vec;
@@ -134,8 +154,8 @@ void goat_tilde_setup(void) {
         0);
 
     class_addmethod(goat_tilde_class,
-        (t_method) goat_tilde_param_offset,
-        gensym("param-offset"),
+        (t_method) goat_tilde_param_set,
+        gensym("param-set"),
         A_SYMBOL,
         A_FLOAT,
         A_NULL);
@@ -146,8 +166,8 @@ void goat_tilde_setup(void) {
         A_FLOAT,
         A_FLOAT,
         A_NULL);
-    // there seems to be a bug in pure data where this specific arrangement of arguments causes
-    // Pd to crash when reading the second symbol. Therefore, we add another DEFSYM which isn't used.
+    // there seems to be a bug in pure data where a float followed by a symbol argument
+    // causes Pd to crash on windows. Therefore, we use a gimme instead.
     class_addmethod(goat_tilde_class,
         (t_method) goat_tilde_param_attach,
         gensym("param-attach"),
@@ -158,6 +178,10 @@ void goat_tilde_setup(void) {
         gensym("param-detach"),
         A_SYMBOL,
         A_FLOAT,
+        A_NULL);
+    class_addmethod(goat_tilde_class,
+        (t_method) goat_tilde_param_post,
+        gensym("param-post"),
         A_NULL);
 
     class_addmethod(goat_tilde_class,

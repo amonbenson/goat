@@ -3,14 +3,16 @@
 @page Messages Pd Messages
 The `[goat~]` object accepts command messages on its first inlet.
 
-@section param
+@section Control System
 
-`[param-offset <paramname> <value>(`
+`[param-set <paramname> <value>(`
 
 `[param-amount <paramname> <slot> <value>(`
 
 `[param-attach <paramname> <slot> <modname>(`
 
 `[param-detach <paramname> <slot>(`
+
+`[param-post(`
 
 */

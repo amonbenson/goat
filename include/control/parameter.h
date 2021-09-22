@@ -40,7 +40,7 @@ void control_parameter_detach(control_parameter *p, size_t slot);
 
 void control_parameter_amount(control_parameter *p, size_t slot, float amount);
 
-void control_parameter_offset(control_parameter *p, float offset);
+void control_parameter_set(control_parameter *p, float offset);
 
 
 float control_parameter_get_float(control_parameter *p);

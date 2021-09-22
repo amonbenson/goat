@@ -48,17 +48,17 @@ void goat_tilde_free(goat_tilde *x);
 
 /**
  * @memberof goat_tilde
- * @brief updateds a parameter offset
+ * @brief updates a parameter's value
  * 
  * @param x the goat object
  * @param paramname the name of the parameter to be updated
  * @param value the offset value to be updated
  */
-void goat_tilde_param_offset(goat_tilde *x, t_symbol *paramname, t_float value);
+void goat_tilde_param_set(goat_tilde *x, t_symbol *paramname, t_float value);
 
 /**
  * @memberof goat_tilde
- * @brief updateds a parameter slot's amount of influence
+ * @brief updates a parameter slot's amount of influence
  * 
  * @param x the goat object
  * @param paramname the name of the parameter to be updated
@@ -88,6 +88,14 @@ void goat_tilde_param_attach(goat_tilde *x, t_symbol *s, int argc, t_atom *argv)
  * @param fslot the slot to be updated
  */
 void goat_tilde_param_detach(goat_tilde *x, t_symbol *paramname, t_float fslot);
+
+/**
+ * @memberof goat_tilde
+ * @brief posts all parameters to the debug console
+ * 
+ * @param x the goat object
+ */
+void goat_tilde_param_post(goat_tilde *x);
 
 /**
  * @memberof goat_tilde

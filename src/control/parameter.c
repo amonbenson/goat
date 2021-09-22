@@ -56,8 +56,8 @@ void control_parameter_amount(control_parameter *p,
     p->slots[slot].amount = amount;
 }
 
-void control_parameter_offset(control_parameter *p, float offset) {
-    p->offset = offset;
+void control_parameter_set(control_parameter *p, float value) {
+    p->offset = value;
 }
 
 
