@@ -101,6 +101,7 @@ int scheduler_get_next_interonset(int max, int min, int slot);
  * Configs could change automaticly or under user's adjustion
  * 
  * @param sd the scheduler object to be processed
+ * @param n the number of samples processed
  */
 void scheduler_perform(scheduler *sd, int n);
 
@@ -111,5 +112,6 @@ void scheduler_perform(scheduler *sd, int n);
  * This method updates the counter(fetchgrain/synthgrain) at each dsp routine
  * 
  * @param sd the scheduler object to be processed
+ * @param n the number of samples processed
  */
 void scheduler_update_counter(scheduler *sd, int n);
