@@ -1,4 +1,5 @@
 #pragma once
+#include "goat_config.h"
 #include "modulators/lfo/lfo.h"
 
 
@@ -12,6 +13,7 @@
  * and clarity to the user.
  */
 typedef struct modulator_bank {
+    goat_config *cfg; /**< global goat configuration */
     low_frequency_oscillator *lfos[MODBANK_NUM_LFOS]; /**< generic purpose LFOs */
 } modulator_bank;
 
@@ -20,16 +22,15 @@ typedef struct modulator_bank {
  * @memberof modulator_bank
  * @brief creates a new modulator bank
  * 
- * @param mgr the control manager to add modulators to
+ * @param cfg global goat configuration
  * @return modulator_bank* a pointer to the new modulator bank or NULL if the allocation failed
  */
-modulator_bank *modulator_bank_new(control_manager *mgr);
+modulator_bank *modulator_bank_new(goat_config *cfg);
 
 /**
  * @memberof modulator_bank
  * @brief frees an existing modulator bank
  * 
  * @param bank the modulator bank to be freed
- * @param mgr the control manager to remove the modulators from
  */
-void modulator_bank_free(modulator_bank *bank, control_manager *mgr);
+void modulator_bank_free(modulator_bank *bank);

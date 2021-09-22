@@ -23,9 +23,8 @@
  * @brief Main GOAT class
  */
 typedef struct goat {
-    goat_config config; /**< configuration parameters */
+    goat_config cfg; /**< configuration parameters */
     modulator_bank *modbank; /**< the modulator bank */
-    control_manager *mgr; /**< the control manager */
     granular *gran;     /**< the granular instance */
     scheduler *schdur;  /**< the scheduler instance */
     // analyzer *anlyz;    /**< the analyzer instance */

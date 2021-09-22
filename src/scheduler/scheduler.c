@@ -4,12 +4,12 @@
 #include "util/mem.h"
 #include "util/util.h"
 
-scheduler *scheduler_new(control_manager *mgr) {
+scheduler *scheduler_new(goat_config *cfg) {
     scheduler *sd = malloc(sizeof(scheduler));
     if (!sd) return NULL;
 
     // basic user adjustable configs
-    sd->gransize = control_manager_parameter_add(mgr, "grainsize", 2048, 128, 4096);
+    sd->gransize = control_manager_parameter_add(cfg->mgr, "grainsize", 2048, 128, 4096);
     sd->interonset = 1024;
     sd->maxinteronset = 1024;
     sd->mininteronset = 1024;

@@ -5,20 +5,21 @@
 #include "util/util.h"
 
 
-low_frequency_oscillator *lfo_new(control_manager *mgr, const char *name) {
-    low_frequency_oscillator *lfo = (low_frequency_oscillator *) control_manager_modulator_add(mgr,
+low_frequency_oscillator *lfo_new(goat_config *cfg, const char *name) {
+    low_frequency_oscillator *lfo = (low_frequency_oscillator *) control_manager_modulator_add(cfg->mgr,
         name,
         (control_modulator_perform_method) lfo_perform,
         sizeof(low_frequency_oscillator));
 
+    lfo->cfg = cfg;
     lfo->frequency = 100.0f; // TODO: currently unused
 
     return lfo;
 }
 
-void lfo_free(low_frequency_oscillator *lfo, control_manager *mgr) {
+void lfo_free(low_frequency_oscillator *lfo) {
     // removing the modulator from the manager will automatically free the lfo subclass
-    control_manager_modulator_remove(mgr, &lfo->super);
+    control_manager_modulator_remove(lfo->cfg->mgr, &lfo->super);
 }
 
 void lfo_perform(low_frequency_oscillator *lfo, __attribute__((unused)) float *in, __attribute__((unused)) int n) {

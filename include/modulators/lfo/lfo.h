@@ -1,4 +1,5 @@
 #pragma once
+#include "goat_config.h"
 #include "control/manager.h"
 #include <stdlib.h>
 #include <math.h>
@@ -10,6 +11,7 @@
  */
 typedef struct low_frequency_oscillator {
     control_modulator super; /**< the modulator super class instance */
+    goat_config *cfg; /**< the goat configuration */
 
     float phase; /**< the current phase of the lfo */
     float frequency; /**< the frequency of the lfo */
@@ -20,20 +22,19 @@ typedef struct low_frequency_oscillator {
  * @memberof low_frequency_oscillator
  * @brief create a new lfo modulator.
  * 
- * @param mgr a reference to the control manager
+ * @param cfg the global goat configuration
  * @param name the name of the lfo
  * @return low_frequency_oscillator* a pointer to the new lfo or NULL if the allocation failed
  */
-low_frequency_oscillator *lfo_new(control_manager *mgr, const char *name);
+low_frequency_oscillator *lfo_new(goat_config *cfg, const char *name);
 
 /**
  * @memberof low_frequency_oscillator
  * @brief free a lfo modulator.
  * 
  * @param lfo a reference to the lfo to free
- * @param mgr a reference to the control manager
  */
-void lfo_free(low_frequency_oscillator *lfo, control_manager *mgr);
+void lfo_free(low_frequency_oscillator *lfo);
 
 /**
  * @memberof low_frequency_oscillator

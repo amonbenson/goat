@@ -26,7 +26,7 @@
 #include "m_pd.h" // add for post function, remove this after debuging
 
 #include "params.h"
-#include "control/manager.h"
+#include "goat_config.h"
 
 
 /**
@@ -67,7 +67,7 @@ typedef struct {
  * 
  * @return scheduler* a reference to the scheduler object or `NULL` if failed
  */
-scheduler *scheduler_new(control_manager *mgr);
+scheduler *scheduler_new(goat_config *cfg);
 
 /**
  * @memberof scheduler

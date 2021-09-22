@@ -1,21 +1,25 @@
 #include "modulators/modulator_bank.h"
+#include <stdio.h>
 
 
-modulator_bank *modulator_bank_new(control_manager *mgr) {
+modulator_bank *modulator_bank_new(goat_config *cfg) {
     modulator_bank *modbank = malloc(sizeof(modulator_bank));
+    if (modbank == NULL) return NULL;
 
-    char lfoname[] = "lfoN";
+    char lfoname[16];
     for (int i = 0; i < MODBANK_NUM_LFOS; i++) {
-        lfoname[3] = '1' + i;
-        modbank->lfos[i] = lfo_new(mgr, lfoname);
+        snprintf(lfoname, sizeof(lfoname), "lfo%d", i);
+
+        modbank->lfos[i] = lfo_new(cfg, lfoname);
+        if (modbank->lfos[i] == NULL) return NULL;
     }
 
     return modbank;
 }
 
-void modulator_bank_free(modulator_bank *modbank, control_manager *mgr) {
+void modulator_bank_free(modulator_bank *modbank) {
     for (int i = 0; i < MODBANK_NUM_LFOS; i++) {
-        lfo_free(modbank->lfos[i], mgr);
+        lfo_free(modbank->lfos[i]);
     }
 
     free(modbank);

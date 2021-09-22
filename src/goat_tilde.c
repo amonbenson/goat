@@ -29,13 +29,13 @@ void goat_tilde_free(goat_tilde *x) {
 }
 
 static control_parameter *goat_tilde_validate_parameter(goat_tilde *x, const char *name) {
-    control_parameter *param = control_manager_parameter_by_name(x->g->mgr, name);
+    control_parameter *param = control_manager_parameter_by_name(x->g->cfg.mgr, name);
     if (param == NULL) error("goat~: unknown parameter %s", name);
     return param;
 }
 
 static control_modulator *goat_tilde_validate_modulator(goat_tilde *x, const char *name) {
-    control_modulator *mod = control_manager_modulator_by_name(x->g->mgr, name);
+    control_modulator *mod = control_manager_modulator_by_name(x->g->cfg.mgr, name);
     if (mod == NULL) error("goat~: unknown modulator %s", name);
     return mod;
 }
@@ -126,7 +126,7 @@ void goat_tilde_param_post(goat_tilde *x) {
     int i;
 
     post("PARAMETERS:");
-    LL_FOREACH(x->g->mgr->parameters, param) {
+    LL_FOREACH(x->g->cfg.mgr->parameters, param) {
         startpost("    %s: %.2f <- %.2f",
             param->name,
             control_parameter_get_float(param));
