@@ -8,10 +8,6 @@ scheduler *scheduler_new(control_manager *mgr) {
     scheduler *sd = malloc(sizeof(scheduler));
     if (!sd) return NULL;
 
-    // configs from pd
-    sd->streamsize = 64; 
-    sd->samplerate = 44100;
-
     // basic user adjustable configs
     sd->gransize = control_manager_parameter_add(mgr, "grainsize", 2048, 128, 4096);
     sd->interonset = 1024;
@@ -46,30 +42,30 @@ int scheduler_get_next_interonset(int max, int min, int slot){
 }
 
 
-void scheduler_update_counter(scheduler *sd){
+void scheduler_update_counter(scheduler *sd, int n){
 
 	if (sd->fetchgrain != 0){
-		sd->fetchgrain = sd->fetchgrain - sd->streamsize;
+		sd->fetchgrain = sd->fetchgrain - n;
 		// post("sd->fetchgrain: %d", sd->fetchgrain);
 	}
 	else{
-		sd->fetchgrain = sd->interonset - sd->streamsize;
+		sd->fetchgrain = sd->interonset - n;
 		// post("sd->fetchgrain: %d", sd->fetchgrain);
 	}
 
 	if (sd->synthgrain != 0){
-		sd->synthgrain = sd->synthgrain - sd->streamsize;
+		sd->synthgrain = sd->synthgrain - n;
 		// post("sd->synthgrain: %d", sd->synthgrain);
 	}
 	else{
-		sd->synthgrain = scheduler_get_next_interonset(sd->maxinteronset, sd->mininteronset, sd->streamsize) - sd->streamsize;
+		sd->synthgrain = scheduler_get_next_interonset(sd->maxinteronset, sd->mininteronset, n) - n;
 		// post("sd->synthgrain: %d", sd->synthgrain);
 	}
 }
 
 
-void scheduler_perform(scheduler *sd){
+void scheduler_perform(scheduler *sd, int n){
 	// todo: add control function of other parameters
-	scheduler_update_counter(sd);
+	scheduler_update_counter(sd, n);
 }
 

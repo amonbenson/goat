@@ -1,19 +1,19 @@
 #N canvas 68 660 850 457 12;
 #X obj 218 275 goat~;
 #X obj 17 407 dac~;
-#X obj 17 148 readsf~;
-#X msg 30 112 1;
-#X obj 19 22 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#X obj 17 204 readsf~;
+#X msg 30 168 1;
+#X obj 19 78 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X obj 19 50 t b b;
-#X msg 63 112 0;
-#X msg 17 78 open Radiohead-reconer_piano.wav;
+#X obj 19 106 t b b;
+#X msg 63 168 0;
+#X msg 17 134 open Radiohead-reconer_piano.wav;
 #X obj 43 381 r~ wet;
 #X obj 17 357 r~ dry;
-#X obj 16 178 s~ dry;
+#X obj 16 234 s~ dry;
 #X obj 219 250 r~ dry;
 #X obj 218 300 s~ wet;
-#X obj 169 198 r cmd;
+#X obj 173 196 r cmd;
 #X obj 199 223 print command;
 #X obj 389 336 hsl 128 15 128 4096 0 0 empty empty grainsize -2 -8
 0 10 -262144 -1 -1 0 1;
@@ -29,6 +29,8 @@
 #X obj 386 383 s cmd;
 #X msg 567 187 param-post;
 #X obj 567 212 s cmd;
+#X obj 19 17 loadbang;
+#X msg 54 45 \; pd dsp 1;
 #X connect 0 0 12 0;
 #X connect 2 0 10 0;
 #X connect 2 1 4 0;
@@ -48,3 +50,5 @@
 #X connect 20 0 18 0;
 #X connect 23 0 24 0;
 #X connect 25 0 26 0;
+#X connect 27 0 4 0;
+#X connect 27 0 28 0;

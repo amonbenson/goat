@@ -36,10 +36,6 @@
  * The scheduler class contains all user adjustable configs
  */
 typedef struct {
-    // configs from pd
-    int streamsize;     /**< 64 samples for now, puredata default*/
-    int samplerate;     /**< 44100 samples for now, puredata default */
-
     // basic user adjustable configs
     control_parameter *gransize;  /**< the size of sampled grains also for corresponding evelope*/
     int interonset;     /**< the onset difference between two grains that been sampled */
@@ -106,7 +102,7 @@ int scheduler_get_next_interonset(int max, int min, int slot);
  * 
  * @param sd the scheduler object to be processed
  */
-void scheduler_perform(scheduler *sd);
+void scheduler_perform(scheduler *sd, int n);
 
 /**
  * @memberof scheduler
@@ -116,4 +112,4 @@ void scheduler_perform(scheduler *sd);
  * 
  * @param sd the scheduler object to be processed
  */
-void scheduler_update_counter(scheduler *sd);
+void scheduler_update_counter(scheduler *sd, int n);

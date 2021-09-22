@@ -14,7 +14,11 @@ void *goat_tilde_new(void) {
     x->out = outlet_new(&x->x_obj, &s_signal);
     if (!x->out) return NULL;
 
-    x->g = goat_new();
+    goat_config config = {
+        .sample_rate = (size_t) sys_getsr(),
+        .block_size = sys_getblksize()
+    };
+    x->g = goat_new(&config);
 
     return (void *) x;
 }

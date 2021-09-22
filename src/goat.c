@@ -4,9 +4,11 @@
 #include "control/manager.h"
 
 
-goat *goat_new(void) {
+goat *goat_new(goat_config *config) {
     goat *g = malloc(sizeof(goat));
     if (!g) return NULL;
+
+    memcpy(&g->config, config, sizeof(goat_config));
 
     g->mgr = control_manager_new();
     if (!g->mgr) return NULL;
@@ -33,6 +35,6 @@ void goat_free(goat *g) {
 
 void goat_perform(goat *g, float *in, float *out, int n) {
     control_manager_perform(g->mgr, in, n);
-    scheduler_perform(g->schdur);
+    scheduler_perform(g->schdur, n);
     granular_perform(g->gran, g->schdur, in, out, n); // update the buffer and manipulate the DelayLine
 }
