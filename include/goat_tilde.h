@@ -71,11 +71,13 @@ void goat_tilde_param_amount(goat_tilde *x, t_symbol *paramname, t_float fslot, 
  * @memberof goat_tilde
  * @brief connects a modulator to a parameter.
  * Any other modulator on that slot will be disconnected.
+ * Due to a bug in the windows version of Pure Data, this method had to be implemented using
+ * A_GIMME instead of the parameter list A_SYMBOL, A_FLOAT, A_SYMBOL.
  * 
  * @param x the goat object
- * @param paramname the name of the parameter to be updated
- * @param fslot the slot to be updated
- * @param modname the name of the modulator to be connected
+ * @param s unused symbol representation of the following arguments
+ * @param argc the number of arguments
+ * @param argv the arguments in the order: param name, slot, modulator name
  */
 void goat_tilde_param_attach(goat_tilde *x, t_symbol *s, int argc, t_atom *argv);
 

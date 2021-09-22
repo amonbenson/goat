@@ -36,7 +36,7 @@ typedef struct {
     int length;          /**< The length of evelope */
     int attacksamples;   /**< The number of attack samples */
     int releasesamples;  /**< The number of release samples */
-} evelope, *p_evelope;
+} evelope, *p_evelope; /**< pointer to an envelope */
 
 
 /**

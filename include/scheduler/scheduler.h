@@ -49,8 +49,8 @@ typedef struct {
 
 
     // configs that changed at each dsp routine
-    int fetchgrain;
-    int synthgrain;
+    int fetchgrain;     /**< the number of grains sampled */
+    int synthgrain;     /**< the number of grains synthesized */
 
     // advance user adjustable configs 
     int getpitch;       /**< enable the pitch detection or not, 0 for disable */
@@ -60,7 +60,7 @@ typedef struct {
     float pitchratio;   /**< wished energy of transformed grain, e.g. 2*higher(octave) for all upcoming grains*/
     float energyratio;  /**< wished energy of transformed grain, e.g. 2*louder for all upcoming grains */
 
-}scheduler, *p_scheduler;
+}scheduler, *p_scheduler; /**< pointer to a scheduler */
 
 
 /**

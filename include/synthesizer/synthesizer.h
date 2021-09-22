@@ -35,7 +35,7 @@ typedef struct {
     int pos;       /**< The position to read this activate grain */
     int length;    /**< The position to read this activate grain */
     int repeat;    /**< Wether use this grain repeatly */
-} activategrain, *p_activategrain;
+} activategrain, *p_activategrain; /**< a pointer to an active grain */
 
 
 /**
