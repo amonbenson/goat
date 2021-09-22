@@ -12,7 +12,7 @@
  * and clarity to the user.
  */
 typedef struct modulator_bank {
-    low_frequency_oscillator lfos[MODBANK_NUM_LFOS]; /**< generic purpose LFOs */
+    low_frequency_oscillator *lfos[MODBANK_NUM_LFOS]; /**< generic purpose LFOs */
 } modulator_bank;
 
 

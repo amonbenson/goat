@@ -1,6 +1,7 @@
 #include "control/parameter.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "util/util.h"
 
 
@@ -8,7 +9,7 @@ control_parameter *control_parameter_new(const char *name, float default_value, 
     control_parameter *p = malloc(sizeof(control_parameter));
     if (p == NULL) return NULL;
     
-    p->name = name;
+    p->name = strdup(name);
     p->offset = default_value;
     p->min = min;
     p->max = max;
@@ -23,6 +24,7 @@ control_parameter *control_parameter_new(const char *name, float default_value, 
 }
 
 void control_parameter_free(control_parameter *p) {
+    free(p->name);
     free(p);
 }
 

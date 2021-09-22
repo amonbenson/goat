@@ -22,7 +22,7 @@ typedef void (*control_modulator_perform_method)(struct control_modulator *mod, 
  * This struct can be used as a base class for any specific modulator
  */
 typedef struct control_modulator {
-    const char *name; /**< the name of the modulator */
+    char *name; /**< the name of the modulator */
     control_modulator_perform_method perform_method; /**< the perform callback function */
 
     float value; /**< the current value of the modulator */

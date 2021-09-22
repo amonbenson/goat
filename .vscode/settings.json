@@ -9,7 +9,16 @@
         "*.json": "jsonc",
         "Makefile.*": "makefile",
         "random": "c",
-        "functional": "c"
+        "functional": "c",
+        "*.tcc": "c",
+        "memory_resource": "c",
+        "memory": "c",
+        "fstream": "c",
+        "istream": "c",
+        "ostream": "c",
+        "sstream": "c",
+        "streambuf": "c",
+        "typeinfo": "c"
     },
     "editor.rulers": [100]
 }

@@ -1,5 +1,5 @@
 cflags += -Iinclude
-cflags += -std=c11
+cflags += -std=gnu11
 cflags += -Wall -Wextra
 
 lib.name = goat~

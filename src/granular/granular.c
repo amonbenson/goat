@@ -19,7 +19,7 @@ granular *granular_new(void) {
     if (!g->grains) return NULL;
 
     // create the evelopbuf
-    g->evelopes = evelopbuf_new(EVELOPBUFSIZE); 
+    g->evelopes = evelopbuf_new(ENVELOPEBUFSIZE); 
     if (!g->evelopes) return NULL;
 
     g->synth = synthesizer_new(NUMACTIVEGRAIN);

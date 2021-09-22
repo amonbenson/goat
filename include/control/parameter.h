@@ -27,7 +27,7 @@ typedef struct control_parameter_slot {
  * see @ref control_manager.control_manager_perform
  */
 typedef struct control_parameter {
-    const char *name; /**< the name of the parameter */
+    char *name; /**< the name of the parameter */
 
     control_parameter_slot slots[CONTROL_NUM_SLOTS]; /**< the modulator slots */
 
