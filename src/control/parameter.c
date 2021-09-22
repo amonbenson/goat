@@ -11,6 +11,7 @@ control_parameter *control_parameter_new(const char *name, float default_value, 
     
     p->name = strdup(name);
     p->offset = default_value;
+    p->value = default_value;
     p->min = min;
     p->max = max;
     p->next = NULL;

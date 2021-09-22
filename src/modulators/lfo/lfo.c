@@ -10,24 +10,30 @@ low_frequency_oscillator *lfo_new(goat_config *cfg, const char *name) {
         name,
         (control_modulator_perform_method) lfo_perform,
         sizeof(low_frequency_oscillator));
+    char namebuf[32];
 
     lfo->cfg = cfg;
-    lfo->frequency = 100.0f; // TODO: currently unused
+
+    snprintf(namebuf, sizeof(namebuf), "%s.frequency", name);
+    lfo->frequency = control_manager_parameter_add(cfg->mgr,
+        namebuf, 1.0f, 0.01f, 10.0f);
 
     return lfo;
 }
 
 void lfo_free(low_frequency_oscillator *lfo) {
+    control_manager_parameter_remove(lfo->cfg->mgr, lfo->frequency);
+
     // removing the modulator from the manager will automatically free the lfo subclass
     control_manager_modulator_remove(lfo->cfg->mgr, &lfo->super);
 }
 
-void lfo_perform(low_frequency_oscillator *lfo, __attribute__((unused)) float *in, __attribute__((unused)) int n) {
+void lfo_perform(low_frequency_oscillator *lfo, __attribute__((unused)) float *in, int n) {
     float p = lfo->phase;
-    lfo->super.value = sinf(p * 2 * M_PI);
 
-    p += 0.003f; // TODO: make depended on frequency
-    p -= ((int) p); // extract fractional part
+    p += control_parameter_get_float(lfo->frequency) * (float) n / (float) lfo->cfg->sample_rate;
+    p = p - ((int) p); // extract fractional part
+    lfo->super.value = sinf(p * 2 * M_PI); // set the value
 
     lfo->phase = p;
 }

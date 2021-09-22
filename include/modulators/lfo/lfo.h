@@ -14,7 +14,7 @@ typedef struct low_frequency_oscillator {
     goat_config *cfg; /**< the goat configuration */
 
     float phase; /**< the current phase of the lfo */
-    float frequency; /**< the frequency of the lfo */
+    control_parameter *frequency; /**< the frequency of the lfo */
 } low_frequency_oscillator;
 
 

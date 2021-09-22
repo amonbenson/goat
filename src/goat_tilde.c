@@ -102,6 +102,27 @@ void goat_tilde_param_detach(goat_tilde *x, t_symbol *paramname, t_floatarg fslo
     control_parameter_detach(param, slot);
 }
 
+void goat_tilde_param_post(goat_tilde *x) {
+    control_parameter *param;
+    int i;
+
+    post("PARAMETERS:");
+    LL_FOREACH(x->g->cfg.mgr->parameters, param) {
+        startpost("    %s: %.2f <- %.2f",
+            param->name,
+            control_parameter_get_float(param),
+            param->offset);
+        for (i = 0; i < CONTROL_NUM_SLOTS; i++) {
+            if (param->slots[i].mod) {
+                startpost(" + %s * %.2f",
+                    param->slots[i].mod->name,
+                    param->slots[i].amount);
+            }
+        }
+        endpost();
+    }
+}
+
 static t_int *goat_tilde_perform(t_int *w) {
     goat_tilde *x = (goat_tilde *) w[1];
     t_sample *in = (t_sample *) w[2];
@@ -119,26 +140,6 @@ static t_int *goat_tilde_perform(t_int *w) {
     //     out);
 
     return &w[5];
-}
-
-void goat_tilde_param_post(goat_tilde *x) {
-    control_parameter *param;
-    int i;
-
-    post("PARAMETERS:");
-    LL_FOREACH(x->g->cfg.mgr->parameters, param) {
-        startpost("    %s: %.2f <- %.2f",
-            param->name,
-            control_parameter_get_float(param));
-        for (i = 0; i < CONTROL_NUM_SLOTS; i++) {
-            if (param->slots[i].mod) {
-                startpost(" + %s * %.2f",
-                    param->slots[i].mod->name,
-                    param->slots[i].amount);
-            }
-        }
-        endpost();
-    }
 }
 
 void goat_tilde_dsp(goat_tilde *x, t_signal **sp) {

@@ -16,21 +16,24 @@
 #X obj 173 196 r cmd;
 #X obj 199 223 print command;
 #X obj 389 336 hsl 128 15 128 4096 0 0 empty empty grainsize -2 -8
-0 10 -262144 -1 -1 0 1;
+0 10 -262144 -1 -1 12700 1;
 #X obj 388 29 loadbang;
 #X text 399 53 connect the first lfo to the grainsize parameter;
 #X obj 388 132 s cmd;
-#X text 399 70 and set its amount to 500;
-#X msg 388 92 param-attach grainsize 0 lfo1 \, param-amount grainsize
-0 500;
 #X text 568 165 debug print all parameters;
-#X text 381 294 change the grainsize.;
 #X msg 386 358 param-set grainsize \$1;
 #X obj 386 383 s cmd;
 #X msg 567 187 param-post;
 #X obj 567 212 s cmd;
 #X obj 19 17 loadbang;
 #X msg 54 45 \; pd dsp 1;
+#X obj 617 336 hsl 128 15 0.01 10 1 0 empty empty lfo0_frequency -2
+-8 0 10 -262144 -1 -1 9800 1;
+#X obj 614 383 s cmd;
+#X msg 388 92 param-attach grainsize 0 lfo1 \, param-amount grainsize
+0 1000;
+#X text 399 70 and set its amount to 1000;
+#X msg 614 358 param-set lfo1.frequency \$1;
 #X connect 0 0 12 0;
 #X connect 2 0 10 0;
 #X connect 2 1 4 0;
@@ -45,10 +48,12 @@
 #X connect 11 0 0 0;
 #X connect 13 0 0 0;
 #X connect 13 0 14 0;
-#X connect 15 0 23 0;
-#X connect 16 0 20 0;
-#X connect 20 0 18 0;
-#X connect 23 0 24 0;
-#X connect 25 0 26 0;
-#X connect 27 0 4 0;
-#X connect 27 0 28 0;
+#X connect 15 0 20 0;
+#X connect 16 0 28 0;
+#X connect 20 0 21 0;
+#X connect 22 0 23 0;
+#X connect 24 0 4 0;
+#X connect 24 0 25 0;
+#X connect 26 0 30 0;
+#X connect 28 0 18 0;
+#X connect 30 0 27 0;
