@@ -13,11 +13,12 @@ typedef struct _rand_mod {
     control_modulator super; /**< the modulator super class instance */
     goat_config *cfg;  /**< the goat configuration */
 
-    float   mu, sigma; /**< mu: Expectation value; sigma: standard deviation*/
+    control_parameter   *mu;
+    control_parameter   *sigma; /**< mu: Expectation value; sigma: standard deviation*/
+    control_parameter   *freq; /**< frequency of new random numbers*/
     float   rand_num; /**< a normal distributed random number*/
     int     seed; /**< Seed for the standard rand() function; needed for receiving different random numbers every time*/
-    float   freq; /**< frequency of new random numbers*/
-    int     count; /**< number of blocks processed since last generated random number*/
+    float   time; /**< time passed since last generated random number*/
 } rand_mod;
 
 
@@ -37,7 +38,7 @@ rand_mod *rand_mod_new(goat_config *cfg, const char *name);
  * 
  * @param rm a reference to the random modulator to free
  */
-void rand_mod_free(rand_mod *rm;)
+void rand_mod_free(rand_mod *rm);
 
 /**
  * @memberof rand_mod

@@ -5,7 +5,7 @@
 modulator_bank *modulator_bank_new(goat_config *cfg) {
     modulator_bank *modbank = malloc(sizeof(modulator_bank));
     if (modbank == NULL) return NULL;
-    char namebuf[32];
+    char namebuf[50];
 
     for (int i = 0; i < MODBANK_NUM_LFOS; i++) {
         snprintf(namebuf, sizeof(namebuf), "lfo%d", i + 1);

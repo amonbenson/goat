@@ -13,7 +13,7 @@ rand_mod *rand_mod_new(goat_config *cfg, const char *name){
         (control_modulator_perform_method) rand_mod_perform,
         sizeof(rand_mod));
     
-    rm->cfg = cfg
+    rm->cfg = cfg;
     rm->seed=time(NULL);
     rm->time=0.0f;
 
@@ -35,7 +35,7 @@ rand_mod *rand_mod_new(goat_config *cfg, const char *name){
 }
 
 
-void rand_mod_free(rand_mod *rm, control_manager *mgr){
+void rand_mod_free(rand_mod *rm){
     control_manager_parameter_remove(rm->cfg->mgr, rm->freq);
     control_manager_parameter_remove(rm->cfg->mgr, rm->mu);
     control_manager_parameter_remove(rm->cfg->mgr, rm->sigma);
@@ -45,7 +45,7 @@ void rand_mod_free(rand_mod *rm, control_manager *mgr){
 
 void rand_mod_perform(rand_mod *rm, __attribute__((unused)) float *in, int n){
     
-    if (fmod(rm->time, 1/rm->freq) < (float) n / (float) rm->cfg->sample_rate ){
+    if (fmod(rm->time, 1/control_parameter_get_float(rm->freq)) < (float) n / (float) rm->cfg->sample_rate ){
         rand_setSeed(rm);
         rm->rand_num = rand_nn(rm); //!< perform algorithm
         rm->super.value = rm->rand_num;
@@ -81,7 +81,7 @@ float rand_nn(rand_mod *rm) { //mu: Expectation value; sigma: standard deviation
         y = fabs(v) - t;
         Q = w*w + y*(a*y-b*w);
         if (Q < 0.27597) {
-            return (v/u*0.5*rm->sigma+rm->mu);
+            return (v/u*0.5*control_parameter_get_float(rm->sigma)+control_parameter_get_float(rm->mu));
         }
         if (Q>0.27846) {
             num_rej++;
@@ -91,7 +91,7 @@ float rand_nn(rand_mod *rm) { //mu: Expectation value; sigma: standard deviation
             num_rej++;
             continue;
         }
-        else return (v/u*0.5*rm->sigma+rm->mu);
+        else return (v/u*0.5*control_parameter_get_float(rm->sigma)+control_parameter_get_float(rm->mu));
     }
 return 666; //should never be reached :O
 }
