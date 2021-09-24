@@ -1,0 +1,8 @@
+<map id="word" name="word">
+<area shape="rect" id="node1" title=" " alt="" coords="97,95,152,121"/>
+<area shape="rect" id="node3" href="$struct__gpointer.html" title=" " alt="" coords="122,273,205,300"/>
+<area shape="rect" id="node4" href="$struct__scalar.html" title=" " alt="" coords="181,184,249,211"/>
+<area shape="rect" id="node2" href="$struct__symbol.html" title=" " alt="" coords="142,5,219,32"/>
+<area shape="rect" id="node5" href="$struct__gobj.html" title=" " alt="" coords="341,95,399,121"/>
+<area shape="rect" id="node6" href="$struct__gstub.html" title=" " alt="" coords="273,184,339,211"/>
+</map>

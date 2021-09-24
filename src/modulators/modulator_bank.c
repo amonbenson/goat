@@ -14,6 +14,9 @@ modulator_bank *modulator_bank_new(goat_config *cfg) {
         if (modbank->lfos[i] == NULL) return NULL;
     }
 
+    //add Mods + naming here
+
+
     return modbank;
 }
 
