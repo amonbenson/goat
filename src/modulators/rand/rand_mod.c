@@ -1,15 +1,23 @@
 #include "modulators/rand/rand_mod.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #include <time.h>
+#include "util/util.h"
 
 //
-rand_mod *rand_mod_new(control_manager *mgr, const char *name){
-    rand_mod *rm = (rand_mod *) control_manager_modulator_add(mgr,
+rand_mod *rand_mod_new(goat_config *cfg, const char *name){
+    rand_mod *rm = (rand_mod *) control_manager_modulator_add(cfg->mgr,
         name,
         (control_modulator_perform_method) rand_mod_perform,
         sizeof(rand_mod));
+    char namebuf[32];
+    rm->cfg = cfg
+
+    snprintf(namebuf, sizeof(namebuf), "%s.frequency", name);
+    lfo->frequency = control_manager_parameter_add(cfg->mgr,
+        namebuf, 1.0f, 0.01f, 10.0f);
 
     rm->mu= 100.0f; // TODO: currently unused
     rm->sigma=5.0f;
