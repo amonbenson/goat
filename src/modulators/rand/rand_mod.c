@@ -12,28 +12,48 @@ rand_mod *rand_mod_new(goat_config *cfg, const char *name){
         name,
         (control_modulator_perform_method) rand_mod_perform,
         sizeof(rand_mod));
-    char namebuf[32];
+    
     rm->cfg = cfg
+    rm->seed=time(NULL);
+    rm->time=0.0f;
+
+    char namebuf[32];
 
     snprintf(namebuf, sizeof(namebuf), "%s.frequency", name);
-    lfo->frequency = control_manager_parameter_add(cfg->mgr,
-        namebuf, 1.0f, 0.01f, 10.0f);
+    rm->freq = control_manager_parameter_add(cfg->mgr,
+        namebuf, 1.0f, 0.01f, 689.0f ); // 689=44100/64=Samplingrate/Blocksize
 
-    rm->mu= 100.0f; // TODO: currently unused
-    rm->sigma=5.0f;
-    rm->seed=time(NULL);
+    snprintf(namebuf, sizeof(namebuf), "%s.value", name);
+    rm->mu = control_manager_parameter_add(cfg->mgr,
+        namebuf, 100.0f, 0.01f, 20000.0f);
+
+    snprintf(namebuf, sizeof(namebuf), "%s.variation", name);
+    rm->sigma = control_manager_parameter_add(cfg->mgr,
+        namebuf, 5.0f, 0.0001f, 10000.0f);
+
     return rm;
 }
 
 
 void rand_mod_free(rand_mod *rm, control_manager *mgr){
-    control_manager_modulator_remove(mgr, &rm->super);
+    control_manager_parameter_remove(rm->cfg->mgr, rm->freq);
+    control_manager_parameter_remove(rm->cfg->mgr, rm->mu);
+    control_manager_parameter_remove(rm->cfg->mgr, rm->sigma);
+
+    control_manager_modulator_remove(rm->cfg->mgr, &rm->super);
 };
 
-void rand_mod_perform(rand_mod *rm, __attribute__((unused)) float *in, __attribute__((unused)) int n){
-    rand_setSeed(rm);
-    rm->rand_num = rand_nn(rm);
-    rm->super.value = rm->rand_num;
+void rand_mod_perform(rand_mod *rm, __attribute__((unused)) float *in, int n){
+    
+    if (fmod(rm->time, 1/rm->freq) < (float) n / (float) rm->cfg->sample_rate ){
+        rand_setSeed(rm);
+        rm->rand_num = rand_nn(rm); //!< perform algorithm
+        rm->super.value = rm->rand_num;
+        rm->time = 0.0f; //!< reset timer
+    }
+
+    rm->time += (float) n / (float) rm->cfg->sample_rate; //!< time increment per processed block
+    
 }
 
 
@@ -73,7 +93,7 @@ float rand_nn(rand_mod *rm) { //mu: Expectation value; sigma: standard deviation
         }
         else return (v/u*0.5*rm->sigma+rm->mu);
     }
-return 666;
+return 666; //should never be reached :O
 }
 
 

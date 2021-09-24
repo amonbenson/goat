@@ -1,9 +1,11 @@
 #pragma once
 #include "goat_config.h"
 #include "modulators/lfo/lfo.h"
+#include "modulators/rand/rand_mod.h"
 
 
 #define MODBANK_NUM_LFOS 4
+#define MODBANK_NUM_RANDS 4
 
 /**
  * @struct modulator_bank 
@@ -15,6 +17,7 @@
 typedef struct modulator_bank {
     goat_config *cfg; /**< global goat configuration */
     low_frequency_oscillator *lfos[MODBANK_NUM_LFOS]; /**< generic purpose LFOs */
+    rand_mod *rms[MODBANK_NUM_RANDS]; //!< generic purpose random number generators */
 } modulator_bank;
 
 
