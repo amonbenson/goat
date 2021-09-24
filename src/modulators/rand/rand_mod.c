@@ -1,4 +1,4 @@
-#include "control/modulators/rand/rand_mod.h"
+#include "modulators/rand/rand_mod.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -13,7 +13,7 @@ rand_mod *rand_mod_new(control_manager *mgr, const char *name){
 
     rm->mu= 100.0f; // TODO: currently unused
     rm->sigma=5.0f;
-    rm->seed=time(NULL)
+    rm->seed=time(NULL);
     return rm;
 }
 
@@ -30,7 +30,7 @@ void rand_mod_perform(rand_mod *rm, __attribute__((unused)) float *in, __attribu
 
 
 void rand_setSeed(rand_mod *rm){
-    srand(rm->rand_intSeed);
+    srand(rm->seed);
     rm->seed=rand();
 }
 
@@ -53,7 +53,7 @@ float rand_nn(rand_mod *rm) { //mu: Expectation value; sigma: standard deviation
         y = fabs(v) - t;
         Q = w*w + y*(a*y-b*w);
         if (Q < 0.27597) {
-            return (v/u*0.5*x->sigma+x->mu);
+            return (v/u*0.5*rm->sigma+rm->mu);
         }
         if (Q>0.27846) {
             num_rej++;
@@ -63,7 +63,7 @@ float rand_nn(rand_mod *rm) { //mu: Expectation value; sigma: standard deviation
             num_rej++;
             continue;
         }
-        else return (v/u*0.5*x->sigma+x->mu);
+        else return (v/u*0.5*rm->sigma+rm->mu);
     }
 return 666;
 }
