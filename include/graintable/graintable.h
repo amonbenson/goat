@@ -32,6 +32,7 @@ typedef struct {
     int position;    /**< absolute start position of a grain at buffer */
     int duration;    /**< length of a grain in sample */
     int  timeout;    /**< statue mark to tell if a grain still valid. suit for DelayLine grain source */
+    int  lifetime;   /**< elapsed samples since the grain's creation */
     int  evelope;    /**< type of evelope to be applied on this grain */
 
     // advance features of a grain
@@ -64,7 +65,7 @@ typedef struct{
  * @param cb the circle buffer object as the source of grains
  * @param position absolute start position of a grain at buffer
  * @param duration length of a grain in sample
- * @param timeout statue mark to tell if a grain still valid
+ * @param lifetime statue mark to tell if a grain still valid
  * @param evelope type of evelope to be applied on this grain
  * 
  * @return grain* a reference to the grain object
@@ -89,7 +90,7 @@ void grain_post_feature(grain *gn);
  * @param gn the grain object to be updated
  * @param n number of new samples stored in audio buffer
  */
-void grain_update_timeout(grain *gn, int n);
+void grain_update_lifetime(grain *gn, int n);
 
 /**
  * @memberof grain
@@ -143,7 +144,19 @@ void graintable_free(graintable *gt);
  * @param grainsize the size of grain
  * @param evelope the tyoe of evelope of grain
  */
-void graintable_add_grain(graintable *gt, circbuf *cb, int grainsize, int evelope); 
+void graintable_add_grain(graintable *gt, circbuf *cb, int position, int grainsize, int evelope); 
+
+/**
+ * @memberof graintable
+ * @brief return the front grain out of graintable without removing it
+ * 
+ * This method returns the front grain object out of graintable when the graintable is not empty
+ * 
+ * @param gt graintable object where grain object will be returned
+ * 
+ * @return grain* a reference to the grain object or `NULL` if failed
+ */
+grain *graintable_peek_grain(graintable *gt);
 
 /**
  * @memberof graintable
@@ -152,11 +165,10 @@ void graintable_add_grain(graintable *gt, circbuf *cb, int grainsize, int evelop
  * This method pop the front grain object out of graintable when the graintable is not empty
  * 
  * @param gt graintable object where grain object will be popped
- * @param gn grain object to store popped grain object
  * 
  * @return grain* a reference to the grain object or `NULL` if failed
  */
-grain *graintable_pop_grain(graintable *gt, grain *gn);
+grain *graintable_pop_grain(graintable *gt);
 
 /**
  * @memberof graintable
@@ -212,7 +224,7 @@ int graintable_get_len(graintable *gt);
  * @param gt graintable object that stores grains 
  * @param n number of new samples stored in audio buffer
  */
-void graintable_update_timeout(graintable *gt, int n);
+void graintable_update_lifetime(graintable *gt, int n);
 
 /**
  * @memberof graintable

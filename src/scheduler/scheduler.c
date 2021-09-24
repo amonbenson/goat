@@ -8,15 +8,16 @@ scheduler *scheduler_new(goat_config *cfg) {
     scheduler *sd = malloc(sizeof(scheduler));
     if (!sd) return NULL;
 
+	sd->cfg = cfg;
+
     // basic user adjustable configs
-    sd->gransize = control_manager_parameter_add(cfg->mgr, "grainsize", 2048, 128, 4096);
-    sd->interonset = 1024;
-    sd->maxinteronset = 1024;
-    sd->mininteronset = 1024;
+    sd->grainsize = control_manager_parameter_add(cfg->mgr, "grainsize", 1.0, 0.0, 10.0);
+    sd->graindist = control_manager_parameter_add(cfg->mgr, "graindist", 0.0, -1.0, 1.0);
+	sd->graindelay = control_manager_parameter_add(cfg->mgr, "graindelay", 0.0, 0.0, 10.0);
     sd->eveloptype = 3;
 
-    sd->fetchgrain = 2048; // initial: gransize, at least enough of a single grain
-    sd->synthgrain = 2048; // initial: max(mininteronset,gransize)
+    sd->lastfetch = 0;
+	sd->dofetch = 1; // do an initial fetch
 
     // advance user adjustable configs 
     sd->getpitch = 0;       
@@ -35,14 +36,7 @@ void scheduler_free(scheduler *sd){
 }
 
 
-int scheduler_get_next_interonset(int max, int min, int slot){
-	srand((unsigned)time(NULL));
-	int interonset = rand() % (max - min + 1) + max;
-	return interonset - interonset % slot; // rond it to an integer multipule of streamsize
-}
-
-
-void scheduler_update_counter(scheduler *sd, int n){
+/* void scheduler_update_counter(scheduler *sd, int n){
 
 	if (sd->fetchgrain != 0){
 		sd->fetchgrain = sd->fetchgrain - n;
@@ -61,11 +55,25 @@ void scheduler_update_counter(scheduler *sd, int n){
 		sd->synthgrain = scheduler_get_next_interonset(sd->maxinteronset, sd->mininteronset, n) - n;
 		// post("sd->synthgrain: %d", sd->synthgrain);
 	}
-}
+} */
 
 
 void scheduler_perform(scheduler *sd, int n){
 	// todo: add control function of other parameters
-	scheduler_update_counter(sd, n);
+	// scheduler_update_counter(sd, n);
+
+	// calculate the distance in samples between two grains.
+	int nextfetch = param(float, sd->grainsize) * sd->cfg->sample_rate * (1.0f + param(float, sd->graindist));
+
+	// if enough time elapsed, mark the grain as ready to be fetched and reset the lastfetch counter
+	if (sd->lastfetch > nextfetch) {
+		sd->dofetch = 1;
+		sd->lastfetch = 0;
+	} else {
+		sd->dofetch = 0;
+	}
+
+	// update the lastfetch counter
+	sd->lastfetch += n;
 }
 
