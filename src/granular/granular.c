@@ -7,18 +7,12 @@ granular *granular_new(void) {
     granular *g = malloc(sizeof(granular));
     if (!g) return NULL;
 
-    // create the circular buffer
-    g->buffer = circbuf_new(DELAYLINESIZE); 
+    g->buffer = circbuf_new(DELAYLINESIZE, NUMACTIVEGRAIN);
     if (!g->buffer) return NULL;
-    // add a single read tap. 
-    if (!circbuf_readtap_add(g->buffer)) return NULL;
-    g->buffer->readtaps->speed = 1.0f; 
 
-    // create the graintable
     g->grains = graintable_new(MAXTABLESIZE); 
     if (!g->grains) return NULL;
 
-    // create the evelopbuf
     g->evelopes = evelopbuf_new(ENVELOPEBUFSIZE); 
     if (!g->evelopes) return NULL;
 
@@ -38,25 +32,80 @@ void granular_free(granular *g) {
 }
 
 
+void granular_synthesize(granular *g, int blockstart, float *out, int n) {
+    // alternate synthesis method
+    grain *gn;
+    int i, j;
+    size_t position;
+    size_t readtapid;
+    size_t grainstart, grainend;
+    circbuf_readtap *readtap;
+
+    // loop through each sample
+    for (i = 0; i < n; i++) {
+        position = blockstart + i;
+        readtapid = 0;
+        out[i] = 0.0f;
+
+        // loop through each grain
+        for (j = 0; j < graintable_get_len(g->grains); j++){
+            gn = &g->grains->data[(g->grains->front + j) % g->grains->size];
+            grainstart = gn->position;
+            grainend = (grainstart + gn->duration) % g->buffer->size;
+
+            // if the grain is not active, skip it
+            if (!CIRCBUF_INRANGE(grainstart, grainend, position)) continue;
+
+            // setup the readtap and read the sample
+            readtap = &g->buffer->readtaps[readtapid];
+            readtap->position = grainstart + i;
+            readtap->speed = 1.0f;
+
+            /* printf("writing at %lu, reading tap %lu at %f --- %d\n", 
+                position,
+                readtapid,
+                readtap->position,
+                gn->position); */
+            out[i] += circbuf_read_interp(g->buffer, readtapid);
+
+            // only continue if we have readtaps left
+            readtapid++;
+            if (readtapid >= g->buffer->num_readtaps) break;
+        }
+    }
+}
+
+
 void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
-    grain* gn = NULL; // todo: remove this somehow
-    evelope* ep = NULL; // todo: remove this somehow
+    grain *gn;
+    size_t blockstart = g->buffer->writetap.position;
 
     // Delayline load input stream
     circbuf_write_block(g->buffer, in, n); //load input stream into circbuf constantly @todo add parameter to stop and continue loading 
     
-    // sample new grain and add into graintable
-    if (s->fetchgrain == 0){
-        printf("gransize %d\n", param(int, s->gransize));
-        graintable_add_grain(g->grains, g->buffer, param(int, s->gransize), 0);
+    // sample new grain and add into the graintable
+    if (s->dofetch){
+        graintable_add_grain(g->grains,
+            g->buffer,
+            blockstart,
+            param(float, s->grainsize) * s->cfg->sample_rate,
+            0);
     }
-    // post("graintable length: %d",graintable_get_len(g->grains));
+
+    // remove old grains
+    gn = graintable_peek_grain(g->grains);
+    if (gn && (gn->lifetime >= gn->duration || (size_t) gn->lifetime >= g->buffer->size)) {
+        graintable_pop_grain(g->grains);
+    }
 
     // update state of all grains
-    graintable_update_timeout(g->grains, n);
+    graintable_update_lifetime(g->grains, n);
+
+    // synthesize grains
+    granular_synthesize(g, blockstart, out, n);
 
     // fetch grain to synthesis output
-    if (s->synthgrain == 0){
+    /* if (s->synthgrain == 0) {
         // gn = graintable_check_grain(g->grains, gn, 0); // set delay to 0 is actully fetch the same grain except won't move it out
         do{
             gn = graintable_pop_grain(g->grains, gn);
@@ -66,5 +115,5 @@ void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
         synthesizer_active_grain(g->synth, gn, ep);
     }
 
-    synthesizer_write_output(g->synth, out, n);
+    synthesizer_write_output(g->synth, out, n); */
 }

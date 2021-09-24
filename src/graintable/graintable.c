@@ -5,13 +5,13 @@
 #include "util/mem.h"
 #include "util/util.h"
 
-grain *grain_init(grain *gn, circbuf *cb, int position, int duration, int timeout, int evelope){
+grain *grain_init(grain *gn, circbuf *cb, int position, int duration, int evelope){
     gn->buffer = cb;
 
     gn->position = position;
     gn->duration = duration;
     gn->evelope  = evelope;
-    gn->timeout  = timeout;
+    gn->lifetime = 0;
 
     gn->frequency = -1.0;
     gn->energy = -1.0;
@@ -21,19 +21,19 @@ grain *grain_init(grain *gn, circbuf *cb, int position, int duration, int timeou
 
 
 void grain_post_feature(grain *gn){
-    post("features: \n position: %d | \t duration: %d | \t evelope: %d | \t timeout: %d | \t frequency: %f | \t energy: %f \n",
+    post("features: \n position: %d | \t duration: %d | \t evelope: %d | \t lifetime: %d | \t frequency: %f | \t energy: %f \n",
         gn->position,
         gn->duration,
         gn->evelope,
-        gn->timeout,
+        gn->lifetime,
         gn->frequency,
         gn->energy
         );
 }
 
 
-void grain_update_timeout(grain *gn, int n){
-    gn->timeout = gn->timeout - n;
+void grain_update_lifetime(grain *gn, int n){
+    gn->lifetime += n;
 }
 
 
@@ -84,28 +84,30 @@ int graintable_is_empty(graintable *gt){
 }
 
 
-void graintable_add_grain(graintable *gt, circbuf *cb, int grainsize, int evelope){  
+void graintable_add_grain(graintable *gt, circbuf *cb, int position, int grainsize, int evelope){  
     if (graintable_is_full(gt) == 1){
         return;
     }
-    int position, timeout;
 
-    position = ((int)cb->writetap.position - grainsize) % cb->size;
-    timeout  = cb->size - grainsize;
-
-    grain_init(&gt->data[gt->rear], cb, position, grainsize, timeout, evelope);       
-    gt->rear = (gt->rear+ 1) % gt->size;    
+    grain_init(&gt->data[gt->rear], cb, position, grainsize, evelope);     
+    printf("push %p\n", &gt->data[gt->rear]);  
+    gt->rear = (gt->rear + 1) % gt->size;    
 }
 
 
-grain *graintable_pop_grain(graintable *gt, grain *gn){
-    if (graintable_is_empty(gt) == 1){
-        return NULL;
-    }
-    gn = &gt->data[gt->front]; 
+grain *graintable_peek_grain(graintable *gt) {
+    if (graintable_is_empty(gt)) return NULL;
+    return &gt->data[gt->front];
+}
 
-    // grain_post_feature(gn);
+
+grain *graintable_pop_grain(graintable *gt){
+    if (graintable_is_empty(gt)) return NULL;
+
+    grain *gn = &gt->data[gt->front];
     gt->front = (gt->front + 1) % gt->size;
+    printf("pop %p\n", gn);
+
     return gn;
 }
 
@@ -123,9 +125,9 @@ void graintable_check_grain(graintable *gt, __attribute__((unused)) grain *gn, i
 }
 
 
-void graintable_update_timeout(graintable *gt, int n){
+void graintable_update_lifetime(graintable *gt, int n){
     for (int i = 0; i < graintable_get_len(gt); i++){
-        grain_update_timeout(&gt->data[(gt->front+i) % gt->size], n);
+        grain_update_lifetime(&gt->data[(gt->front+i) % gt->size], n);
     }
 }
 

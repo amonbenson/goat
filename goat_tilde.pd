@@ -1,4 +1,4 @@
-#N canvas 68 660 850 457 12;
+#N canvas 21 569 992 600 12;
 #X obj 218 275 goat~;
 #X obj 17 407 dac~;
 #X obj 17 204 readsf~;
@@ -15,25 +15,33 @@
 #X obj 218 300 s~ wet;
 #X obj 173 196 r cmd;
 #X obj 199 223 print command;
-#X obj 389 336 hsl 128 15 128 4096 0 0 empty empty grainsize -2 -8
-0 10 -262144 -1 -1 12700 1;
+#X obj 390 285 hsl 128 15 0 1 0 1 empty empty Grain_Size -2 -8 0 10
+-262144 -1 -1 4700 1;
 #X obj 388 29 loadbang;
 #X text 399 53 connect the first lfo to the grainsize parameter;
 #X obj 388 132 s cmd;
 #X text 568 165 debug print all parameters;
-#X msg 386 358 param-set grainsize \$1;
-#X obj 386 383 s cmd;
+#X msg 387 307 param-set grainsize \$1;
+#X obj 387 332 s cmd;
 #X msg 567 187 param-post;
 #X obj 567 212 s cmd;
 #X obj 19 17 loadbang;
 #X msg 54 45 \; pd dsp 1;
 #X obj 617 336 hsl 128 15 0.01 10 1 0 empty empty lfo0_frequency -2
--8 0 10 -262144 -1 -1 9800 1;
+-8 0 10 -262144 -1 -1 0 1;
 #X obj 614 383 s cmd;
-#X msg 388 92 param-attach grainsize 0 lfo1 \, param-amount grainsize
-0 1000;
 #X text 399 70 and set its amount to 1000;
 #X msg 614 358 param-set lfo1.frequency \$1;
+#X obj 390 381 hsl 128 15 -1 1 0 1 empty empty Grain_Distance -2 -8
+0 10 -262144 -1 -1 6900 1;
+#X obj 387 428 s cmd;
+#X msg 387 403 param-set graindelay \$1;
+#X obj 388 471 hsl 128 15 0 1 0 1 empty empty Grain_Delay -2 -8 0 10
+-262144 -1 -1 5300 1;
+#X obj 385 518 s cmd;
+#X msg 385 493 param-set graindelay \$1;
+#X msg 388 92 param-attach grainsize 0 lfo1 \, param-amount grainsize
+0 0.5;
 #X connect 0 0 12 0;
 #X connect 2 0 10 0;
 #X connect 2 1 4 0;
@@ -49,11 +57,14 @@
 #X connect 13 0 0 0;
 #X connect 13 0 14 0;
 #X connect 15 0 20 0;
-#X connect 16 0 28 0;
 #X connect 20 0 21 0;
 #X connect 22 0 23 0;
 #X connect 24 0 4 0;
 #X connect 24 0 25 0;
-#X connect 26 0 30 0;
-#X connect 28 0 18 0;
-#X connect 30 0 27 0;
+#X connect 26 0 29 0;
+#X connect 29 0 27 0;
+#X connect 30 0 32 0;
+#X connect 32 0 31 0;
+#X connect 33 0 35 0;
+#X connect 35 0 34 0;
+#X connect 36 0 18 0;

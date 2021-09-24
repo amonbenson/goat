@@ -191,7 +191,7 @@ void evelopbuf_add_evelope(evelopbuf *eb, int type, int length){
    // ep = evelope_new(ep, type, length, amplitude, attacksamples, releasesamples);
    eb->data[eb->rear] = ep;     
    eb->rear = (eb->rear+ 1) % eb->size;
-   // post("front: %d | rear : %d", eb->front, eb->rear);
+   printf("size: %d\n", eb->size);
 }
 
 
