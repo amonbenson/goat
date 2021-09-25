@@ -8,6 +8,8 @@
 
 # documentation (perhabs an automatic generation at commit / push would be appropiate
 docs
+html
+latex
 
 # valgrind logs
 valgrind.log

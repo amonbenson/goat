@@ -31,7 +31,7 @@ void lfo_free(low_frequency_oscillator *lfo) {
 void lfo_perform(low_frequency_oscillator *lfo, __attribute__((unused)) float *in, int n) {
     float p = lfo->phase;
 
-    p += control_parameter_get_float(lfo->frequency) * (float) n / (float) lfo->cfg->sample_rate;
+    p += param(float, lfo->frequency) * (float) n / (float) lfo->cfg->sample_rate;
     p = p - ((int) p); // extract fractional part
     lfo->super.value = sinf(p * 2 * M_PI); // set the value
 

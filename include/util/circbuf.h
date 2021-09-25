@@ -14,6 +14,9 @@
 #include <stddef.h>
 
 
+#define CIRCBUF_INRANGE(a, b, x) ((a) <= (b) ? ((x) >= (a) && (x) <= (b)) : ((x) >= (a) || (x) <= (b)))
+
+
 /**
  * @struct circbuf_writetap
  * @related circbuf
@@ -23,7 +26,6 @@
  */
 typedef struct {
     size_t position; /**< buffer position of this tap */
-    void *userdata; /**< optional pointer to a user data section. Before freeing, this must be set to `NULL` */
 } circbuf_writetap;
 
 /**
@@ -37,9 +39,6 @@ typedef struct {
 struct circbuf_readtap {
     float position; /**< interpolated buffer position of this tap */
     float speed; /**< speed at which the data is read */
-    void *userdata; /**< optional pointer to a user data section. Before freeing, this must be set to `NULL` */
-
-    struct circbuf_readtap *next; /**< reference to the next read tap or `NULL`, if this is the last one in the chain */
 };
 
 /**
@@ -62,34 +61,11 @@ typedef struct circbuf_readtap circbuf_readtap;
 typedef struct {
     float *data; /**< The stored data itself */
     size_t size; /**< The size of the buffer and its data array */
+    size_t num_readtaps; /**< The number of read taps */
 
     circbuf_writetap writetap; /**< The write tap assigned to this buffer */
-    circbuf_readtap *readtaps; /**< A list of read taps or `NULL` if there are none */
+    circbuf_readtap readtaps[]; /**< A list of read taps or `NULL` if there are none */
 } circbuf;
-
-
-/**
- * @memberof circbuf_readtap
- * @brief create a new circbuf_readtap object
- * 
- * If you want to add a readtap to an exising circular buffer, use circbuf_readtap_add(circbuf *) instead.
- * @see circbuf_readtap_add
- * 
- * @return circbuf_readtap* a reference to the allocated circbuf_readtap or `NULL` if the allocation failed.
- */
-circbuf_readtap *circbuf_readtap_new(void);
-
-/**
- * @memberof circbuf_readtap
- * @brief free an existing circbuf_readtap object
- * 
- * @ref circbuf_readtap.userdata must be freed and set to `NULL` manually before calling this function.
- * If you want to remove a readtap from a an existing circular buffer, use circbuf_readtap_remove(circbuf *, circbuf_readtap *) instead.
- * @see circbuf_readtap_remove
- * 
- * @param tap the readtap to be freed
- */
-void circbuf_readtap_free(circbuf_readtap *tap);
 
 
 /**
@@ -97,9 +73,10 @@ void circbuf_readtap_free(circbuf_readtap *tap);
  * @brief create a new circular buffer of a specific @a size
  * 
  * @param size size of the circular buffer. This must be a power of two
+ * @param num_readtaps number of read taps to create
  * @return circbuf* a reference to the allocated circular buffer or `NULL` if the allocation failed.
  */
-circbuf *circbuf_new(size_t size);
+circbuf *circbuf_new(size_t size, size_t num_readtaps);
 
 /**
  * @memberof circbuf 
@@ -113,42 +90,6 @@ circbuf *circbuf_new(size_t size);
  */
 void circbuf_free(circbuf *cb);
 
-/**
- * @memberof circbuf
- * @brief allocate and add a new read tap to a circular buffer
- * 
- * A new read tap will be allocated using circbuf_readtap_new and linked to the end of @ref circbuf.readtaps
- * 
- * @param cb the buffer to which the read tap is added
- * @return circbuf_readtap* the appended read tap or `NULL` if the creation failed.
- */
-circbuf_readtap *circbuf_readtap_add(circbuf *cb);
-
-/**
- * @memberof circbuf
- * @brief remove and free an existing read tap from a buffer
- * 
- * The readtap must be part of the @ref circbuf.readtaps list
- * Because the tap will be freed, its userdata must be cleared:
- * @see circbuf_readtap_free
- * 
- * @param cb the buffer from which the read tap is removed
- * @param tap the tap to be removed and freed
- */
-void circbuf_readtap_remove(circbuf *cb, circbuf_readtap *tap);
-
-/**
- * @memberof circbuf
- * @brief get the read tap at a specified index
- * 
- * because this function iterated through all taps each time it is called, it is recommended
- * to store a @ref circbuf_readtap* reference if multiple operations will be perfomed on that tap
- * 
- * @param cb the buffer from which to get the tap
- * @param index the index at which to find the tap
- * @return circbuf_readtap* a reference to the tap or `NULL` if the index was out of range
- */
-circbuf_readtap *circbuf_readtap_get(circbuf *cb, int index);
 
 /**
  * @memberof circbuf
@@ -174,10 +115,10 @@ void circbuf_write_block(circbuf *cb, float *src, size_t n);
  * After the sample is read, the position is moved forward according to @ref circbuf_readtap.speed
  * 
  * @param cb the buffer to read data from
- * @param tap the read tap at which to read the data. It must be a member of the buffer's @ref circbuf.readtaps
+ * @param tap the read tap index at which to read the data
  * @return float the sample that was read
  */
-float circbuf_read_interp(circbuf *cb, circbuf_readtap *tap);
+float circbuf_read_interp(circbuf *cb, size_t tap);
 
 /**
  * @memberof circbuf
@@ -188,8 +129,8 @@ float circbuf_read_interp(circbuf *cb, circbuf_readtap *tap);
  * @see circbuf_read_interp
  * 
  * @param cb the buffer to read data from
- * @param tap the read tap at which to read the data. It must be a member of the buffer's @ref circbuf.readtaps
+ * @param tap the read tap index at which to read the data
  * @param dst the destination array to write the samples to
  * @param n the number of samples to be read
  */
-void circbuf_read_block(circbuf *cb, circbuf_readtap *tap, float *dst, size_t n);
+void circbuf_read_block(circbuf *cb, size_t tap, float *dst, size_t n);

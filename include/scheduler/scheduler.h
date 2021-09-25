@@ -36,17 +36,17 @@
  * The scheduler class contains all user adjustable configs
  */
 typedef struct {
+    goat_config *cfg; /**< pointer to the global config */
+
     // basic user adjustable configs
-    control_parameter *gransize;  /**< the size of sampled grains also for corresponding evelope*/
-    int interonset;     /**< the onset difference between two grains that been sampled */
-    int maxinteronset;  /**< the maximun onset difference between two grains to be synthesized */
-    int mininteronset;  /**< the minimun onset difference between two grains to be synthesized */
+    control_parameter *grainsize; /**< the size of a grain in seconds */
+    control_parameter *graindist; /**< distance between two grains relative to the grainsize */
+    control_parameter *graindelay; /**< delay between the sampling and synthetization of a grain in seconds */
     int eveloptype;     /**< type of evelop used for grain generation procedure */
 
-
     // configs that changed at each dsp routine
-    int fetchgrain;     /**< the number of grains sampled */
-    int synthgrain;     /**< the number of grains synthesized */
+    int lastfetch; /**< the number of samples since the last grain was fetched */
+    int dofetch; /**< flag if we should sample a new grain */
 
     // advance user adjustable configs 
     int getpitch;       /**< enable the pitch detection or not, 0 for disable */

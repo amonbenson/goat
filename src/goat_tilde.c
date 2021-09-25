@@ -103,20 +103,20 @@ void goat_tilde_param_detach(goat_tilde *x, t_symbol *paramname, t_floatarg fslo
 }
 
 void goat_tilde_param_post(goat_tilde *x) {
-    control_parameter *param;
+    control_parameter *p;
     int i;
 
     post("PARAMETERS:");
-    LL_FOREACH(x->g->cfg.mgr->parameters, param) {
+    LL_FOREACH(x->g->cfg.mgr->parameters, p) {
         startpost("    %s: %.2f <- %.2f",
-            param->name,
-            control_parameter_get_float(param),
-            param->offset);
+            p->name,
+            param(float, p),
+            p->offset);
         for (i = 0; i < CONTROL_NUM_SLOTS; i++) {
-            if (param->slots[i].mod) {
+            if (p->slots[i].mod) {
                 startpost(" + %s * %.2f",
-                    param->slots[i].mod->name,
-                    param->slots[i].amount);
+                    p->slots[i].mod->name,
+                    p->slots[i].amount);
             }
         }
         endpost();
