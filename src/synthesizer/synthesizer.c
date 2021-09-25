@@ -76,7 +76,7 @@ void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep){
             return;
         }
     }
-    post("synthesizer_active_grain: no more space for another activated grain, discard");
+    // post("synthesizer_active_grain: no more space for another activated grain, discard");
 }
 
 

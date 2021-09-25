@@ -24,9 +24,11 @@ typedef struct {
     t_object x_obj; /**< parent Pure Data object */
     t_float *f; /**< fallback field for the main signal inlet */
 
+    t_outlet *sigout; /**< main signal outlet */
+    t_outlet *dataout; /**< main data outlet */
+
     goat *g; /**< pointer to the goat object */
 
-    t_outlet *out; /**< main signal outlet */
 } goat_tilde;
 
 
@@ -45,6 +47,8 @@ void *goat_tilde_new(void);
  * @param x the goat object to be freed. Must not be `NULL`
  */
 void goat_tilde_free(goat_tilde *x);
+
+void goat_tilde_param_get(goat_tilde *x, t_symbol *paramname);
 
 /**
  * @memberof goat_tilde

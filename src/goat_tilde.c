@@ -11,8 +11,11 @@ void *goat_tilde_new(void) {
     goat_tilde *x = (goat_tilde *) pd_new(goat_tilde_class);
     if (!x) return NULL;
 
-    x->out = outlet_new(&x->x_obj, &s_signal);
-    if (!x->out) return NULL;
+    x->sigout = outlet_new(&x->x_obj, &s_signal);
+    if (!x->sigout) return NULL;
+
+    x->dataout = outlet_new(&x->x_obj, &s_symbol);
+    if (!x->dataout) return NULL;
 
     goat_config config = {
         .sample_rate = (size_t) sys_getsr(),
@@ -24,7 +27,8 @@ void *goat_tilde_new(void) {
 }
 
 void goat_tilde_free(goat_tilde *x) {
-    outlet_free(x->out);
+    outlet_free(x->sigout);
+    outlet_free(x->dataout);
     goat_free(x->g);
 }
 
@@ -48,9 +52,29 @@ static int goat_tilde_validate_slot(int slot) {
     return slot;
 }
 
-void goat_tilde_param_set(goat_tilde *x, t_symbol *paramname, t_float value) {
+void goat_tilde_param_get(goat_tilde *x, t_symbol *paramname) {
     control_parameter *param;
 
+    // get all parameters
+    if (paramname->s_name[0] == '\0') {
+        LL_FOREACH(x->g->cfg.mgr->parameters, param) {
+            goat_tilde_param_get(x, gensym(param->name));
+        }
+
+        return;
+    }
+
+    if ((param = goat_tilde_validate_parameter(x, paramname->s_name)) == NULL) return;
+
+    int argc = 2;
+    t_atom argv[2];
+    SETSYMBOL(&argv[0], paramname);
+    SETFLOAT(&argv[1], param->offset);
+    outlet_anything(x->dataout, gensym("param-get"), argc, argv);
+}
+
+void goat_tilde_param_set(goat_tilde *x, t_symbol *paramname, t_float value) {
+    control_parameter *param;
     if ((param = goat_tilde_validate_parameter(x, paramname->s_name)) == NULL) return;
 
     control_parameter_set(param, value);
@@ -128,10 +152,10 @@ void goat_tilde_param_reset(goat_tilde *x){
     int i;
 
     LL_FOREACH(x->g->cfg.mgr->parameters, p) {
-        p->offset=p->reset;
+        control_parameter_set(p, p->reset);
         for (i = 0; i < CONTROL_NUM_SLOTS; i++) {
             if (p->slots[i].mod) {
-                control_parameter_amount(p,i,0);
+                control_parameter_amount(p,i,1.0f);
                 control_parameter_detach(p,i);
             }
         }
@@ -148,13 +172,6 @@ static t_int *goat_tilde_perform(t_int *w) {
 
     // invoke the main algorithm
     goat_perform(x->g, in, out, n);
-
-    // debug info
-    // post("write %p -> %d, read %f -> %p\n",
-    //     in,
-    //     x->g->gran->buffer->writetap.position,
-    //     x->g->gran->buffer->readtaps->position,
-    //     out);
 
     return &w[5];
 }
@@ -175,6 +192,11 @@ void goat_tilde_setup(void) {
         CLASS_DEFAULT,
         0);
 
+    class_addmethod(goat_tilde_class,
+        (t_method) goat_tilde_param_get,
+        gensym("param-get"),
+        A_DEFSYMBOL,
+        A_NULL);
     class_addmethod(goat_tilde_class,
         (t_method) goat_tilde_param_set,
         gensym("param-set"),
@@ -205,15 +227,15 @@ void goat_tilde_setup(void) {
         (t_method) goat_tilde_param_post,
         gensym("param-post"),
         A_NULL);
+    class_addmethod(goat_tilde_class,
+        (t_method) goat_tilde_param_reset,
+        gensym("param-reset"),
+        A_NULL);
 
     class_addmethod(goat_tilde_class,
         (t_method) goat_tilde_dsp,
         gensym("dsp"),
         A_CANT,
-        A_NULL);
-    class_addmethod(goat_tilde_class,
-        (t_method) goat_tilde_param_reset,
-        gensym("param-reset"),
         A_NULL);
     CLASS_MAINSIGNALIN(goat_tilde_class, goat_tilde, f);
 }

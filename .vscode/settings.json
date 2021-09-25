@@ -18,7 +18,8 @@
         "ostream": "c",
         "sstream": "c",
         "streambuf": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "array": "c"
     },
     "editor.rulers": [100]
 }
