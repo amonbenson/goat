@@ -28,18 +28,16 @@
  */
 typedef struct {
     // basic features of a grain
-    circbuf *buffer; /**< pointer to the buffer contains data to be sampled */
-    int position;    /**< absolute start position of a grain at buffer */
-    int duration;    /**< length of a grain in samples */
-    int delay;       /**< delay of a grain in samples */
-    int  timeout;    /**< statue mark to tell if a grain still valid. suit for DelayLine grain source */
-    int  lifetime;   /**< elapsed samples since the grain's creation */
+    circbuf *cb; /**< pointer to the buffer contains data to be sampled */
+    size_t gb_size; /**< size of the grain buffer */
+
+    float position;  /**< absolute start position of a grain at buffer */
+    float duration;  /**< length of a grain in samples */
+    float delay;     /**< delay of a grain in samples */
+    float speed;     /**< the speed at which the grain should be read */
+    size_t timeout;    /**< statue mark to tell if a grain still valid. suit for DelayLine grain source */
+    size_t lifetime;   /**< elapsed samples since the grain's creation */
     int  evelope;    /**< type of evelope to be applied on this grain */
-
-    // advance features of a grain
-    float frequency; /**< fundamental frequency of a grain. set to -1 if grain isn't assumed as monophonic or pitch detection is disabled*/
-    float energy;    /**< simple framewise energy set to -1 if energy detection is disabled*/
-
 } grain;
 
 
@@ -71,7 +69,7 @@ typedef struct{
  * 
  * @return grain* a reference to the grain object
  */
-grain *grain_init(grain *gn, circbuf *cb, int position, int duration, int delay, int  timeout, int evelope);
+grain *grain_init(grain *gn, circbuf *cb, float position, float duration, float delay, float speed, size_t max_timeout, int evelope);
 
 /**
  * @memberof grain
@@ -92,21 +90,6 @@ void grain_post_feature(grain *gn);
  * @param n number of new samples stored in audio buffer
  */
 void grain_update_lifetime(grain *gn, int n);
-
-/**
- * @memberof grain
- * @brief update advance features parameter after analyzing
- * 
- * Advance features can only derive after analyzing the selected section of audio in the buffer
- * After analyzing procedure advance features will be updated in the grain structure
- * basic features don't support update(for now)
- * 
- * @param gn the grain object to be updated
- * @param value value of feature to be updated
- * @param feature type of feature to be updated
- */
-void grain_update_feature(grain *gn, float value, int feature);
-
 
 /**
  * @memberof graintable
@@ -145,7 +128,7 @@ void graintable_free(graintable *gt);
  * @param duration the size of grain
  * @param evelope the tyoe of evelope of grain
  */
-void graintable_add_grain(graintable *gt, circbuf *cb, int position, int duration, int delay, int evelope); 
+void graintable_add_grain(graintable *gt, circbuf *cb, float position, float duration, float delay, float speed, int evelope);
 
 /**
  * @memberof graintable

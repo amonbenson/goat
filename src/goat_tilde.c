@@ -137,8 +137,8 @@ void goat_tilde_param_reset(goat_tilde *x){
             }
         }
     }
-    post("DEFAULTS:");
-    goat_tilde_param_post(x);
+    // post("DEFAULTS:");
+    // goat_tilde_param_post(x);
 }
 
 static t_int *goat_tilde_perform(t_int *w) {

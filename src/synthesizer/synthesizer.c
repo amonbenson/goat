@@ -7,21 +7,22 @@
 #include "util/util.h"
 
 activategrain *activategrain_new(grain* gn, evelope* ep, int repeat){
-
     activategrain *ag = malloc(sizeof(activategrain));
     if (!ag) return NULL;
 
-    ag->data = malloc(sizeof(float) * gn->duration); // to store grain samples
+    ag->data = malloc(sizeof(float) * gn->gb_size); // to store grain samples
+    if (!ag->data) return NULL;
 
-    gn->buffer->readtaps->position = (gn->position - gn->delay) % gn->buffer->size;
-    circbuf_read_block(gn->buffer, 0, ag->data, gn->duration); //can only use the first readtap 
+    gn->cb->readtaps->position = emod((int) (gn->position - gn->delay), gn->cb->size);
+    gn->cb->readtaps->speed = gn->speed;
+    circbuf_read_block(gn->cb, 0, ag->data, gn->gb_size); //can only use the first readtap
 
-    for (int i = 0; i < gn->duration; i++){
+    for (size_t i = 0; i < gn->gb_size; i++){
         ag->data[i] = ag->data[i] * ep->data[i]; // multiply the evelope
     }
 
     ag->pos = 0;
-    ag->length = gn->duration;
+    ag->length = gn->gb_size;
     ag->repeat = repeat;
 
     return ag;
@@ -44,6 +45,7 @@ synthesizer *synthesizer_new(int length){
     if (!syn) return NULL;
 
     syn->data = malloc(sizeof(p_activategrain) * length);
+    if (!syn->data) return NULL;
 
     for (int i = 0; i < length; i++){
         syn->data[i] = NULL;
@@ -86,7 +88,7 @@ float synthesizer_sum_samples(synthesizer *syn){
             ag = syn->data[i];
             tmp += ag->data[ag->pos];
             ag->pos++;
-            if (ag->pos == ag->length && ag->repeat == 0){
+            if (ag->pos >= ag->length && ag->repeat == 0){
                 activategrain_free(ag); 
                 syn->data[i] = NULL;
             }
