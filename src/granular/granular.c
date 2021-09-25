@@ -42,10 +42,13 @@ void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
     // sample new grain and add into graintable
     if (s->dofetch){
         int grainsize = param(float, s->grainsize) * s->cfg->sample_rate;
+        int graindelay = param(float, s->graindelay) * s->cfg->sample_rate;
+
         graintable_add_grain(g->grains,
             g->buffer,
             (g->buffer->writetap.position - grainsize) % g->buffer->size,
             grainsize,
+            graindelay,
             s->eveloptype);
     }
     // post("graintable length: %d",graintable_get_len(g->grains));
@@ -55,7 +58,7 @@ void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
 
     // fetch grain to synthesize output
     gn = graintable_peek_grain(g->grains);
-    if (gn && 1){ // only relevant when grain delay is implemented
+    if (gn && gn->lifetime > gn->delay){ // only relevant when grain delay is implemented
         graintable_pop_grain(g->grains);
 
         ep = evelopbuf_check_evelope(g->evelopes, gn->evelope, gn->duration);

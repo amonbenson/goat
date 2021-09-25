@@ -13,7 +13,7 @@ activategrain *activategrain_new(grain* gn, evelope* ep, int repeat){
 
     ag->data = malloc(sizeof(float) * gn->duration); // to store grain samples
 
-    gn->buffer->readtaps->position = (float) gn->position;
+    gn->buffer->readtaps->position = (gn->position - gn->delay) % gn->buffer->size;
     circbuf_read_block(gn->buffer, 0, ag->data, gn->duration); //can only use the first readtap 
 
     for (int i = 0; i < gn->duration; i++){

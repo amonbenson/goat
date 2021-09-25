@@ -30,7 +30,8 @@ typedef struct {
     // basic features of a grain
     circbuf *buffer; /**< pointer to the buffer contains data to be sampled */
     int position;    /**< absolute start position of a grain at buffer */
-    int duration;    /**< length of a grain in sample */
+    int duration;    /**< length of a grain in samples */
+    int delay;       /**< delay of a grain in samples */
     int  timeout;    /**< statue mark to tell if a grain still valid. suit for DelayLine grain source */
     int  lifetime;   /**< elapsed samples since the grain's creation */
     int  evelope;    /**< type of evelope to be applied on this grain */
@@ -70,7 +71,7 @@ typedef struct{
  * 
  * @return grain* a reference to the grain object
  */
-grain *grain_init(grain *gn, circbuf *cb, int position, int duration, int  timeout, int evelope);
+grain *grain_init(grain *gn, circbuf *cb, int position, int duration, int delay, int  timeout, int evelope);
 
 /**
  * @memberof grain
@@ -141,10 +142,10 @@ void graintable_free(graintable *gt);
  * 
  * @param gt the graintable object to store the new grain
  * @param cb the circle buffer to sample grain
- * @param grainsize the size of grain
+ * @param duration the size of grain
  * @param evelope the tyoe of evelope of grain
  */
-void graintable_add_grain(graintable *gt, circbuf *cb, int position, int grainsize, int evelope); 
+void graintable_add_grain(graintable *gt, circbuf *cb, int position, int duration, int delay, int evelope); 
 
 /**
  * @memberof graintable
