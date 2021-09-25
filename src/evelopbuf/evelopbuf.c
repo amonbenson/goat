@@ -180,21 +180,21 @@ evelope *evelopbuf_pop_evelope(evelopbuf *eb, evelope* ep){
 }
 
 
-void evelopbuf_add_evelope(evelopbuf *eb, int type, int length){
+void evelopbuf_add_evelope(evelopbuf *eb, int type, int length, int attacksamples, int releasesamples){
    evelope* ep = NULL;
 
    if (evelopbuf_is_full(eb) == 1){
       ep = evelopbuf_pop_evelope(eb, ep);   // remove the earliest added evelope to move space for a new one
       evelope_free(ep);    
    }
-   ep = evelope_new(ep, type, length, 0.99, 512, 512); // todo move this parameters to scheduler
+   ep = evelope_new(ep, type, length, 0.99,  attacksamples, releasesamples); // todo move this parameters to scheduler
    // ep = evelope_new(ep, type, length, amplitude, attacksamples, releasesamples);
    eb->data[eb->rear] = ep;     
    eb->rear = (eb->rear+ 1) % eb->size;
 }
 
 
-evelope *evelopbuf_check_evelope(evelopbuf *eb, int type, int length){
+evelope *evelopbuf_check_evelope(evelopbuf *eb, int type, int length, int attacksamples, int releasesamples){
    evelope* ep = NULL;
    for (int i = 0; i < evelopbuf_get_len(eb); i++){
       ep = eb->data[(eb->front + i) % eb->size];
@@ -203,7 +203,7 @@ evelope *evelopbuf_check_evelope(evelopbuf *eb, int type, int length){
       }
    }
    // if desired evelope not found, add it and return.
-   evelopbuf_add_evelope(eb, type, length);
+   evelopbuf_add_evelope(eb, type, length,  attacksamples, releasesamples);
    ep = eb->data[(eb->rear - 1 + eb->size) % eb->size];
    return ep;
 }

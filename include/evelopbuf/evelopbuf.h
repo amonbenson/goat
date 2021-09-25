@@ -177,7 +177,7 @@ void evelopbuf_free(evelopbuf *eb);
  * @param type the type of the to be added evelope
  * @param length the length of the to be added evelope
  */ 
-void evelopbuf_add_evelope(evelopbuf *eb, int type, int length); // todo: add all parameters 
+void evelopbuf_add_evelope(evelopbuf *eb, int type, int length, int attacksamples, int releasesamples); // todo: add all parameters 
 
 /**
  * @memberof evelopbuf
@@ -202,10 +202,12 @@ evelope *evelopbuf_pop_evelope(evelopbuf *eb, evelope* ep);
  * @param eb evelopbuf object to be checked
  * @param type the type of the requested evelope
  * @param length the length of the requested evelope
+ * @param attacksamples number for samples for envelope attack
+ * @param releasesamples number of samples for envelope release
  * 
  * @return evelope* a reference to the evelope object or `NULL` if failed
  */
-evelope *evelopbuf_check_evelope(evelopbuf *eb, int type, int length);
+evelope *evelopbuf_check_evelope(evelopbuf *eb, int type, int length, int attacksamples, int releasesamples);
 
 /**
  * @memberof evelopbuf

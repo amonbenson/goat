@@ -11,11 +11,12 @@ scheduler *scheduler_new(goat_config *cfg) {
 	sd->cfg = cfg;
 
     // basic user adjustable configs
-    sd->grainsize = control_manager_parameter_add(cfg->mgr, "grainsize", 0.1, 0.1, 6.0); //values in seconds
-    sd->graindist = control_manager_parameter_add(cfg->mgr, "graindist", 0.0, -1.0, 1.0);
+    sd->grainsize = control_manager_parameter_add(cfg->mgr, "grainsize", 0.28, 0.1, 6.0); //values in seconds
+    sd->graindist = control_manager_parameter_add(cfg->mgr, "graindist", -0.05, -1.0, 1.0);
 	sd->graindelay = control_manager_parameter_add(cfg->mgr, "graindelay", 0.0, 0.0, 10.0);
-    sd->eveloptype = 3;
-
+    sd->eveloptype = control_manager_parameter_add(cfg->mgr, "envelope", 2, 0, 3);
+	sd->attacktime = control_manager_parameter_add(cfg->mgr, "attacktime",0.12, 0, 0.4);
+	sd->releasetime = control_manager_parameter_add(cfg->mgr, "releasetime",0.12, 0, 0.4);
     sd->lastfetch = 0;
 	sd->dofetch = 1; // do an initial fetch
 
