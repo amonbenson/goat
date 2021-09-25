@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#N canvas 505 322 976 571 12;
-=======
-#N canvas 21 569 992 600 12;
->>>>>>> 6e0765c8d9a9c949d3272c465ebaa81c094c1fae
+#N canvas 577 237 992 600 12;
 #X obj 218 275 goat~;
 #X obj 18 446 dac~;
 #X obj 17 204 readsf~;
@@ -12,20 +8,15 @@
 #X obj 19 106 t b b;
 #X msg 63 168 0;
 #X msg 17 134 open Radiohead-reconer_piano.wav;
-#X obj 86 371 r~ wet;
+#X obj 43 381 r~ wet;
 #X obj 17 357 r~ dry;
 #X obj 16 234 s~ dry;
 #X obj 219 250 r~ dry;
 #X obj 218 300 s~ wet;
 #X obj 173 196 r cmd;
 #X obj 199 223 print command;
-<<<<<<< HEAD
-#X obj 389 336 hsl 128 15 128 4096 0 0 empty empty grainsize -2 -8
-0 10 -262144 -1 -1 0 1;
-=======
 #X obj 390 285 hsl 128 15 0 1 0 1 empty empty Grain_Size -2 -8 0 10
--262144 -1 -1 1500 1;
->>>>>>> 6e0765c8d9a9c949d3272c465ebaa81c094c1fae
+-262144 -1 -1 2400 1;
 #X obj 388 29 loadbang;
 #X text 399 53 connect the first lfo to the grainsize parameter;
 #X obj 388 132 s cmd;
@@ -37,31 +28,23 @@
 #X obj 19 17 loadbang;
 #X msg 54 45 \; pd dsp 1;
 #X obj 617 336 hsl 128 15 0.01 10 1 0 empty empty lfo0_frequency -2
--8 0 10 -262144 -1 -1 0 1;
+-8 0 10 -262144 -1 -1 3100 1;
 #X obj 614 383 s cmd;
 #X text 399 70 and set its amount to 1000;
 #X msg 614 358 param-set lfo1.frequency \$1;
-<<<<<<< HEAD
-#X obj 205 486 s cmd;
-#X obj 462 517 s cmd;
-#X msg 462 477 param-attach grainsize 0 rand1 \, param-amount grainsize
-0 1;
-#X msg 205 433 param-set rand1.frequency 2 \, param-set rand1.value
-0 \, param-set rand1.variation 500;
-#X obj 205 373 loadbang;
-=======
 #X obj 390 381 hsl 128 15 -1 1 0 1 empty empty Grain_Distance -2 -8
-0 10 -262144 -1 -1 2500 1;
+0 10 -262144 -1 -1 10600 1;
 #X obj 387 428 s cmd;
 #X obj 388 471 hsl 128 15 0 1 0 1 empty empty Grain_Delay -2 -8 0 10
--262144 -1 -1 5300 1;
+-262144 -1 -1 10100 1;
 #X obj 385 518 s cmd;
 #X msg 385 493 param-set graindelay \$1;
 #X msg 388 92 param-attach grainsize 0 lfo1 \, param-amount grainsize
 0 0.5;
 #X msg 388 403 param-set graindist \$1;
 #X obj 43 406 *~ 0.5;
->>>>>>> 6e0765c8d9a9c949d3272c465ebaa81c094c1fae
+#X obj 614 271 s cmd;
+#X msg 614 246 param-reset;
 #X connect 0 0 12 0;
 #X connect 2 0 10 0;
 #X connect 2 1 4 0;
@@ -71,12 +54,8 @@
 #X connect 5 1 7 0;
 #X connect 6 0 2 0;
 #X connect 7 0 2 0;
-<<<<<<< HEAD
-#X connect 8 0 1 1;
-=======
 #X connect 8 0 37 0;
 #X connect 9 0 1 0;
->>>>>>> 6e0765c8d9a9c949d3272c465ebaa81c094c1fae
 #X connect 11 0 0 0;
 #X connect 13 0 0 0;
 #X connect 13 0 14 0;
@@ -85,15 +64,6 @@
 #X connect 22 0 23 0;
 #X connect 24 0 4 0;
 #X connect 24 0 25 0;
-<<<<<<< HEAD
-#X connect 26 0 30 0;
-#X connect 28 0 18 0;
-#X connect 30 0 27 0;
-#X connect 33 0 32 0;
-#X connect 34 0 31 0;
-#X connect 35 0 34 0;
-#X connect 35 0 33 0;
-=======
 #X connect 26 0 29 0;
 #X connect 29 0 27 0;
 #X connect 30 0 36 0;
@@ -102,4 +72,4 @@
 #X connect 35 0 18 0;
 #X connect 36 0 31 0;
 #X connect 37 0 1 1;
->>>>>>> 6e0765c8d9a9c949d3272c465ebaa81c094c1fae
+#X connect 39 0 38 0;

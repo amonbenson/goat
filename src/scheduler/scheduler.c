@@ -11,7 +11,7 @@ scheduler *scheduler_new(goat_config *cfg) {
 	sd->cfg = cfg;
 
     // basic user adjustable configs
-    sd->grainsize = control_manager_parameter_add(cfg->mgr, "grainsize", 1.0, 0.0, 10.0);
+    sd->grainsize = control_manager_parameter_add(cfg->mgr, "grainsize", 0.1, 0.1, 6.0); //values in seconds
     sd->graindist = control_manager_parameter_add(cfg->mgr, "graindist", 0.0, -1.0, 1.0);
 	sd->graindelay = control_manager_parameter_add(cfg->mgr, "graindelay", 0.0, 0.0, 10.0);
     sd->eveloptype = 3;
