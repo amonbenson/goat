@@ -1,4 +1,4 @@
-#N canvas 68 660 850 457 12;
+#N canvas 505 322 976 571 12;
 #X obj 218 275 goat~;
 #X obj 17 407 dac~;
 #X obj 17 204 readsf~;
@@ -8,7 +8,7 @@
 #X obj 19 106 t b b;
 #X msg 63 168 0;
 #X msg 17 134 open Radiohead-reconer_piano.wav;
-#X obj 43 381 r~ wet;
+#X obj 86 371 r~ wet;
 #X obj 17 357 r~ dry;
 #X obj 16 234 s~ dry;
 #X obj 219 250 r~ dry;
@@ -16,7 +16,7 @@
 #X obj 173 196 r cmd;
 #X obj 199 223 print command;
 #X obj 389 336 hsl 128 15 128 4096 0 0 empty empty grainsize -2 -8
-0 10 -262144 -1 -1 12700 1;
+0 10 -262144 -1 -1 0 1;
 #X obj 388 29 loadbang;
 #X text 399 53 connect the first lfo to the grainsize parameter;
 #X obj 388 132 s cmd;
@@ -28,12 +28,19 @@
 #X obj 19 17 loadbang;
 #X msg 54 45 \; pd dsp 1;
 #X obj 617 336 hsl 128 15 0.01 10 1 0 empty empty lfo0_frequency -2
--8 0 10 -262144 -1 -1 9800 1;
+-8 0 10 -262144 -1 -1 0 1;
 #X obj 614 383 s cmd;
 #X msg 388 92 param-attach grainsize 0 lfo1 \, param-amount grainsize
 0 1000;
 #X text 399 70 and set its amount to 1000;
 #X msg 614 358 param-set lfo1.frequency \$1;
+#X obj 205 486 s cmd;
+#X obj 462 517 s cmd;
+#X msg 462 477 param-attach grainsize 0 rand1 \, param-amount grainsize
+0 1;
+#X msg 205 433 param-set rand1.frequency 2 \, param-set rand1.value
+0 \, param-set rand1.variation 500;
+#X obj 205 373 loadbang;
 #X connect 0 0 12 0;
 #X connect 2 0 10 0;
 #X connect 2 1 4 0;
@@ -44,7 +51,6 @@
 #X connect 6 0 2 0;
 #X connect 7 0 2 0;
 #X connect 8 0 1 1;
-#X connect 9 0 1 0;
 #X connect 11 0 0 0;
 #X connect 13 0 0 0;
 #X connect 13 0 14 0;
@@ -57,3 +63,7 @@
 #X connect 26 0 30 0;
 #X connect 28 0 18 0;
 #X connect 30 0 27 0;
+#X connect 33 0 32 0;
+#X connect 34 0 31 0;
+#X connect 35 0 34 0;
+#X connect 35 0 33 0;

@@ -5,6 +5,7 @@
 #include <math.h>
 #include <time.h>
 #include "util/util.h"
+#include "m_pd.h"
 
 //
 rand_mod *rand_mod_new(goat_config *cfg, const char *name){
@@ -25,7 +26,7 @@ rand_mod *rand_mod_new(goat_config *cfg, const char *name){
 
     snprintf(namebuf, sizeof(namebuf), "%s.value", name);
     rm->mu = control_manager_parameter_add(cfg->mgr,
-        namebuf, 100.0f, 0.01f, 20000.0f);
+        namebuf, 100.0f, 0.01f, 20000.0f); //TODO: allow negatives... because modulators are summative
 
     snprintf(namebuf, sizeof(namebuf), "%s.variation", name);
     rm->sigma = control_manager_parameter_add(cfg->mgr,
@@ -44,16 +45,19 @@ void rand_mod_free(rand_mod *rm){
 };
 
 void rand_mod_perform(rand_mod *rm, __attribute__((unused)) float *in, int n){
-    
-    if (fmod(rm->time, 1/control_parameter_get_float(rm->freq)) < (float) n / (float) rm->cfg->sample_rate ){
+    float a = fmod(rm->time, 1/control_parameter_get_float(rm->freq)); //!< Modulus of elapsed time and period of random numbers
+    float b = (float) n / (float) rm->cfg->sample_rate; //!< Blocksize/Samplerate=time intervall between blocks
+    if ( a < b ){
         rand_setSeed(rm);
         rm->rand_num = rand_nn(rm); //!< perform algorithm
         rm->super.value = rm->rand_num;
-        rm->time = 0.0f; //!< reset timer
+        //post("[rand] success: %f",rm->rand_num);//debugging post
+        rm->time = 0.0; //!< reset timer
+        
     }
 
-    rm->time += (float) n / (float) rm->cfg->sample_rate; //!< time increment per processed block
-    
+    rm->time += b; //!< time increment per processed block
+   // post("[rand] wait, time: %f",rm->time);
 }
 
 
