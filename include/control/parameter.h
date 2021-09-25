@@ -35,6 +35,7 @@ typedef struct control_parameter {
     float min; /**< the minimum value of the parameter */
     float max; /**< the maximum value of the parameter */
     float value; /**< the current computed value of the parameter */
+    float default; /**< the default value for reset */
 
     struct control_parameter *next; /**< the next parameter in the list */
 } control_parameter;
