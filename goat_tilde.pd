@@ -27,22 +27,26 @@
 #X obj 567 212 s cmd;
 #X obj 19 17 loadbang;
 #X msg 54 45 \; pd dsp 1;
-#X obj 617 336 hsl 128 15 0.01 10 1 0 empty empty lfo0_frequency -2
+#X obj 641 286 hsl 128 15 0.01 10 1 0 empty empty lfo0_frequency -2
 -8 0 10 -262144 -1 -1 0 1;
-#X obj 614 383 s cmd;
+#X obj 638 333 s cmd;
 #X text 399 70 and set its amount to 1000;
-#X msg 614 358 param-set lfo1.frequency \$1;
+#X msg 638 308 param-set lfo1.frequency \$1;
 #X obj 390 381 hsl 128 15 -1 1 0 1 empty empty Grain_Distance -2 -8
 0 10 -262144 -1 -1 2500 1;
 #X obj 387 428 s cmd;
 #X obj 388 471 hsl 128 15 0 1 0 1 empty empty Grain_Delay -2 -8 0 10
--262144 -1 -1 5300 1;
+-262144 -1 -1 0 1;
 #X obj 385 518 s cmd;
 #X msg 385 493 param-set graindelay \$1;
 #X msg 388 92 param-attach grainsize 0 lfo1 \, param-amount grainsize
 0 0.5;
 #X msg 388 403 param-set graindist \$1;
 #X obj 43 406 *~ 0.5;
+#X obj 600 472 hsl 128 15 -36 36 0 1 empty empty Grain_Pitch -2 -8
+0 10 -262144 -1 -1 6400 1;
+#X obj 597 519 s cmd;
+#X msg 597 494 param-set grainpitch \$1;
 #X connect 0 0 12 0;
 #X connect 2 0 10 0;
 #X connect 2 1 4 0;
@@ -70,3 +74,5 @@
 #X connect 35 0 18 0;
 #X connect 36 0 31 0;
 #X connect 37 0 1 1;
+#X connect 38 0 40 0;
+#X connect 40 0 39 0;

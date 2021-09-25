@@ -11,21 +11,14 @@ scheduler *scheduler_new(goat_config *cfg) {
 	sd->cfg = cfg;
 
     // basic user adjustable configs
-    sd->grainsize = control_manager_parameter_add(cfg->mgr, "grainsize", 1.0, 0.0, 10.0);
-    sd->graindist = control_manager_parameter_add(cfg->mgr, "graindist", 0.0, -1.0, 1.0);
-	sd->graindelay = control_manager_parameter_add(cfg->mgr, "graindelay", 0.0, 0.0, 10.0);
+    sd->grainsize = control_manager_parameter_add(cfg->mgr, "grainsize", 1.0f, 0.0f, 10.0f);
+    sd->graindist = control_manager_parameter_add(cfg->mgr, "graindist", 0.0f, -1.0f, 1.0f);
+	sd->graindelay = control_manager_parameter_add(cfg->mgr, "graindelay", 0.0f, 0.0f, 10.0f);
+	sd->grainpitch = control_manager_parameter_add(cfg->mgr, "grainpitch", 0.0f, -36.0f, 36.0f);
     sd->eveloptype = 3;
 
     sd->lastfetch = 0;
-	sd->dofetch = 1; // do an initial fetch
-
-    // advance user adjustable configs 
-    sd->getpitch = 0;       
-    sd->getenergy = 0;      
-    sd->pitch = 440.0;        
-    sd->energy = 0.5;      
-    sd->pitchratio = 2.0;   
-    sd->energyratio = 0.99;  
+	sd->dofetch = 0;
 
     return sd;
 }
@@ -59,11 +52,9 @@ void scheduler_free(scheduler *sd){
 
 
 void scheduler_perform(scheduler *sd, int n){
-	// todo: add control function of other parameters
-	// scheduler_update_counter(sd, n);
-
 	// calculate the distance in samples between two grains.
-	int nextfetch = param(float, sd->grainsize) * sd->cfg->sample_rate * (1.0f + param(float, sd->graindist));
+	float actualduration = param(float, sd->grainsize) * sd->cfg->sample_rate * semitonefact(param(float, sd->grainpitch));
+	size_t nextfetch = actualduration * (1.0f + param(float, sd->graindist));
 
 	// if enough time elapsed, mark the grain as ready to be fetched and reset the lastfetch counter
 	if (sd->lastfetch > nextfetch) {

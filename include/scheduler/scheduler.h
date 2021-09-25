@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h> // for the rand function
 #include <time.h>   // for seed
+#include <stddef.h>
 
 #include "util/mem.h"
 #include "util/util.h"
@@ -42,19 +43,20 @@ typedef struct {
     control_parameter *grainsize; /**< the size of a grain in seconds */
     control_parameter *graindist; /**< distance between two grains relative to the grainsize */
     control_parameter *graindelay; /**< delay between the sampling and synthetization of a grain in seconds */
+    control_parameter *grainpitch; /**< pitch of a grain in semitones */
     int eveloptype;     /**< type of evelop used for grain generation procedure */
 
     // configs that changed at each dsp routine
-    int lastfetch; /**< the number of samples since the last grain was fetched */
+    size_t lastfetch; /**< the number of samples since the last grain was fetched */
     int dofetch; /**< flag if we should sample a new grain */
 
-    // advance user adjustable configs 
-    int getpitch;       /**< enable the pitch detection or not, 0 for disable */
-    int getenergy;      /**< enable the energy detection or not, 0 for disable */
-    float pitch;        /**< wished pitch of transformed grain, e.g. 440Hz for all upcoming grains*/
-    float energy;       /**< wished energy of transformed grain, e.g. 0.5 for all upcoming grains */
-    float pitchratio;   /**< wished energy of transformed grain, e.g. 2*higher(octave) for all upcoming grains*/
-    float energyratio;  /**< wished energy of transformed grain, e.g. 2*louder for all upcoming grains */
+    // // advance user adjustable configs 
+    // int getpitch;       /**< enable the pitch detection or not, 0 for disable */
+    // int getenergy;      /**< enable the energy detection or not, 0 for disable */
+    // float pitch;        /**< wished pitch of transformed grain, e.g. 440Hz for all upcoming grains*/
+    // float energy;       /**< wished energy of transformed grain, e.g. 0.5 for all upcoming grains */
+    // float pitchratio;   /**< wished energy of transformed grain, e.g. 2*higher(octave) for all upcoming grains*/
+    // float energyratio;  /**< wished energy of transformed grain, e.g. 2*louder for all upcoming grains */
 
 }scheduler, *p_scheduler; /**< pointer to a scheduler */
 

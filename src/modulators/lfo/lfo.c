@@ -13,6 +13,7 @@ low_frequency_oscillator *lfo_new(goat_config *cfg, const char *name) {
     char namebuf[32];
 
     lfo->cfg = cfg;
+    lfo->phase = 0.0f;
 
     snprintf(namebuf, sizeof(namebuf), "%s.frequency", name);
     lfo->frequency = control_manager_parameter_add(cfg->mgr,

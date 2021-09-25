@@ -41,14 +41,17 @@ void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
     
     // sample new grain and add into graintable
     if (s->dofetch){
-        int grainsize = param(float, s->grainsize) * s->cfg->sample_rate;
-        int graindelay = param(float, s->graindelay) * s->cfg->sample_rate;
+        float speed = semitonefact(param(float, s->grainpitch));
+        float duration = param(float, s->grainsize) * s->cfg->sample_rate;
+        float delay = param(float, s->graindelay) * s->cfg->sample_rate;
+        float position = emod((int) (g->buffer->writetap.position - duration * speed), g->buffer->size);
 
         graintable_add_grain(g->grains,
             g->buffer,
-            (g->buffer->writetap.position - grainsize) % g->buffer->size,
-            grainsize,
-            graindelay,
+            position,
+            duration,
+            delay,
+            speed,
             s->eveloptype);
     }
     // post("graintable length: %d",graintable_get_len(g->grains));

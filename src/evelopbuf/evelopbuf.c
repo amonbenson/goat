@@ -37,7 +37,11 @@ void evelope_free(evelope* ep){
 
 evelope *evelope_gen_trapezoidal(evelope* ep, int type, int length, float amplitude, int attacksamples, int releasesamples){
    ep = malloc(sizeof(evelope));
+   if (!ep) return NULL;
+
    ep->data = malloc(sizeof(float) * length);
+   if (!ep->data) return NULL;
+
    ep->type = type;
    ep->length = length;
    ep->attacksamples = attacksamples;
@@ -70,7 +74,11 @@ evelope *evelope_gen_trapezoidal(evelope* ep, int type, int length, float amplit
 
 evelope *evelope_gen_parabolic(evelope* ep, int type, int length, float amplitude){
    ep = malloc(sizeof(evelope));
+   if (!ep) return NULL;
+
    ep->data = malloc(sizeof(float) * length);
+   if (!ep->data) return NULL;
+
    ep->type = type;
    ep->length = length;
    ep->attacksamples = 0;
@@ -93,8 +101,18 @@ evelope *evelope_gen_parabolic(evelope* ep, int type, int length, float amplitud
 
 
 evelope *evelope_gen_raised_cosine_bell(evelope* ep, int type, int length, float amplitude, int attacksamples, int releasesamples){
+   // make sure attack and release fit into the length
+   if (attacksamples + releasesamples > length) {
+      attacksamples = length / 2;
+      releasesamples = length / 2;
+   }
+
    ep = malloc(sizeof(evelope));
+   if (!ep) return NULL;
+
    ep->data = malloc(sizeof(float) * length);
+   if (!ep->data) return NULL;
+
    ep->type = type;
    ep->length = length;
    ep->attacksamples = attacksamples;
@@ -124,7 +142,11 @@ evelope *evelope_gen_raised_cosine_bell(evelope* ep, int type, int length, float
 
 evelope *evelope_gen_no_evelope(evelope* ep, int type, int length, float amplitude){
    ep = malloc(sizeof(evelope));
+   if (!ep) return NULL;
+
    ep->data = malloc(sizeof(float) * length);
+   if (!ep->data) return NULL;
+
    ep->type = type;
    ep->length = length;
    ep->attacksamples = 0;
@@ -143,6 +165,8 @@ evelopbuf *evelopbuf_new(int size){
 	if (!eb) return NULL;
 
    eb->data = malloc(sizeof(evelope) * size);
+   if (!eb->data) return NULL;
+
    eb->size = size;
    eb->front = 0;
    eb->rear = 0;
