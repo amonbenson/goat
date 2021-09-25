@@ -43,14 +43,10 @@ typedef struct {
     control_parameter *grainsize; /**< the size of a grain in seconds */
     control_parameter *graindist; /**< distance between two grains relative to the grainsize */
     control_parameter *graindelay; /**< delay between the sampling and synthetization of a grain in seconds */
-<<<<<<< HEAD
     control_parameter *eveloptype;     /**< type of evelop used for grain generation procedure */
     control_parameter *attacktime;  /**< attack time for envelope*/
     control_parameter *releasetime; /**< release time for envelope*/
-=======
     control_parameter *grainpitch; /**< pitch of a grain in semitones */
-    control_parameter *eveloptype; /**< type of evelop used for grain generation procedure */
->>>>>>> f6dcf6374a214dc0630b58ab788b863424cec8d5
 
     // configs that changed at each dsp routine
     size_t lastfetch; /**< the number of samples since the last grain was fetched */

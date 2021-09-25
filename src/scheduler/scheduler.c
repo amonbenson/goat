@@ -11,21 +11,17 @@ scheduler *scheduler_new(goat_config *cfg) {
 	sd->cfg = cfg;
 
     // basic user adjustable configs
-<<<<<<< HEAD
-    sd->grainsize = control_manager_parameter_add(cfg->mgr, "grainsize", 0.28, 0.1, 6.0); //values in seconds
-    sd->graindist = control_manager_parameter_add(cfg->mgr, "graindist", -0.05, -1.0, 1.0);
-	sd->graindelay = control_manager_parameter_add(cfg->mgr, "graindelay", 0.0, 0.0, 10.0);
-    sd->eveloptype = control_manager_parameter_add(cfg->mgr, "envelope", 2, 0, 3);
-	sd->attacktime = control_manager_parameter_add(cfg->mgr, "attacktime",0.12, 0, 0.4);
-	sd->releasetime = control_manager_parameter_add(cfg->mgr, "releasetime",0.12, 0, 0.4);
-=======
-    sd->grainsize = control_manager_parameter_add(cfg->mgr, "grainsize", 0.01f, 0.0f, 6.0f); //values in seconds
-    sd->graindist = control_manager_parameter_add(cfg->mgr, "graindist", -0.5f, -1.0f, 1.0f);
+
+
+    sd->grainsize = control_manager_parameter_add(cfg->mgr, "grainsize", 0.28f, 0.01f, 6.0f); //values in seconds
+    sd->graindist = control_manager_parameter_add(cfg->mgr, "graindist", -0.28f, -1.0f, 1.0f);
 	sd->graindelay = control_manager_parameter_add(cfg->mgr, "graindelay", 0.0f, 0.0f, 10.0f);
 	sd->grainpitch = control_manager_parameter_add(cfg->mgr, "grainpitch", 0.0f, -36.0f, 36.0f);
-    sd->eveloptype = control_manager_parameter_add(cfg->mgr, "grainenv", 3, 0, 3);
+    sd->eveloptype = control_manager_parameter_add(cfg->mgr, "grainenv", 2, 0, 3);
+	sd->attacktime = control_manager_parameter_add(cfg->mgr, "attacktime", 0.06, 0, 0.4);
+	sd->releasetime = control_manager_parameter_add(cfg->mgr, "releasetime", 0.06, 0, 0.4);
 
->>>>>>> f6dcf6374a214dc0630b58ab788b863424cec8d5
+
     sd->lastfetch = 0;
 	sd->dofetch = 0;
 
