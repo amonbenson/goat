@@ -28,7 +28,9 @@
  */
 typedef struct {
     // basic features of a grain
-    circbuf *buffer; /**< pointer to the buffer contains data to be sampled */
+    circbuf *cb; /**< pointer to the buffer contains data to be sampled */
+    size_t gb_size; /**< size of the grain buffer */
+
     float position;  /**< absolute start position of a grain at buffer */
     float duration;  /**< length of a grain in samples */
     float delay;     /**< delay of a grain in samples */

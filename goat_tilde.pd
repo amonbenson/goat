@@ -1,6 +1,6 @@
-#N canvas 21 569 992 600 12;
-#X obj 218 275 goat~;
-#X obj 18 446 dac~;
+#N canvas 30 783 530 558 12;
+#X obj 42 248 goat~;
+#X obj 17 314 dac~;
 #X obj 17 204 readsf~;
 #X msg 30 168 1;
 #X obj 19 78 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
@@ -8,47 +8,100 @@
 #X obj 19 106 t b b;
 #X msg 63 168 0;
 #X msg 17 134 open Radiohead-reconer_piano.wav;
-#X obj 43 381 r~ wet;
-#X obj 17 357 r~ dry;
-#X obj 16 234 s~ dry;
-#X obj 219 250 r~ dry;
-#X obj 218 300 s~ wet;
-#X obj 173 196 r cmd;
-#X obj 199 223 print command;
-#X obj 390 285 hsl 128 15 0 1 0 1 empty empty Grain_Size -2 -8 0 10
--262144 -1 -1 1500 1;
-#X obj 388 29 loadbang;
-#X text 399 53 connect the first lfo to the grainsize parameter;
-#X obj 388 132 s cmd;
-#X text 568 165 debug print all parameters;
-#X msg 387 307 param-set grainsize \$1;
-#X obj 387 332 s cmd;
-#X msg 567 187 param-post;
-#X obj 567 212 s cmd;
+#X obj 90 206 r cmd;
+#X obj 90 248 print command;
 #X obj 19 17 loadbang;
 #X msg 54 45 \; pd dsp 1;
-#X obj 641 286 hsl 128 15 0.01 10 1 0 empty empty lfo0_frequency -2
--8 0 10 -262144 -1 -1 0 1;
-#X obj 638 333 s cmd;
-#X text 399 70 and set its amount to 1000;
-#X msg 638 308 param-set lfo1.frequency \$1;
-#X obj 390 381 hsl 128 15 -1 1 0 1 empty empty Grain_Distance -2 -8
-0 10 -262144 -1 -1 2500 1;
-#X obj 387 428 s cmd;
-#X obj 388 471 hsl 128 15 0 1 0 1 empty empty Grain_Delay -2 -8 0 10
--262144 -1 -1 0 1;
-#X obj 385 518 s cmd;
-#X msg 385 493 param-set graindelay \$1;
-#X msg 388 92 param-attach grainsize 0 lfo1 \, param-amount grainsize
-0 0.5;
-#X msg 388 403 param-set graindist \$1;
-#X obj 43 406 *~ 0.5;
-#X obj 600 472 hsl 128 15 -36 36 0 1 empty empty Grain_Pitch -2 -8
-0 10 -262144 -1 -1 6400 1;
-#X obj 597 519 s cmd;
-#X msg 597 494 param-set grainpitch \$1;
+#X obj 42 274 *~ 0.5;
+#X obj 294 144 textfile;
+#X msg 294 66 read presets/\$1.txt;
+#X msg 339 118 rewind;
+#X obj 294 118 until;
+#X obj 340 196 s cmd;
+#X obj 294 168 route #;
+#X obj 294 90 t b b a b;
+#X msg 396 118 param-reset;
+#X obj 294 41 r presetid;
+#N canvas 404 398 621 594 gui 1;
+#X obj 25 153 hsl 128 15 0 1 0 0 grainsize grainsize_d Grain_Size -2
+-8 0 10 -262144 -1 -1 254 1;
+#X obj 24 190 hsl 128 15 -1 1 0 0 graindist graindist_d Grain_Distance
+-2 -8 0 10 -262144 -1 -1 1905 1;
+#X obj 24 227 hsl 128 15 0 1 0 0 graindelay graindelay_d Grain_Delay
+-2 -8 0 10 -262144 -1 -1 0 1;
+#X obj 24 263 hsl 128 15 -36 36 0 0 grainpitch grainpitch_d Grain_Pitch
+-2 -8 0 10 -262144 -1 -1 6350 1;
+#X obj 21 298 hradio 15 1 0 4 grainenv grainenv_d Grain_Envelope 0
+-8 0 10 -262144 -1 -1 3;
+#X obj 71 65 hradio 15 1 1 1 presetid empty Load_Preset 0 -8 0 10 -262144
+-1 -1 0;
+#X text 20 112 GRANULAR ENGINE;
+#X obj 22 65 bng 15 250 50 0 param-reset empty Reset 0 -8 0 10 -262144
+-1 -1;
+#X text 19 13 GOAT;
+#X text 208 114 LFO 1;
+#X obj 213 152 hsl 128 15 0 50 0 0 lfo1.frequency lfo1.frequency_d
+Frequency -2 -8 0 10 -262144 -1 -1 1681 1;
+#X obj 406 153 hsl 128 15 0 50 0 0 rand1.frequency rand1.frequency_d
+Interval -2 -8 0 10 -262144 -1 -1 0 1;
+#X text 401 114 RAND 1;
+#X obj 406 189 hsl 128 15 0.01 20000 0 0 rand1.value rand1.value_d
+Value -2 -8 0 10 -262144 -1 -1 0 1;
+#X obj 406 225 hsl 128 15 0 10000 0 0 rand1.variation rand1.variation_d
+Variation -2 -8 0 10 -262144 -1 -1 0 1;
+#X restore 12 443 pd gui;
+#N canvas 110 814 868 531 cmdreceivers 0;
+#X obj 72 25 r grainsize;
+#X obj 72 80 r graindist;
+#X msg 72 105 param-set graindist \$1;
+#X msg 72 50 param-set grainsize \$1;
+#X obj 33 304 s cmd;
+#X obj 72 135 r graindelay;
+#X obj 72 185 r grainpitch;
+#X msg 72 210 param-set grainpitch \$1;
+#X msg 73 260 param-set grainenv \$1;
+#X obj 73 235 r grainenv;
+#X msg 73 160 param-set graindelay \$1;
+#X obj 265 23 r lfo1.frequency;
+#X msg 265 48 param-set lfo1.frequency \$1;
+#X obj 491 23 r rand1.frequency;
+#X msg 491 48 param-set rand1.frequency \$1;
+#X obj 491 76 r rand1.value;
+#X msg 491 101 param-set rand1.value \$1;
+#X obj 492 129 r rand1.variation;
+#X msg 492 154 param-set rand1.variation \$1;
+#X connect 0 0 3 0;
+#X connect 1 0 2 0;
+#X connect 2 0 4 0;
+#X connect 3 0 4 0;
+#X connect 5 0 10 0;
+#X connect 6 0 7 0;
+#X connect 7 0 4 0;
+#X connect 8 0 4 0;
+#X connect 9 0 8 0;
+#X connect 10 0 4 0;
+#X connect 11 0 12 0;
+#X connect 12 0 4 0;
+#X connect 13 0 14 0;
+#X connect 14 0 4 0;
+#X connect 15 0 16 0;
+#X connect 16 0 4 0;
+#X connect 17 0 18 0;
+#X connect 18 0 4 0;
+#X restore 12 472 pd cmdreceivers;
+#X msg 280 466 param-post;
+#X obj 280 491 s cmd;
+#X text 291 17 load a preset file;
+#X text 278 443 print all parameters;
+#X obj 292 241 route param-set;
+#X obj 292 266 unpack s f;
+#X obj 292 377 s;
+#X obj 292 348 f;
+#X obj 292 317 t b s;
+#X msg 292 291 symbol \$1_d;
 #X connect 0 0 12 0;
-#X connect 2 0 10 0;
+#X connect 2 0 0 0;
+#X connect 2 0 1 0;
 #X connect 2 1 4 0;
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
@@ -56,23 +109,29 @@
 #X connect 5 1 7 0;
 #X connect 6 0 2 0;
 #X connect 7 0 2 0;
-#X connect 8 0 37 0;
-#X connect 9 0 1 0;
-#X connect 11 0 0 0;
-#X connect 13 0 0 0;
-#X connect 13 0 14 0;
-#X connect 15 0 20 0;
-#X connect 20 0 21 0;
-#X connect 22 0 23 0;
-#X connect 24 0 4 0;
+#X connect 8 0 0 0;
+#X connect 8 0 9 0;
+#X connect 10 0 4 0;
+#X connect 10 0 11 0;
+#X connect 12 0 1 1;
+#X connect 13 0 18 0;
+#X connect 13 1 16 1;
+#X connect 14 0 19 0;
+#X connect 15 0 13 0;
+#X connect 16 0 13 0;
+#X connect 18 1 17 0;
+#X connect 18 1 28 0;
+#X connect 19 0 16 0;
+#X connect 19 1 15 0;
+#X connect 19 2 13 0;
+#X connect 19 3 20 0;
+#X connect 20 0 17 0;
+#X connect 21 0 14 0;
 #X connect 24 0 25 0;
-#X connect 26 0 29 0;
-#X connect 29 0 27 0;
-#X connect 30 0 36 0;
-#X connect 32 0 34 0;
-#X connect 34 0 33 0;
-#X connect 35 0 18 0;
-#X connect 36 0 31 0;
-#X connect 37 0 1 1;
-#X connect 38 0 40 0;
-#X connect 40 0 39 0;
+#X connect 28 0 29 0;
+#X connect 29 0 33 0;
+#X connect 29 1 31 1;
+#X connect 31 0 30 0;
+#X connect 32 0 31 0;
+#X connect 32 1 30 1;
+#X connect 33 0 32 0;

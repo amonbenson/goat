@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include "util/util.h"
 
 
@@ -69,5 +70,5 @@ float control_parameter_get_float(control_parameter *p) {
 }
 
 int control_parameter_get_int(control_parameter *p) {
-    return (int) p->value;
+    return roundf(p->value);
 }

@@ -26,10 +26,10 @@ goat *goat_new(goat_config *config) {
 }
 
 void goat_free(goat *g) {
-    modulator_bank_free(g->modbank);
-    control_manager_free(g->cfg.mgr);
     granular_free(g->gran);
     scheduler_free(g->schdur);
+    modulator_bank_free(g->modbank);
+    control_manager_free(g->cfg.mgr);
     free(g);
 }
 

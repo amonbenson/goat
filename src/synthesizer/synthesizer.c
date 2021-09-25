@@ -7,29 +7,22 @@
 #include "util/util.h"
 
 activategrain *activategrain_new(grain* gn, evelope* ep, int repeat){
-    size_t actualduration = gn->duration * gn->speed;
-
-    // samples with invalid length will cause issues and crashes, so we sort them out
-    if (actualduration > gn->buffer->size || actualduration < 2.0f) {
-        return NULL;
-    }
-
     activategrain *ag = malloc(sizeof(activategrain));
     if (!ag) return NULL;
 
-    ag->data = malloc(sizeof(float) * (size_t) (actualduration + 1.0f)); // to store grain samples
+    ag->data = malloc(sizeof(float) * gn->gb_size); // to store grain samples
     if (!ag->data) return NULL;
 
-    gn->buffer->readtaps->position = emod((int) (gn->position - gn->delay), gn->buffer->size);
-    gn->buffer->readtaps->speed = gn->speed;
-    circbuf_read_block(gn->buffer, 0, ag->data, actualduration); //can only use the first readtap
+    gn->cb->readtaps->position = emod((int) (gn->position - gn->delay), gn->cb->size);
+    gn->cb->readtaps->speed = gn->speed;
+    circbuf_read_block(gn->cb, 0, ag->data, gn->gb_size); //can only use the first readtap
 
-    for (size_t i = 0; i < actualduration; i++){
+    for (size_t i = 0; i < gn->gb_size; i++){
         ag->data[i] = ag->data[i] * ep->data[i]; // multiply the evelope
     }
 
     ag->pos = 0;
-    ag->length = actualduration;
+    ag->length = gn->gb_size;
     ag->repeat = repeat;
 
     return ag;

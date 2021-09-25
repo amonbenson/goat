@@ -15,7 +15,7 @@ scheduler *scheduler_new(goat_config *cfg) {
     sd->graindist = control_manager_parameter_add(cfg->mgr, "graindist", 0.0f, -1.0f, 1.0f);
 	sd->graindelay = control_manager_parameter_add(cfg->mgr, "graindelay", 0.0f, 0.0f, 10.0f);
 	sd->grainpitch = control_manager_parameter_add(cfg->mgr, "grainpitch", 0.0f, -36.0f, 36.0f);
-    sd->eveloptype = 3;
+    sd->eveloptype = control_manager_parameter_add(cfg->mgr, "grainenv", 3, 0, 3);
 
     sd->lastfetch = 0;
 	sd->dofetch = 0;
@@ -25,6 +25,12 @@ scheduler *scheduler_new(goat_config *cfg) {
 
 
 void scheduler_free(scheduler *sd){
+	control_manager_parameter_remove(sd->cfg->mgr, sd->grainsize);
+	control_manager_parameter_remove(sd->cfg->mgr, sd->graindist);
+	control_manager_parameter_remove(sd->cfg->mgr, sd->graindelay);
+	control_manager_parameter_remove(sd->cfg->mgr, sd->grainpitch);
+	control_manager_parameter_remove(sd->cfg->mgr, sd->eveloptype);
+
 	free(sd);
 }
 

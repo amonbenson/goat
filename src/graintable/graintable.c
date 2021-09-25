@@ -6,7 +6,7 @@
 #include "util/util.h"
 
 grain *grain_init(grain *gn, circbuf *cb, float position, float duration, float delay, float speed, size_t max_timeout, int evelope){
-    gn->buffer = cb;
+    gn->cb = cb;
 
     gn->position = position;
     gn->duration = duration;
@@ -15,6 +15,9 @@ grain *grain_init(grain *gn, circbuf *cb, float position, float duration, float 
     gn->timeout = min(max_timeout, (size_t) (delay + duration * speed));
     gn->evelope  = evelope;
     gn->lifetime  = 0;
+
+    // size of the internal grain buffer (used by the active grain and envelope buffer)
+    gn->gb_size = min(cb->size, (size_t) (gn->duration * gn->speed + 1.0f));
 
     return gn;
 }
