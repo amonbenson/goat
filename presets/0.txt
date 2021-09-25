@@ -10,4 +10,4 @@ param-set lfo1.frequency 6.62;
 
 # connect lfo 1 to the grain pitch;
 param-attach grainpitch 0 lfo1;
-param-amount grainpitch 0 0.5;
+param-amount grainpitch 0 1.5;

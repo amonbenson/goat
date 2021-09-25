@@ -33,10 +33,10 @@
 -2 -8 0 10 -262144 -1 -1 6350 1;
 #X obj 21 298 hradio 15 1 0 4 grainenv grainenv_d Grain_Envelope 0
 -8 0 10 -262144 -1 -1 3;
-#X obj 71 65 hradio 15 1 1 1 presetid empty Load_Preset 0 -8 0 10 -262144
+#X obj 71 65 hradio 15 1 0 1 presetid empty Load_Preset 0 -8 0 10 -262144
 -1 -1 0;
 #X text 20 112 GRANULAR ENGINE;
-#X obj 22 65 bng 15 250 50 0 param-reset empty Reset 0 -8 0 10 -262144
+#X obj 22 65 bng 15 250 50 1 param-reset empty Reset 0 -8 0 10 -262144
 -1 -1;
 #X text 19 13 GOAT;
 #X text 208 114 LFO 1;
@@ -93,12 +93,6 @@ Variation -2 -8 0 10 -262144 -1 -1 0 1;
 #X obj 280 491 s cmd;
 #X text 291 17 load a preset file;
 #X text 278 443 print all parameters;
-#X obj 292 241 route param-set;
-#X obj 292 266 unpack s f;
-#X obj 292 377 s;
-#X obj 292 348 f;
-#X obj 292 317 t b s;
-#X msg 292 291 symbol \$1_d;
 #X connect 0 0 12 0;
 #X connect 2 0 0 0;
 #X connect 2 0 1 0;
@@ -110,7 +104,6 @@ Variation -2 -8 0 10 -262144 -1 -1 0 1;
 #X connect 6 0 2 0;
 #X connect 7 0 2 0;
 #X connect 8 0 0 0;
-#X connect 8 0 9 0;
 #X connect 10 0 4 0;
 #X connect 10 0 11 0;
 #X connect 12 0 1 1;
@@ -120,7 +113,6 @@ Variation -2 -8 0 10 -262144 -1 -1 0 1;
 #X connect 15 0 13 0;
 #X connect 16 0 13 0;
 #X connect 18 1 17 0;
-#X connect 18 1 28 0;
 #X connect 19 0 16 0;
 #X connect 19 1 15 0;
 #X connect 19 2 13 0;
@@ -128,10 +120,3 @@ Variation -2 -8 0 10 -262144 -1 -1 0 1;
 #X connect 20 0 17 0;
 #X connect 21 0 14 0;
 #X connect 24 0 25 0;
-#X connect 28 0 29 0;
-#X connect 29 0 33 0;
-#X connect 29 1 31 1;
-#X connect 31 0 30 0;
-#X connect 32 0 31 0;
-#X connect 32 1 30 1;
-#X connect 33 0 32 0;

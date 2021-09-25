@@ -101,6 +101,14 @@ void goat_tilde_param_post(goat_tilde *x);
 
 /**
  * @memberof goat_tilde
+ * @brief resets all the parameters to default and detaches modulators
+ * 
+ * @param x the goat object
+ */
+void goat_tilde_param_reset(goat_tilde *x);
+
+/**
+ * @memberof goat_tilde
  * @brief sets up the dsp tree for a given goat_tilde object
  * 
  * @param x the goat object

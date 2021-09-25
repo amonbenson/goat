@@ -110,7 +110,7 @@ void goat_tilde_param_post(goat_tilde *x) {
     LL_FOREACH(x->g->cfg.mgr->parameters, p) {
         startpost("    %s: %.2f <- %.2f",
             p->name,
-            param(float, p),
+            param(float, p), //value
             p->offset);
         for (i = 0; i < CONTROL_NUM_SLOTS; i++) {
             if (p->slots[i].mod) {
@@ -121,6 +121,23 @@ void goat_tilde_param_post(goat_tilde *x) {
         }
         endpost();
     }
+}
+
+void goat_tilde_param_reset(goat_tilde *x){
+    control_parameter *p;
+    int i;
+
+    LL_FOREACH(x->g->cfg.mgr->parameters, p) {
+        p->offset=p->reset;
+        for (i = 0; i < CONTROL_NUM_SLOTS; i++) {
+            if (p->slots[i].mod) {
+                control_parameter_amount(p,i,0);
+                control_parameter_detach(p,i);
+            }
+        }
+    }
+    // post("DEFAULTS:");
+    // goat_tilde_param_post(x);
 }
 
 static t_int *goat_tilde_perform(t_int *w) {
@@ -193,6 +210,10 @@ void goat_tilde_setup(void) {
         (t_method) goat_tilde_dsp,
         gensym("dsp"),
         A_CANT,
+        A_NULL);
+    class_addmethod(goat_tilde_class,
+        (t_method) goat_tilde_param_reset,
+        gensym("param-reset"),
         A_NULL);
     CLASS_MAINSIGNALIN(goat_tilde_class, goat_tilde, f);
 }
