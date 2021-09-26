@@ -11,9 +11,8 @@
 #define SYNTH_MAX_SPEED 1000.0f
 
 
-activategrain *activategrain_new(grain* gn, evelope* ep, int repeat){
-    int relative_pitch = 1;
-    float pitch;
+activategrain *activategrain_new(grain* gn, evelope* ep, int repeat, int relativepitch){
+    float pitch, pitch_median, pitch_sum;
     float speed;
 
     activategrain *ag = malloc(sizeof(activategrain));
@@ -23,27 +22,41 @@ activategrain *activategrain_new(grain* gn, evelope* ep, int repeat){
     if (!ag->data) return NULL;
 
     int bufstart = emod((int) (gn->position - gn->delay), gn->cb->size);
+
+    // determine the speed of the grain
+    if (relativepitch) {
+        // get the median pitch
+        gn->pb->readtaps->position = bufstart;
+
+        pitch_median = 0.0f;
+        pitch_sum = 0.0f;
+        for (size_t i = 0; i < gn->gb_size; i++) {
+            pitch = circbuf_read_interp(gn->pb, 0);
+            if (pitch == -1) continue; // ignore unvoiced samples
+
+            pitch_median += pitch;
+            pitch_sum++;
+        }
+
+        if (pitch_sum == 0) {
+            // no pitch information available
+            speed = 1.0f;
+        } else {
+            pitch_median /= pitch_sum;
+            speed = 220.0f / pitch_median * gn->speed;
+        }
+    } else {
+        speed = gn->speed;
+    }
+
+    // read the data block with the specific speed
     gn->cb->readtaps->position = bufstart;
-    gn->pb->readtaps->position = bufstart;
+    gn->cb->readtaps->speed = speed;
+    circbuf_read_block(gn->cb, 0, ag->data, gn->gb_size);
 
+    // apply the grain envelope
     for (size_t i = 0; i < gn->gb_size; i++) {
-        // get the original pitch
-        pitch = circbuf_read_interp(gn->pb, 0);
-
-        // set the data read speed according to the desired pitch
-        speed = relative_pitch
-            ? (isfinite(pitch)
-                ? powf(2.0f, 440.0f - pitch)
-                : 1.0f)
-            : gn->speed;
-        speed = max(speed, SYNTH_MIN_SPEED);
-        speed = min(speed, SYNTH_MAX_SPEED);
-
-        gn->cb->readtaps->speed = speed;
-        
-        // read the grain data with the desired speed and apply the envelope
-        ag->data[i] = circbuf_read_interp(gn->cb, 0)
-            * ep->data[i];
+        ag->data[i] *= ep->data[i];
     }
 
     ag->pos = 0;
@@ -91,8 +104,8 @@ void synthesizer_free(synthesizer *syn){
 }
 
 
-void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep){
-    activategrain *ag = activategrain_new(gn, ep, 0); // set repeat to 0
+void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep, int relativepitch){
+    activategrain *ag = activategrain_new(gn, ep, 0, relativepitch); // set repeat to 0
     if (!ag) return;
 
     for (int i = 0; i < syn->length; i++){

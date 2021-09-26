@@ -19,6 +19,7 @@ scheduler *scheduler_new(goat_config *cfg) {
     sd->eveloptype = control_manager_parameter_add(cfg->mgr, "envelope", 2, 0, 3);
 	sd->attacktime = control_manager_parameter_add(cfg->mgr, "attacktime",0.12, 0, 0.4);
 	sd->releasetime = control_manager_parameter_add(cfg->mgr, "releasetime",0.12, 0, 0.4);
+	sd->relativepitch = control_manager_parameter_add(cfg->mgr, "relativepitch", 0, 0, 1);
     sd->lastfetch = 0;
 	sd->dofetch = 0;
 
@@ -34,6 +35,7 @@ void scheduler_free(scheduler *sd){
 	control_manager_parameter_remove(sd->cfg->mgr, sd->eveloptype);
 	control_manager_parameter_remove(sd->cfg->mgr, sd->attacktime);
 	control_manager_parameter_remove(sd->cfg->mgr, sd->releasetime);
+	control_manager_parameter_remove(sd->cfg->mgr, sd->relativepitch);
 
 	free(sd);
 }

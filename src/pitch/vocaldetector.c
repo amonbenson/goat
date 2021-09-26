@@ -27,6 +27,7 @@ vocaldetector *vd_new(size_t sample_rate) {
 
     vd->period = 0.0f;
     vd->frequency = 0.0f;
+    vd->voiced = 0;
 
     return vd;
 }
@@ -131,7 +132,7 @@ static void vd_process_signal(vocaldetector *vd, float *s, size_t n) {
 }
 
 static int is_better_period(__attribute__((unused)) vocaldetector *vd, __attribute__((unused)) float period, float correlation, float best_correlation) {
-    return correlation * 0.90f > best_correlation;
+    return correlation * 0.8f > best_correlation;
 }
 
 static void vd_detect_period(vocaldetector *vd) {
@@ -179,7 +180,15 @@ static void vd_detect_period(vocaldetector *vd) {
 
     vd->sampled_period = best_sampled_period;
     vd->period = best_period;
-    vd->frequency = vd->sample_rate / vd->period;
+
+    if (vd->period < VD_PERIOD_MIN || vd->period > VD_PERIOD_MAX) {
+        vd->period = -1.0f;
+        vd->frequency = -1.0f;
+        vd->voiced = 0;
+    } else {
+        vd->frequency = vd->sample_rate / vd->period;
+        vd->voiced = 1;
+    }
 }
 
 void vd_perform(vocaldetector *vd, float *s, size_t n) {

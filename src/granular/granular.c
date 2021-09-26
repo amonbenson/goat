@@ -9,11 +9,11 @@ granular *granular_new(void) {
 
     g->buffer = circbuf_new(DELAYLINESIZE, NUMACTIVEGRAIN);
     if (!g->buffer) return NULL;
-    for (int i = 0; i < g->buffer->size; i++) g->buffer->data[i] = 0.0f;
+    for (size_t i = 0; i < g->buffer->size; i++) g->buffer->data[i] = 0.0f;
 
     g->pitchbuffer = circbuf_new(DELAYLINESIZE, NUMACTIVEGRAIN);
     if (!g->pitchbuffer) return NULL;
-    for (int i = 0; i < g->pitchbuffer->size; i++) g->pitchbuffer->data[i] = 0.0f;
+    for (size_t i = 0; i < g->pitchbuffer->size; i++) g->pitchbuffer->data[i] = 0.0f;
 
     g->grains = graintable_new(MAXTABLESIZE); 
     if (!g->grains) return NULL;
@@ -81,7 +81,10 @@ void granular_perform(granular *g, scheduler *s, vocaldetector *vd, float *in, f
         int releasesamples = param(float,s->releasetime)* s->cfg->sample_rate;
         ep = evelopbuf_check_evelope(g->evelopes, gn->evelope, gn->gb_size,attacksamples,releasesamples);
         
-        synthesizer_active_grain(g->synth, gn, ep);
+        synthesizer_active_grain(g->synth,
+            gn,
+            ep,
+            param(int, s->relativepitch));
     }
 
     synthesizer_write_output(g->synth, out, n);

@@ -5,8 +5,8 @@
 #include "util/util.h"
 
 
-#define VD_PERIOD_MIN ((size_t) (44100 / 1000))
-#define VD_PERIOD_MAX ((size_t) (44100 / 50))
+#define VD_PERIOD_MIN ((size_t) (44100 / 300))
+#define VD_PERIOD_MAX ((size_t) (44100 / 100))
 
 typedef unsigned long vd_block;
 #define VD_BITS_PER_BLOCK (sizeof(vd_block) * 8)
@@ -35,6 +35,7 @@ typedef struct _vocaldetector {
     size_t sampled_period;
     float period;
     float frequency;
+    int voiced;
 } vocaldetector;
 
 

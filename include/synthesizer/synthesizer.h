@@ -62,7 +62,7 @@ typedef struct {
  * 
  * @return activategrain* a reference to the activategrain object or `NULL` if failed
  */
-activategrain *activategrain_new(grain* gn, evelope* ep, int repeat);
+activategrain *activategrain_new(grain* gn, evelope* ep, int repeat, int relativepitch);
 
 /**
  * @memberof activategrain
@@ -107,7 +107,7 @@ void synthesizer_free(synthesizer *syn);
  * @param gn the grain object contains information for activation
  * @param ep the grain object contains evelope
  */
-void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep);
+void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep, int relativepitch);
 
 /**
  * @memberof synthesizer
