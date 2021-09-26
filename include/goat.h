@@ -11,14 +11,24 @@
 
 #pragma once
 
+#include "goat_config.h"
 #include "granular/granular.h"
+#include "scheduler/scheduler.h"
+#include "modulators/modulator_bank.h"
+#include "control/manager.h"
 
+#include "params.h"
 
 /**
  * @brief Main GOAT class
  */
 typedef struct goat {
-    granular *gran; /**< the granular instance */
+    goat_config cfg; /**< configuration parameters */
+    modulator_bank *modbank; /**< the modulator bank */
+    granular *gran;     /**< the granular instance */
+    scheduler *schdur;  /**< the scheduler instance */
+    // analyzer *anlyz;    /**< the analyzer instance */
+    // transformer *trans; /**< the transformer instance */
 } goat;
 
 
@@ -28,7 +38,7 @@ typedef struct goat {
  * 
  * @return goat* the new goat instance
  */
-goat *goat_new(void);
+goat *goat_new(goat_config *config);
 
 /**
  * @memberof goat

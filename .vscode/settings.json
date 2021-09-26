@@ -1,8 +1,25 @@
 {
     "files.associations": {
+        "*.c": "c",
         "*.h": "c",
+        "*.lds": "linkerscript",
+        "*.xaml": "xml",
+        "*.pl": "prolog",
+        "*.make": "makefile",
+        "*.json": "jsonc",
         "Makefile.*": "makefile",
-        "random": "c"
+        "random": "c",
+        "functional": "c",
+        "*.tcc": "c",
+        "memory_resource": "c",
+        "memory": "c",
+        "fstream": "c",
+        "istream": "c",
+        "ostream": "c",
+        "sstream": "c",
+        "streambuf": "c",
+        "typeinfo": "c",
+        "array": "c"
     },
     "editor.rulers": [100]
 }

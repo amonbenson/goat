@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <math.h>
 #include <inttypes.h>
 #ifdef _MSC_VER
     # include <intrin.h>
@@ -48,3 +49,25 @@
  * @brief checks if @a n is a power of two. @a n must be unsigned.
  */
 #define is_pwrtwo(n) ((n) != 0 && !((n) & ((n) - 1)))
+
+
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846264338327950288 /**< pi */
+#endif
+
+
+/**
+ * @def emod(a, b)
+ * @brief Euclidean modulo
+ * Result is always in the range [0, b), even if a < 0
+ */
+#define emod(a, b) ((a) < 0 ? ((a) % (b) + (b)) % (b) : (a) % (b))
+
+
+/**
+ * @def semitonefact(semitone)
+ * @brief Convert a semitone number to a frequency factor
+ * a semitone of -12.0f will result in a factor of 0.5f
+ * and a semitone of +12.0f will result in a factor of 2.0f
+ */
+#define semitonefact(semitone) (pow(2, (semitone) / 12.0f))

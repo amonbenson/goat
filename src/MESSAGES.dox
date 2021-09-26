@@ -1,0 +1,18 @@
+/**
+
+@page Messages Pd Messages
+The `[goat~]` object accepts command messages on its first inlet.
+
+@section Control System
+
+`[param-set <paramname> <value>(`
+
+`[param-amount <paramname> <slot> <value>(`
+
+`[param-attach <paramname> <slot> <modname>(`
+
+`[param-detach <paramname> <slot>(`
+
+`[param-post(`
+
+*/
