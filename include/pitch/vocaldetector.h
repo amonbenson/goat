@@ -24,6 +24,8 @@ typedef unsigned long vd_block;
 
 
 typedef struct _vocaldetector {
+    size_t sample_rate;
+
     float *buffer;
     vd_block *bitstream;
 
@@ -32,10 +34,11 @@ typedef struct _vocaldetector {
 
     size_t sampled_period;
     float period;
+    float frequency;
 } vocaldetector;
 
 
-vocaldetector *vd_new();
+vocaldetector *vd_new(size_t sample_rate);
 void vd_free(vocaldetector *vd);
 
 int is_valid_block_size(size_t n);

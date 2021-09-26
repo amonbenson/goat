@@ -5,8 +5,9 @@
 #include "util/mem.h"
 #include "util/util.h"
 
-grain *grain_init(grain *gn, circbuf *cb, float position, float duration, float delay, float speed, size_t max_timeout, int evelope){
+grain *grain_init(grain *gn, circbuf *cb, circbuf *pb, float position, float duration, float delay, float speed, size_t max_timeout, int evelope){
     gn->cb = cb;
+    gn->pb = pb;
 
     gn->position = position;
     gn->duration = duration;
@@ -72,7 +73,7 @@ int graintable_is_empty(graintable *gt){
 }
 
 
-void graintable_add_grain(graintable *gt, circbuf *cb, float position, float duration, float delay, float speed, int evelope){  
+void graintable_add_grain(graintable *gt, circbuf *cb, circbuf *pb, float position, float duration, float delay, float speed, int evelope){  
     if (graintable_is_full(gt) == 1){
         return;
     }
@@ -88,6 +89,7 @@ void graintable_add_grain(graintable *gt, circbuf *cb, float position, float dur
 
     grain_init(&gt->data[gt->rear],
         cb,
+        pb,
         position,
         duration,
         delay,

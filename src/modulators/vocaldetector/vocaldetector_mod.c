@@ -20,6 +20,5 @@ void vdmod_free(vocaldetector_mod *vdmod) {
 }
 
 void vdmod_perform(vocaldetector_mod *vdmod, __attribute__((unused)) float *in, __attribute__((unused)) int n) {
-    float frequency = (float) vdmod->cfg->sample_rate / vdmod->vd->period;
-    vdmod->super.value = frequency;
+    vdmod->super.value = vdmod->vd->frequency;
 }

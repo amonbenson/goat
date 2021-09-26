@@ -29,6 +29,7 @@
 typedef struct {
     // basic features of a grain
     circbuf *cb; /**< pointer to the buffer contains data to be sampled */
+    circbuf *pb; /**< pointer to the buffer containing the pitch data */
     size_t gb_size; /**< size of the grain buffer */
 
     float position;  /**< absolute start position of a grain at buffer */
@@ -69,7 +70,7 @@ typedef struct{
  * 
  * @return grain* a reference to the grain object
  */
-grain *grain_init(grain *gn, circbuf *cb, float position, float duration, float delay, float speed, size_t max_timeout, int evelope);
+grain *grain_init(grain *gn, circbuf *cb, circbuf *pb, float position, float duration, float delay, float speed, size_t max_timeout, int evelope);
 
 /**
  * @memberof grain
@@ -128,7 +129,7 @@ void graintable_free(graintable *gt);
  * @param duration the size of grain
  * @param evelope the tyoe of evelope of grain
  */
-void graintable_add_grain(graintable *gt, circbuf *cb, float position, float duration, float delay, float speed, int evelope);
+void graintable_add_grain(graintable *gt, circbuf *cb, circbuf *pb, float position, float duration, float delay, float speed, int evelope);
 
 /**
  * @memberof graintable

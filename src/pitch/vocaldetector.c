@@ -5,7 +5,7 @@
 #include "math.h"
 
 
-vocaldetector *vd_new() {
+vocaldetector *vd_new(size_t sample_rate) {
     printf("vocaldetector: buffersize = %" PRI_SIZE_T ", period_min = %" PRI_SIZE_T ", period_max = %" PRI_SIZE_T "\n",
         VD_BUFFER_SIZE, VD_PERIOD_MIN, VD_PERIOD_MAX);
 
@@ -14,12 +14,19 @@ vocaldetector *vd_new() {
 
     vd->buffer = malloc(sizeof(float) * VD_BUFFER_SIZE);
     if (!vd->buffer) return NULL;
+    for (size_t i = 0; i < VD_BUFFER_SIZE; i++) vd->buffer[i] = 0.0f;
 
     vd->bitstream = malloc(sizeof(vd_block) * VD_BLOCK_SIZE);
     if (!vd->bitstream) return NULL;
+    for (size_t i = 0; i < VD_BLOCK_SIZE; i++) vd->bitstream[i] = 0;
+
+    vd->sample_rate = sample_rate;
 
     vd->write_pos = 0;
     vd->marked_pos = 0;
+
+    vd->period = 0.0f;
+    vd->frequency = 0.0f;
 
     return vd;
 }
@@ -172,6 +179,7 @@ static void vd_detect_period(vocaldetector *vd) {
 
     vd->sampled_period = best_sampled_period;
     vd->period = best_period;
+    vd->frequency = vd->sample_rate / vd->period;
 }
 
 void vd_perform(vocaldetector *vd, float *s, size_t n) {

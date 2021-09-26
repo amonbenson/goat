@@ -9,6 +9,11 @@ granular *granular_new(void) {
 
     g->buffer = circbuf_new(DELAYLINESIZE, NUMACTIVEGRAIN);
     if (!g->buffer) return NULL;
+    for (int i = 0; i < g->buffer->size; i++) g->buffer->data[i] = 0.0f;
+
+    g->pitchbuffer = circbuf_new(DELAYLINESIZE, NUMACTIVEGRAIN);
+    if (!g->pitchbuffer) return NULL;
+    for (int i = 0; i < g->pitchbuffer->size; i++) g->pitchbuffer->data[i] = 0.0f;
 
     g->grains = graintable_new(MAXTABLESIZE); 
     if (!g->grains) return NULL;
@@ -28,17 +33,23 @@ void granular_free(granular *g) {
     evelopbuf_free(g->evelopes);
     graintable_free(g->grains);
     circbuf_free(g->buffer);
+    circbuf_free(g->pitchbuffer);
     free(g);
 }
 
 
-void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
+void granular_perform(granular *g, scheduler *s, vocaldetector *vd, float *in, float *out, int n) {
     grain* gn;
     evelope* ep;
 
     // Delayline load input stream
     circbuf_write_block(g->buffer, in, n); //load input stream into circbuf constantly @todo add parameter to stop and continue loading 
-    
+
+    // load pitch buffer @todo smooth per block
+    for (int i = 0; i < n; i++) {
+        circbuf_write_block(g->pitchbuffer, &vd->frequency, 1);
+    }
+
     // sample new grain and add into graintable
     if (s->dofetch){
         float speed = semitonefact(param(float, s->grainpitch));
@@ -48,6 +59,7 @@ void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
 
         graintable_add_grain(g->grains,
             g->buffer,
+            g->pitchbuffer,
             position,
             duration,
             delay,

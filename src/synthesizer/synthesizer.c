@@ -6,19 +6,44 @@
 #include "util/mem.h"
 #include "util/util.h"
 
+
+#define SYNTH_MIN_SPEED 0.001f
+#define SYNTH_MAX_SPEED 1000.0f
+
+
 activategrain *activategrain_new(grain* gn, evelope* ep, int repeat){
+    int relative_pitch = 1;
+    float pitch;
+    float speed;
+
     activategrain *ag = malloc(sizeof(activategrain));
     if (!ag) return NULL;
 
     ag->data = malloc(sizeof(float) * gn->gb_size); // to store grain samples
     if (!ag->data) return NULL;
 
-    gn->cb->readtaps->position = emod((int) (gn->position - gn->delay), gn->cb->size);
-    gn->cb->readtaps->speed = gn->speed;
-    circbuf_read_block(gn->cb, 0, ag->data, gn->gb_size); //can only use the first readtap
+    int bufstart = emod((int) (gn->position - gn->delay), gn->cb->size);
+    gn->cb->readtaps->position = bufstart;
+    gn->pb->readtaps->position = bufstart;
 
-    for (size_t i = 0; i < gn->gb_size; i++){
-        ag->data[i] = ag->data[i] * ep->data[i]; // multiply the evelope
+    for (size_t i = 0; i < gn->gb_size; i++) {
+        // get the original pitch
+        pitch = circbuf_read_interp(gn->pb, 0);
+
+        // set the data read speed according to the desired pitch
+        speed = relative_pitch
+            ? (isfinite(pitch)
+                ? powf(2.0f, 440.0f - pitch)
+                : 1.0f)
+            : gn->speed;
+        speed = max(speed, SYNTH_MIN_SPEED);
+        speed = min(speed, SYNTH_MAX_SPEED);
+
+        gn->cb->readtaps->speed = speed;
+        
+        // read the grain data with the desired speed and apply the envelope
+        ag->data[i] = circbuf_read_interp(gn->cb, 0)
+            * ep->data[i];
     }
 
     ag->pos = 0;
