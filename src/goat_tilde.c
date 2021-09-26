@@ -152,7 +152,8 @@ void goat_tilde_param_reset(goat_tilde *x){
     int i;
 
     LL_FOREACH(x->g->cfg.mgr->parameters, p) {
-        control_parameter_set(p, p->reset);
+        p->offset=p->reset;
+        p->value=p->reset;
         for (i = 0; i < CONTROL_NUM_SLOTS; i++) {
             if (p->slots[i].mod) {
                 control_parameter_amount(p,i,1.0f);

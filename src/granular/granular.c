@@ -64,7 +64,11 @@ void granular_perform(granular *g, scheduler *s, float *in, float *out, int n) {
     if (gn && gn->lifetime > gn->delay){ // only relevant when grain delay is implemented
         graintable_pop_grain(g->grains);
 
-        ep = evelopbuf_check_evelope(g->evelopes, gn->evelope, gn->gb_size);
+        // Envelope 
+        int attacksamples = param(float,s->attacktime)* s->cfg->sample_rate; //from time to samples
+        int releasesamples = param(float,s->releasetime)* s->cfg->sample_rate;
+        ep = evelopbuf_check_evelope(g->evelopes, gn->evelope, gn->gb_size,attacksamples,releasesamples);
+        
         synthesizer_active_grain(g->synth, gn, ep);
     }
 
