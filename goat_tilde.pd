@@ -1,4 +1,4 @@
-#N canvas 4 531 999 558 12;
+#N canvas 8 531 999 558 12;
 #X obj 42 248 goat~;
 #X obj 17 314 dac~;
 #X obj 17 204 readsf~;
@@ -20,7 +20,7 @@
 #X obj 362 213 route #;
 #X msg 464 163 param-reset;
 #X obj 362 39 r presetid;
-#N canvas 288 455 621 594 gui 1;
+#N canvas 275 835 621 594 gui 1;
 #X obj 25 153 hsl 128 15 0 1 0 0 grainsize grainsize_d Grain_Size -2
 -8 0 10 -261682 -1 -1 635 1;
 #X obj 24 190 hsl 128 15 -1 1 0 0 graindist graindist_d Grain_Distance
@@ -30,7 +30,7 @@
 #X obj 24 263 hsl 128 15 -36 36 0 0 grainpitch grainpitch_d Grain_Pitch
 -2 -8 0 10 -261682 -1 -1 6350 1;
 #X obj 21 298 hradio 15 1 0 4 grainenv grainenv_d Grain_Envelope 0
--8 0 10 -261682 -1 -1 3;
+-8 0 10 -261682 -1 -1 2;
 #X obj 71 65 hradio 15 1 0 4 presetid empty Load_Preset 0 -8 0 10 -261234
 -1 -1 0;
 #X text 20 112 GRANULAR ENGINE;
@@ -75,8 +75,11 @@ Variation -2 -8 0 10 -204800 -1 -1 6 1;
 #X obj 542 217 vsl 15 20 0 1 0 0 rand1.variation_dst empty empty 0
 -9 0 10 -204800 -1 -1 0 1;
 #X text 24 532 then click the amount slider at the parameter;
+#X text 399 288 PITCH DETECTOR;
+#X obj 510 289 bng 15 250 50 0 vodec_src empty empty 17 7 0 10 -262130
+-1 -1;
 #X restore 19 486 pd gui;
-#N canvas 20 975 360 307 cmdreceivers 0;
+#N canvas 35 1107 327 221 cmdreceivers 0;
 #N canvas 8 63 382 445 granular_engine 0;
 #X obj 72 25 r grainsize;
 #X obj 72 80 r graindist;
@@ -138,14 +141,14 @@ Variation -2 -8 0 10 -204800 -1 -1 6 1;
 #X connect 7 0 6 0;
 #X connect 8 0 7 0;
 #X restore 27 69 pd lfos;
-#N canvas 343 253 526 435 rands 0;
-#X obj 179 81 r rand1.frequency;
-#X obj 179 134 r rand1.value;
-#X obj 180 187 r rand1.variation;
-#X obj 144 30 r rand1_src;
-#X msg 180 212 rand1.variation \$1;
-#X msg 179 159 rand1.value \$1;
-#X msg 179 106 rand1.frequency \$1;
+#N canvas 486 324 526 435 rands 0;
+#X obj 146 81 r rand1.frequency;
+#X obj 146 134 r rand1.value;
+#X obj 147 187 r rand1.variation;
+#X obj 20 31 r rand1_src;
+#X msg 147 212 rand1.variation \$1;
+#X msg 146 159 rand1.value \$1;
+#X msg 146 106 rand1.frequency \$1;
 #X obj 20 356 s conn_src;
 #X obj 101 356 s param_set;
 #X obj 326 79 r rand1.frequency_dst;
@@ -155,7 +158,7 @@ Variation -2 -8 0 10 -204800 -1 -1 6 1;
 #X obj 326 185 r rand1.variation_dst;
 #X msg 326 210 rand1.variation \$1;
 #X obj 197 355 s conn_dst;
-#X msg 144 55 rand1;
+#X msg 20 56 rand1;
 #X connect 0 0 6 0;
 #X connect 1 0 5 0;
 #X connect 2 0 4 0;
@@ -171,6 +174,13 @@ Variation -2 -8 0 10 -204800 -1 -1 6 1;
 #X connect 14 0 15 0;
 #X connect 16 0 7 0;
 #X restore 27 108 pd rands;
+#N canvas 26 130 450 300 vodec 0;
+#X obj 18 14 r vodec_src;
+#X msg 18 39 vodec;
+#X obj 18 241 s conn_src;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X restore 26 150 pd vodec;
 #X restore 19 515 pd cmdreceivers;
 #X msg 243 490 param-post;
 #X obj 243 515 s cmd;
@@ -214,6 +224,7 @@ Variation -2 -8 0 10 -204800 -1 -1 6 1;
 #X obj 519 507 s cmd;
 #X obj 519 432 r param_set;
 #X msg 519 482 param-set \$1 \$2;
+#X obj 90 231 print cmd;
 #X connect 0 0 11 0;
 #X connect 0 1 24 0;
 #X connect 2 0 0 0;
@@ -225,6 +236,7 @@ Variation -2 -8 0 10 -204800 -1 -1 6 1;
 #X connect 6 0 2 0;
 #X connect 7 0 2 0;
 #X connect 8 0 0 0;
+#X connect 8 0 64 0;
 #X connect 9 0 4 0;
 #X connect 9 0 10 0;
 #X connect 11 0 1 1;

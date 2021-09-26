@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 
-modulator_bank *modulator_bank_new(goat_config *cfg) {
+modulator_bank *modulator_bank_new(goat_config *cfg, vocaldetector *vd) {
     modulator_bank *modbank = malloc(sizeof(modulator_bank));
     if (modbank == NULL) return NULL;
     char namebuf[50];
@@ -21,8 +21,7 @@ modulator_bank *modulator_bank_new(goat_config *cfg) {
         if (modbank->rms[i] == NULL) return NULL;
     }
 
-    //add Mods + naming here
-
+    modbank->vodec = vdmod_new(cfg, vd, "vodec");
 
     return modbank;
 }
@@ -35,6 +34,8 @@ void modulator_bank_free(modulator_bank *modbank) {
     for (int i = 0; i < MODBANK_NUM_RANDS; i++) {
         rand_mod_free(modbank->rms[i]);
     }
+
+    vdmod_free(modbank->vodec);
 
     free(modbank);
 }
