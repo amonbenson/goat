@@ -1,11 +1,14 @@
 #pragma once
 #include "goat_config.h"
 #include "modulators/lfo/lfo.h"
-#include "modulators/rand/rand_mod.h"
-
+#include "modulators/saw/saw.h"
+#include "modulators/triangle/triangle.h"
+#include "modulators/square/square.h"
 
 #define MODBANK_NUM_LFOS 4
-#define MODBANK_NUM_RANDS 4
+#define MODBANK_NUM_SAWS 4
+#define MODBANK_NUM_TRIANGLES 4
+#define MODBANK_NUM_SQUARES 4
 
 /**
  * @struct modulator_bank 
@@ -17,7 +20,9 @@
 typedef struct modulator_bank {
     goat_config *cfg; /**< global goat configuration */
     low_frequency_oscillator *lfos[MODBANK_NUM_LFOS]; /**< generic purpose LFOs */
-    rand_mod *rms[MODBANK_NUM_RANDS]; //!< generic purpose random number generators */
+    sawtooth_modulator *saws[MODBANK_NUM_SAWS]; /**< generic purpose SAWs */
+    triangle_modulator *triangles[MODBANK_NUM_TRIANGLES]; /**< generic purpose TRIANGLEs */
+    square_modulator *squares[MODBANK_NUM_SQUARES]; /**< generic purpose SQUAREs */
 } modulator_bank;
 
 
