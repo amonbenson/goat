@@ -1,3 +1,5 @@
+name Basic_Vibrato;
+
 # grain settings;
 param-set grainsize 0.02;
 param-set graindist -0.7;

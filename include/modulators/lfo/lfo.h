@@ -5,6 +5,14 @@
 #include <math.h>
 
 
+#define LFO_CURVE_SINE 0
+#define LFO_CURVE_TRIANGLE 1
+#define LFO_CURVE_SQUARE 2
+#define LFO_CURVE_SAWTOOTH 3
+#define LFO_CURVE_SAWTOOTH_REVERSED 4
+#define LFO_NUM_CURVES 5
+
+
 /**
  * @struct low_frequency_oscillator
  * @brief a generic lfo modulator.
@@ -15,6 +23,7 @@ typedef struct low_frequency_oscillator {
 
     float phase; /**< the current phase of the lfo */
     control_parameter *frequency; /**< the frequency of the lfo */
+    control_parameter *curve; /**< the curve type of the lfo */
 } low_frequency_oscillator;
 
 

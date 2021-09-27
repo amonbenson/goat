@@ -6,7 +6,7 @@ lib.name = goat~
 goat~.class.sources = src/goat_tilde.c
 common.sources = $(filter-out $(goat~.class.sources), $(shell find "src" -name "*.c"))
 $(info common.sources: $(common.sources))
-datafiles = goat_tilde.pd Radiohead-reconer_piano.wav dsmn.wav
+datafiles = $(wildcard goat_tilde.pd *.wav preset_*.txt)
 
 # use pd-lib-builder
 include pd-lib-builder/Makefile.pdlibbuilder

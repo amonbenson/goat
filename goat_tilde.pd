@@ -1,4 +1,4 @@
-#N canvas 8 531 999 558 12;
+#N canvas 8 1021 999 558 12;
 #X obj 42 248 goat~;
 #X obj 17 314 dac~;
 #X obj 17 204 readsf~;
@@ -9,84 +9,191 @@
 #X msg 63 168 0;
 #X obj 90 206 r cmd;
 #X obj 19 17 loadbang;
-#X msg 54 45 \; pd dsp 1;
+#X msg 63 65 \; pd dsp 1;
 #X obj 42 274 *~ 0.5;
-#X obj 362 189 textfile;
-#X msg 362 64 read presets/\$1.txt;
-#X msg 407 163 rewind;
-#X obj 362 163 until;
-#X obj 408 241 s cmd;
-#X obj 362 213 route #;
-#X msg 464 163 param-reset;
-#X obj 362 39 r presetid;
-#N canvas 372 177 621 594 gui 1;
+#X obj 305 197 textfile;
+#X msg 350 171 rewind;
+#X obj 305 171 until;
+#X obj 508 268 s cmd;
+#X msg 481 172 param-reset;
+#X obj 322 54 r presetid;
+#N canvas 8 96 1035 738 gui 1;
 #X obj 25 153 hsl 128 15 0 1 0 0 grainsize grainsize_d Grain_Size -2
 -8 0 10 -261682 -1 -1 635 1;
-#X obj 24 190 hsl 128 15 -1 1 0 0 graindist graindist_d Grain_Distance
+#X obj 24 205 hsl 128 15 -1 1 0 0 graindist graindist_d Grain_Distance
 -2 -8 0 10 -261682 -1 -1 1587 1;
-#X obj 24 227 hsl 128 15 0 1 0 0 graindelay graindelay_d Grain_Delay
+#X obj 24 267 hsl 128 15 0 1 0 0 graindelay graindelay_d Grain_Delay
 -2 -8 0 10 -261682 -1 -1 0 1;
-#X obj 24 263 hsl 128 15 -36 36 0 0 grainpitch grainpitch_d Grain_Pitch
+#X obj 24 329 hsl 128 15 -36 36 0 0 grainpitch grainpitch_d Grain_Pitch
 -2 -8 0 10 -261682 -1 -1 6350 1;
-#X obj 21 331 hradio 15 1 0 4 grainenv grainenv_d Grain_Envelope 0
+#X obj 64 441 hradio 15 1 0 4 grainenv grainenv_d Grain_Envelope -44
 -8 0 10 -261682 -1 -1 2;
-#X obj 71 65 hradio 15 1 0 4 presetid empty Load_Preset 0 -8 0 10 -261234
+#X obj 22 63 hradio 15 1 0 4 presetid empty Load_Preset 0 -8 0 10 -261234
 -1 -1 0;
 #X text 20 112 GRANULAR ENGINE;
-#X obj 22 65 bng 15 250 50 1 param-reset empty Reset 0 -8 0 10 -261234
--1 -1;
 #X text 19 13 GOAT;
-#X text 208 114 LFO 1;
-#X obj 213 152 hsl 128 15 0 50 0 0 lfo1.frequency lfo1.frequency_d
-Frequency -2 -8 0 10 -204786 -1 -1 254 1;
-#X obj 406 153 hsl 128 15 0 50 0 0 rand1.frequency rand1.frequency_d
+#X text 232 112 LFO 1;
+#X obj 237 150 hsl 128 15 0 50 0 0 lfo1.frequency lfo1.frequency_d
+Frequency -2 -8 0 10 -204786 -1 -1 0 1;
+#X obj 442 149 hsl 128 15 0 50 0 0 rand1.frequency rand1.frequency_d
 Interval -2 -8 0 10 -204800 -1 -1 254 1;
-#X text 401 114 RAND 1;
-#X obj 406 189 hsl 128 15 0.01 20000 0 0 rand1.value rand1.value_d
-Value -2 -8 0 10 -204800 -1 -1 63 1;
-#X obj 406 225 hsl 128 15 0 10000 0 0 rand1.variation rand1.variation_d
-Variation -2 -8 0 10 -204800 -1 -1 6 1;
-#X obj 257 116 bng 15 250 50 0 lfo1_src empty empty 17 7 0 10 -204786
+#X text 437 110 RAND 1;
+#X obj 442 205 hsl 128 15 -10 10 0 0 rand1.value rand1.value_d Value
+-2 -8 0 10 -204800 -1 -1 0 1;
+#X obj 442 259 hsl 128 15 0 10 0 0 rand1.variation rand1.variation_d
+Variation -2 -8 0 10 -204800 -1 -1 1 1;
+#X obj 281 114 bng 15 250 50 0 lfo1_src empty empty 17 7 0 10 -204786
 -1 -1;
 #X obj 161 146 vsl 15 20 0 1 0 0 grainsize_dst empty empty 0 -9 0 10
 -261682 -1 -1 0 1;
-#X obj 160 183 vsl 15 20 0 1 0 0 graindist_dst empty empty 0 -9 0 10
+#X obj 160 198 vsl 15 20 0 1 0 0 graindist_dst empty empty 0 -9 0 10
 -261682 -1 -1 0 1;
-#X obj 160 220 vsl 15 20 0 1 0 0 graindelay_dst empty empty 0 -9 0
+#X obj 160 260 vsl 15 20 0 1 0 0 graindelay_dst empty empty 0 -9 0
 10 -261682 -1 -1 0 1;
-#X obj 160 255 vsl 15 20 0 1 0 0 grainpitch_dst empty empty 0 -9 0
+#X obj 160 321 vsl 15 20 0 1 0 0 grainpitch_dst empty empty 0 -9 0
 10 -261682 -1 -1 0 1;
-#X obj 350 532 vsl 15 20 0 1 0 0 empty empty empty 0 -9 0 10 -261682
+#X obj 343 884 vsl 15 20 0 1 0 0 empty empty empty 0 -9 0 10 -261682
 -1 -1 0 1;
-#X obj 321 512 bng 15 250 50 0 empty empty empty 17 7 0 10 -204786
+#X obj 314 864 bng 15 250 50 0 empty empty empty 17 7 0 10 -204786
 -1 -1;
-#X text 23 511 to connect a modulator \, press its button \,;
-#X obj 258 64 bng 15 250 50 0 global_detach empty Detach 0 -7 0 10
+#X text 16 863 to connect a modulator \, press its button \,;
+#X obj 162 61 bng 15 250 50 0 global_detach empty Detach 0 -7 0 10
 -261234 -1 -1;
-#X obj 457 117 bng 15 250 50 0 rand1_src empty empty 17 7 0 10 -204800
+#X obj 493 113 bng 15 250 50 0 rand1_src empty empty 17 7 0 10 -204800
 -1 -1;
-#X obj 349 144 vsl 15 20 0 1 0 0 lfo1.frequency_dst empty empty 0 -9
-0 10 -204786 -1 -1 0 1;
-#X obj 542 146 vsl 15 20 0 1 0 0 rand1.frequency_dst empty empty 0
+#X obj 373 142 vsl 15 20 0 50 0 0 lfo1.frequency_dst empty empty 0
+-9 0 10 -204786 -1 -1 0 1;
+#X obj 578 142 vsl 15 20 0 50 0 0 rand1.frequency_dst empty empty 0
 -9 0 10 -204800 -1 -1 0 1;
-#X obj 542 182 vsl 15 20 0 1 0 0 rand1.value_dst empty empty 0 -9 0
-10 -204800 -1 -1 0 1;
-#X obj 542 217 vsl 15 20 0 1 0 0 rand1.variation_dst empty empty 0
+#X obj 578 198 vsl 15 20 0 10 0 0 rand1.value_dst empty empty 0 -9
+0 10 -204800 -1 -1 0 1;
+#X obj 578 251 vsl 15 20 0 10 0 0 rand1.variation_dst empty empty 0
 -9 0 10 -204800 -1 -1 0 1;
-#X text 24 532 then click the amount slider at the parameter;
-#X text 399 288 PITCH DETECTOR;
-#X obj 510 289 bng 15 250 50 0 vodec_src empty empty 17 7 0 10 -262130
+#X text 17 884 then click the amount slider at the parameter;
+#X text 24 613 PITCH DETECTOR;
+#X obj 135 614 bng 15 250 50 0 vodec_src empty empty 17 7 0 10 -262130
 -1 -1;
-#X obj 21 297 tgl 15 0 relativepitch relativepitch_d Use_Relative_Pitch
+#X obj 20 390 tgl 15 0 relativepitch relativepitch_d Use_Relative_Pitch
 0 -7 0 10 -261682 -1 -1 0 1;
+#X obj 261 211 hradio 15 1 0 5 lfo1.curve lfo1.curve_d Curve -28 -8
+0 10 -204786 -1 -1 0;
+#X floatatom 234 165 5 0 0 0 - - -;
+#X floatatom 22 168 5 0 0 0 - - -;
+#X floatatom 21 220 5 0 0 0 - - -;
+#X floatatom 21 282 5 0 0 0 - - -;
+#X floatatom 21 344 5 0 0 0 - - -;
+#X floatatom 439 164 5 0 0 0 - - -;
+#X floatatom 439 220 5 0 0 0 - - -;
+#X floatatom 439 274 5 0 0 0 - - -;
+#X symbolatom 22 78 16 0 0 0 - presetname _dummy;
+#X text 231 224 sin tri sqr sw1 sw2;
+#X text 18 454 none parab trap cos;
+#X obj 22 497 hsl 48 15 0 0.4 0 0 attacktime attacktime_d Attack -2
+-8 0 10 -261682 -1 -1 1410 1;
+#X obj 78 489 vsl 15 20 0 1 0 0 attacktime_dst empty empty 0 -9 0 10
+-261682 -1 -1 0 1;
+#X floatatom 19 512 5 0 0 0 - - -;
+#X obj 109 496 hsl 48 15 0 0.4 0 0 releasetime releasetime_d Release
+-2 -8 0 10 -261682 -1 -1 1410 1;
+#X obj 165 488 vsl 15 20 -12 12 0 0 attacktime_dst empty empty 0 -9
+0 10 -261682 -1 -1 0 1;
+#X floatatom 106 511 5 0 0 0 - - -;
+#X obj 236 305 hsl 128 15 0 50 0 0 lfo2.frequency lfo2.frequency_d
+Frequency -2 -8 0 10 -204786 -1 -1 254 1;
+#X obj 280 269 bng 15 250 50 0 lfo2_src empty empty 17 7 0 10 -204786
+-1 -1;
+#X obj 372 297 vsl 15 20 0 50 0 0 lfo2.frequency_dst empty empty 0
+-9 0 10 -204786 -1 -1 0 1;
+#X obj 260 366 hradio 15 1 0 5 lfo2.curve lfo2.curve_d Curve -28 -8
+0 10 -204786 -1 -1 0;
+#X floatatom 233 320 5 0 0 0 - - -;
+#X text 230 379 sin tri sqr sw1 sw2;
+#X text 231 267 LFO 2;
+#X obj 236 461 hsl 128 15 0 50 0 0 lfo3.frequency lfo3.frequency_d
+Frequency -2 -8 0 10 -204786 -1 -1 254 1;
+#X obj 280 425 bng 15 250 50 0 lfo3_src empty empty 17 7 0 10 -204786
+-1 -1;
+#X obj 372 453 vsl 15 20 0 50 0 0 lfo3.frequency_dst empty empty 0
+-9 0 10 -204786 -1 -1 0 1;
+#X obj 260 522 hradio 15 1 0 5 lfo3.curve lfo3.curve_d Curve -28 -8
+0 10 -204786 -1 -1 0;
+#X floatatom 233 476 5 0 0 0 - - -;
+#X text 230 535 sin tri sqr sw1 sw2;
+#X obj 236 614 hsl 128 15 0 50 0 0 lfo4.frequency lfo4.frequency_d
+Frequency -2 -8 0 10 -204786 -1 -1 254 1;
+#X obj 280 578 bng 15 250 50 0 lfo4_src empty empty 17 7 0 10 -204786
+-1 -1;
+#X obj 372 606 vsl 15 20 0 50 0 0 lfo4.frequency_dst empty empty 0
+-9 0 10 -204786 -1 -1 0 1;
+#X obj 260 675 hradio 15 1 0 5 lfo4.curve lfo4.curve_d Curve -28 -8
+0 10 -204786 -1 -1 0;
+#X floatatom 233 629 5 0 0 0 - - -;
+#X text 230 688 sin tri sqr sw1 sw2;
+#X text 231 423 LFO 3;
+#X text 231 576 LFO 4;
+#X obj 440 351 hsl 128 15 0 50 0 0 rand2.frequency rand2.frequency_d
+Interval -2 -8 0 10 -204800 -1 -1 254 1;
+#X obj 440 407 hsl 128 15 -10 10 0 0 rand2.value rand2.value_d Value
+-2 -8 0 10 -204800 -1 -1 0 1;
+#X obj 440 461 hsl 128 15 0 10 0 0 rand2.variation rand2.variation_d
+Variation -2 -8 0 10 -204800 -1 -1 1 1;
+#X obj 491 315 bng 15 250 50 0 rand2_src empty empty 17 7 0 10 -204800
+-1 -1;
+#X obj 576 344 vsl 15 20 0 50 0 0 rand2.frequency_dst empty empty 0
+-9 0 10 -204800 -1 -1 0 1;
+#X obj 576 400 vsl 15 20 0 10 0 0 rand2.value_dst empty empty 0 -9
+0 10 -204800 -1 -1 0 1;
+#X obj 576 453 vsl 15 20 0 10 0 0 rand2.variation_dst empty empty 0
+-9 0 10 -204800 -1 -1 0 1;
+#X floatatom 437 366 5 0 0 0 - - -;
+#X floatatom 437 422 5 0 0 0 - - -;
+#X floatatom 437 476 5 0 0 0 - - -;
+#X text 435 312 RAND 2;
+#X obj 440 559 hsl 128 15 0 50 0 0 rand3.frequency rand3.frequency_d
+Interval -2 -8 0 10 -204800 -1 -1 254 1;
+#X obj 440 615 hsl 128 15 -10 10 0 0 rand3.value rand3.value_d Value
+-2 -8 0 10 -204800 -1 -1 0 1;
+#X obj 440 669 hsl 128 15 0 10 0 0 rand3.variation rand3.variation_d
+Variation -2 -8 0 10 -204800 -1 -1 1 1;
+#X obj 491 523 bng 15 250 50 0 rand3_src empty empty 17 7 0 10 -204800
+-1 -1;
+#X obj 576 552 vsl 15 20 0 10 0 0 rand3.frequency_dst empty empty 0
+-9 0 10 -204800 -1 -1 0 1;
+#X obj 576 608 vsl 15 20 0 10 0 0 rand3.value_dst empty empty 0 -9
+0 10 -204800 -1 -1 0 1;
+#X obj 576 661 vsl 15 20 0 10 0 0 rand3.variation_dst empty empty 0
+-9 0 10 -204800 -1 -1 0 1;
+#X floatatom 437 574 5 0 0 0 - - -;
+#X floatatom 437 630 5 0 0 0 - - -;
+#X floatatom 437 684 5 0 0 0 - - -;
+#X text 435 520 RAND 3;
+#X connect 0 0 34 0;
+#X connect 1 0 35 0;
+#X connect 2 0 36 0;
+#X connect 3 0 37 0;
+#X connect 9 0 33 0;
+#X connect 10 0 38 0;
+#X connect 12 0 39 0;
+#X connect 13 0 40 0;
+#X connect 44 0 46 0;
+#X connect 47 0 49 0;
+#X connect 50 0 54 0;
+#X connect 57 0 61 0;
+#X connect 63 0 67 0;
+#X connect 71 0 78 0;
+#X connect 72 0 79 0;
+#X connect 73 0 80 0;
+#X connect 82 0 89 0;
+#X connect 83 0 90 0;
+#X connect 84 0 91 0;
 #X restore 19 486 pd gui;
-#N canvas 207 754 327 221 cmdreceivers 1;
-#N canvas 8 63 580 549 granular_engine 0;
+#N canvas 75 876 333 129 cmdreceivers 1;
+#N canvas 166 729 580 549 granular_engine 0;
 #X obj 72 25 r grainsize;
 #X obj 72 80 r graindist;
 #X obj 72 135 r graindelay;
 #X obj 72 185 r grainpitch;
-#X obj 71 294 r grainenv;
+#X obj 345 28 r grainenv;
 #X obj 174 26 r grainsize_dst;
 #X obj 141 361 s conn_dst;
 #X msg 174 51 grainsize \$1;
@@ -96,9 +203,9 @@ Variation -2 -8 0 10 -204800 -1 -1 6 1;
 #X msg 177 159 graindelay \$1;
 #X obj 177 183 r grainpitch_dst;
 #X msg 177 208 grainpitch \$1;
-#X obj 174 294 r grainenv_dst;
-#X msg 174 319 grainenv \$1;
-#X msg 71 320 grainenv \$1;
+#X obj 448 28 r grainenv_dst;
+#X msg 448 53 grainenv \$1;
+#X msg 345 54 grainenv \$1;
 #X msg 72 210 grainpitch \$1;
 #X msg 73 160 graindelay \$1;
 #X msg 72 108 graindist \$1;
@@ -108,6 +215,14 @@ Variation -2 -8 0 10 -204800 -1 -1 6 1;
 #X obj 180 238 r relativepitch_dst;
 #X obj 55 240 r relativepitch;
 #X msg 60 265 relativepitch \$1;
+#X obj 344 81 r attacktime;
+#X msg 344 107 attacktime \$1;
+#X obj 447 81 r attacktime_dst;
+#X msg 447 106 attacktime \$1;
+#X obj 343 136 r releasetime;
+#X obj 446 136 r releasetime_dst;
+#X msg 343 162 releasetime \$1;
+#X msg 446 161 releasetime \$1;
 #X connect 0 0 20 0;
 #X connect 1 0 19 0;
 #X connect 2 0 18 0;
@@ -132,42 +247,130 @@ Variation -2 -8 0 10 -204800 -1 -1 6 1;
 #X connect 23 0 22 0;
 #X connect 24 0 25 0;
 #X connect 25 0 21 0;
+#X connect 26 0 27 0;
+#X connect 27 0 21 0;
+#X connect 28 0 29 0;
+#X connect 29 0 6 0;
+#X connect 30 0 32 0;
+#X connect 31 0 33 0;
+#X connect 32 0 21 0;
+#X connect 33 0 6 0;
 #X restore 28 29 pd granular_engine;
-#N canvas 8 63 499 445 lfos 0;
-#X obj 183 83 r lfo1.frequency;
-#X msg 137 56 lfo1;
-#X obj 38 352 s conn_src;
-#X obj 137 31 r lfo1_src;
-#X msg 183 108 lfo1.frequency \$1;
-#X obj 117 351 s param_set;
-#X obj 203 352 s conn_dst;
-#X msg 320 106 lfo1.frequency \$1;
-#X obj 320 81 r lfo1.frequency_dst;
+#N canvas 24 764 873 561 lfos 0;
+#X obj 177 81 r lfo1.frequency;
+#X msg 131 54 lfo1;
+#X obj 25 511 s conn_src;
+#X obj 131 29 r lfo1_src;
+#X msg 177 106 lfo1.frequency \$1;
+#X obj 365 511 s param_set;
+#X obj 751 504 s conn_dst;
+#X msg 314 104 lfo1.frequency \$1;
+#X obj 314 79 r lfo1.frequency_dst;
+#X obj 177 132 r lfo1.curve;
+#X msg 177 157 lfo1.curve \$1;
+#X obj 126 187 r lfo2_src;
+#X msg 126 212 lfo2;
+#X obj 172 239 r lfo2.frequency;
+#X msg 172 264 lfo2.frequency \$1;
+#X obj 172 290 r lfo2.curve;
+#X msg 172 315 lfo2.curve \$1;
+#X obj 309 237 r lfo2.frequency_dst;
+#X msg 309 262 lfo2.frequency \$1;
+#X obj 481 25 r lfo3_src;
+#X msg 481 50 lfo3;
+#X obj 527 77 r lfo3.frequency;
+#X msg 527 102 lfo3.frequency \$1;
+#X obj 527 128 r lfo3.curve;
+#X msg 527 153 lfo3.curve \$1;
+#X obj 664 75 r lfo3.frequency_dst;
+#X msg 664 100 lfo3.frequency \$1;
+#X obj 476 191 r lfo4_src;
+#X msg 476 216 lfo4;
+#X obj 522 243 r lfo4.frequency;
+#X msg 522 268 lfo4.frequency \$1;
+#X obj 522 294 r lfo4.curve;
+#X msg 522 318 lfo4.curve \$1;
+#X obj 659 241 r lfo4.frequency_dst;
+#X msg 659 266 lfo4.frequency \$1;
 #X connect 0 0 4 0;
 #X connect 1 0 2 0;
 #X connect 3 0 1 0;
 #X connect 4 0 5 0;
 #X connect 7 0 6 0;
 #X connect 8 0 7 0;
-#X restore 27 69 pd lfos;
-#N canvas 486 324 526 435 rands 0;
-#X obj 146 81 r rand1.frequency;
-#X obj 146 134 r rand1.value;
-#X obj 147 187 r rand1.variation;
-#X obj 20 31 r rand1_src;
-#X msg 147 212 rand1.variation \$1;
-#X msg 146 159 rand1.value \$1;
-#X msg 146 106 rand1.frequency \$1;
-#X obj 20 356 s conn_src;
-#X obj 101 356 s param_set;
-#X obj 326 79 r rand1.frequency_dst;
-#X msg 326 104 rand1.frequency \$1;
-#X obj 326 130 r rand1.value_dst;
-#X msg 326 155 rand1.value \$1;
-#X obj 326 185 r rand1.variation_dst;
-#X msg 326 210 rand1.variation \$1;
-#X obj 197 355 s conn_dst;
-#X msg 20 56 rand1;
+#X connect 9 0 10 0;
+#X connect 10 0 5 0;
+#X connect 11 0 12 0;
+#X connect 12 0 2 0;
+#X connect 13 0 14 0;
+#X connect 14 0 5 0;
+#X connect 15 0 16 0;
+#X connect 16 0 5 0;
+#X connect 17 0 18 0;
+#X connect 18 0 6 0;
+#X connect 19 0 20 0;
+#X connect 20 0 2 0;
+#X connect 21 0 22 0;
+#X connect 22 0 5 0;
+#X connect 23 0 24 0;
+#X connect 24 0 5 0;
+#X connect 25 0 26 0;
+#X connect 26 0 6 0;
+#X connect 27 0 28 0;
+#X connect 28 0 2 0;
+#X connect 29 0 30 0;
+#X connect 30 0 5 0;
+#X connect 31 0 32 0;
+#X connect 32 0 5 0;
+#X connect 33 0 34 0;
+#X connect 34 0 6 0;
+#X restore 170 30 pd lfos;
+#N canvas 22 865 824 639 rands 1;
+#X obj 78 94 r rand1.frequency;
+#X obj 78 147 r rand1.value;
+#X obj 79 200 r rand1.variation;
+#X obj 34 33 r rand1_src;
+#X msg 79 225 rand1.variation \$1;
+#X msg 78 172 rand1.value \$1;
+#X msg 78 119 rand1.frequency \$1;
+#X obj 10 578 s conn_src;
+#X obj 352 576 s param_set;
+#X obj 226 92 r rand1.frequency_dst;
+#X msg 226 117 rand1.frequency \$1;
+#X obj 226 143 r rand1.value_dst;
+#X msg 226 168 rand1.value \$1;
+#X obj 226 198 r rand1.variation_dst;
+#X msg 226 223 rand1.variation \$1;
+#X obj 699 572 s conn_dst;
+#X msg 34 58 rand1;
+#X obj 32 293 r rand2_src;
+#X msg 32 318 rand2;
+#X obj 76 354 r rand2.frequency;
+#X msg 76 379 rand2.frequency \$1;
+#X obj 76 407 r rand2.value;
+#X msg 76 432 rand2.value \$1;
+#X obj 77 460 r rand2.variation;
+#X msg 77 485 rand2.variation \$1;
+#X obj 224 352 r rand2.frequency_dst;
+#X msg 224 377 rand2.frequency \$1;
+#X obj 224 403 r rand2.value_dst;
+#X msg 224 428 rand2.value \$1;
+#X obj 224 458 r rand2.variation_dst;
+#X msg 223 483 rand2.variation \$1;
+#X obj 438 32 r rand3_src;
+#X msg 438 57 rand3;
+#X obj 482 93 r rand3.frequency;
+#X msg 482 118 rand3.frequency \$1;
+#X obj 482 146 r rand3.value;
+#X msg 482 171 rand3.value \$1;
+#X obj 483 199 r rand3.variation;
+#X msg 483 224 rand3.variation \$1;
+#X obj 630 91 r rand3.frequency_dst;
+#X msg 630 116 rand3.frequency \$1;
+#X obj 630 142 r rand3.value_dst;
+#X msg 630 167 rand3.value \$1;
+#X obj 630 197 r rand3.variation_dst;
+#X msg 629 222 rand3.variation \$1;
 #X connect 0 0 6 0;
 #X connect 1 0 5 0;
 #X connect 2 0 4 0;
@@ -182,14 +385,42 @@ Variation -2 -8 0 10 -204800 -1 -1 6 1;
 #X connect 13 0 14 0;
 #X connect 14 0 15 0;
 #X connect 16 0 7 0;
-#X restore 27 108 pd rands;
+#X connect 17 0 18 0;
+#X connect 18 0 7 0;
+#X connect 19 0 20 0;
+#X connect 20 0 8 0;
+#X connect 21 0 22 0;
+#X connect 22 0 8 0;
+#X connect 23 0 24 0;
+#X connect 24 0 8 0;
+#X connect 25 0 26 0;
+#X connect 26 0 15 0;
+#X connect 27 0 28 0;
+#X connect 28 0 15 0;
+#X connect 29 0 30 0;
+#X connect 30 0 15 0;
+#X connect 31 0 32 0;
+#X connect 32 0 7 0;
+#X connect 33 0 34 0;
+#X connect 34 0 8 0;
+#X connect 35 0 36 0;
+#X connect 36 0 8 0;
+#X connect 37 0 38 0;
+#X connect 38 0 8 0;
+#X connect 39 0 40 0;
+#X connect 40 0 15 0;
+#X connect 41 0 42 0;
+#X connect 42 0 15 0;
+#X connect 43 0 44 0;
+#X connect 44 0 15 0;
+#X restore 236 31 pd rands;
 #N canvas 26 130 450 300 vodec 0;
 #X obj 18 14 r vodec_src;
 #X msg 18 39 vodec;
 #X obj 18 241 s conn_src;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
-#X restore 26 150 pd vodec;
+#X restore 28 60 pd vodec;
 #X restore 19 515 pd cmdreceivers;
 #X msg 243 490 param-post;
 #X obj 243 515 s cmd;
@@ -199,107 +430,123 @@ Variation -2 -8 0 10 -204800 -1 -1 6 1;
 #X obj 116 401 f;
 #X obj 116 426 s;
 #X msg 148 401 symbol \$1_d;
-#X obj 362 88 t b b b a b;
-#X msg 285 163 param-get;
-#X obj 364 332 r param-reset;
-#X msg 401 383 param-reset;
-#X obj 364 409 s cmd;
-#X obj 364 357 t b b;
-#X msg 321 382 param-get;
+#X obj 368 129 t b b b a b;
+#X msg 404 171 param-get;
+#X obj 540 420 r param-reset;
+#X msg 577 471 param-reset;
+#X obj 540 497 s cmd;
+#X obj 540 445 t b b;
+#X msg 497 470 param-get;
 #X text 122 329 handle param-get;
 #X text 241 467 debug print all parameters;
-#X text 339 310 handle param-reset;
-#X obj 757 142 r conn_src;
-#X obj 658 142 r conn_dst;
-#X text 650 120 handle connections;
-#X text 342 17 load preset files;
-#X obj 704 286 pack s s;
-#X obj 757 169 symbol;
-#X msg 704 311 param-attach \$1 0 \$2;
-#X msg 771 197 1;
-#X msg 718 221 0;
-#X obj 658 168 unpack s f;
-#X obj 704 248 spigot;
-#X msg 640 338 param-amount \$1 0 \$2;
-#X obj 640 286 pack s f;
-#X obj 658 194 t s b s;
-#X obj 704 387 s cmd;
-#X obj 849 142 r global_detach;
-#X obj 810 248 spigot;
-#X msg 849 168 1;
-#X msg 810 281 param-detach \$1 0;
-#X text 518 410 handle param-set;
-#X obj 519 457 list;
-#X obj 519 507 s cmd;
-#X obj 519 432 r param_set;
-#X msg 519 482 param-set \$1 \$2;
+#X text 515 398 handle param-reset;
+#X obj 742 48 r conn_src;
+#X obj 643 48 r conn_dst;
+#X text 635 26 handle connections;
+#X text 302 32 load preset files;
+#X obj 689 192 pack s s;
+#X obj 742 75 symbol;
+#X msg 689 217 param-attach \$1 0 \$2;
+#X msg 756 103 1;
+#X msg 703 127 0;
+#X obj 643 74 unpack s f;
+#X obj 689 154 spigot;
+#X msg 625 244 param-amount \$1 0 \$2;
+#X obj 625 192 pack s f;
+#X obj 643 100 t s b s;
+#X obj 689 293 s cmd;
+#X obj 834 48 r global_detach;
+#X obj 795 154 spigot;
+#X msg 834 74 1;
+#X msg 795 187 param-detach \$1 0;
+#X text 817 404 handle param-set;
+#X obj 818 451 list;
+#X obj 818 501 s cmd;
+#X obj 818 426 r param_set;
+#X msg 818 476 param-set \$1 \$2;
 #X obj 90 231 print cmd;
 #X msg 17 134 open dsmn.wav;
+#X obj 305 281 s presetname;
+#X obj 305 221 route name #;
+#X msg 368 105 read preset_\$1.txt;
+#X obj 305 254 symbol;
+#X obj 669 457 s presetname;
+#X obj 669 432 symbol Reset;
+#X obj 322 78 route 0;
+#X obj 267 105 s param-reset;
+#X obj 147 52 s param-reset;
 #X connect 0 0 10 0;
-#X connect 0 1 23 0;
+#X connect 0 1 21 0;
 #X connect 2 0 0 0;
 #X connect 2 1 4 0;
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
 #X connect 5 0 3 0;
-#X connect 5 1 64 0;
+#X connect 5 1 62 0;
 #X connect 6 0 2 0;
 #X connect 7 0 0 0;
-#X connect 7 0 63 0;
+#X connect 7 0 61 0;
 #X connect 8 0 4 0;
 #X connect 8 0 9 0;
+#X connect 8 0 71 0;
 #X connect 10 0 1 1;
 #X connect 10 0 1 0;
-#X connect 11 0 16 0;
-#X connect 11 1 14 1;
-#X connect 12 0 29 0;
+#X connect 11 0 64 0;
+#X connect 11 1 13 1;
+#X connect 12 0 11 0;
 #X connect 13 0 11 0;
-#X connect 14 0 11 0;
-#X connect 16 1 15 0;
-#X connect 17 0 15 0;
-#X connect 18 0 12 0;
+#X connect 15 0 14 0;
+#X connect 16 0 69 0;
+#X connect 19 0 20 0;
 #X connect 21 0 22 0;
+#X connect 22 0 23 0;
+#X connect 22 1 24 1;
 #X connect 23 0 24 0;
+#X connect 23 1 26 0;
 #X connect 24 0 25 0;
-#X connect 24 1 26 1;
-#X connect 25 0 26 0;
-#X connect 25 1 28 0;
-#X connect 26 0 27 0;
-#X connect 28 0 27 1;
-#X connect 29 0 30 0;
-#X connect 29 1 14 0;
-#X connect 29 2 13 0;
-#X connect 29 3 11 0;
-#X connect 29 4 17 0;
-#X connect 30 0 15 0;
-#X connect 31 0 34 0;
+#X connect 26 0 25 1;
+#X connect 27 0 28 0;
+#X connect 27 1 13 0;
+#X connect 27 2 12 0;
+#X connect 27 3 11 0;
+#X connect 27 4 15 0;
+#X connect 28 0 14 0;
+#X connect 29 0 32 0;
+#X connect 30 0 31 0;
 #X connect 32 0 33 0;
-#X connect 34 0 35 0;
-#X connect 34 1 32 0;
-#X connect 35 0 33 0;
-#X connect 39 0 44 0;
-#X connect 40 0 48 0;
-#X connect 43 0 45 0;
-#X connect 44 0 43 1;
-#X connect 44 0 46 0;
-#X connect 45 0 53 0;
-#X connect 46 0 49 1;
-#X connect 47 0 49 1;
-#X connect 47 0 55 1;
-#X connect 48 0 52 0;
-#X connect 48 1 51 1;
-#X connect 49 0 43 0;
-#X connect 50 0 53 0;
-#X connect 51 0 50 0;
-#X connect 52 0 51 0;
-#X connect 52 1 47 0;
-#X connect 52 2 49 0;
-#X connect 52 2 55 0;
-#X connect 54 0 56 0;
-#X connect 55 0 57 0;
-#X connect 56 0 55 1;
-#X connect 57 0 53 0;
-#X connect 59 0 62 0;
-#X connect 61 0 59 0;
-#X connect 62 0 60 0;
-#X connect 64 0 2 0;
+#X connect 32 1 30 0;
+#X connect 32 1 68 0;
+#X connect 33 0 31 0;
+#X connect 37 0 42 0;
+#X connect 38 0 46 0;
+#X connect 41 0 43 0;
+#X connect 42 0 41 1;
+#X connect 42 0 44 0;
+#X connect 43 0 51 0;
+#X connect 44 0 47 1;
+#X connect 45 0 47 1;
+#X connect 45 0 53 1;
+#X connect 46 0 50 0;
+#X connect 46 1 49 1;
+#X connect 47 0 41 0;
+#X connect 48 0 51 0;
+#X connect 49 0 48 0;
+#X connect 50 0 49 0;
+#X connect 50 1 45 0;
+#X connect 50 2 47 0;
+#X connect 50 2 53 0;
+#X connect 52 0 54 0;
+#X connect 53 0 55 0;
+#X connect 54 0 53 1;
+#X connect 55 0 51 0;
+#X connect 57 0 60 0;
+#X connect 59 0 57 0;
+#X connect 60 0 58 0;
+#X connect 62 0 2 0;
+#X connect 64 0 66 0;
+#X connect 64 2 14 0;
+#X connect 65 0 27 0;
+#X connect 66 0 63 0;
+#X connect 68 0 67 0;
+#X connect 69 0 70 0;
+#X connect 69 1 65 0;
