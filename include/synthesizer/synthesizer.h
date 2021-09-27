@@ -111,6 +111,18 @@ void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep, int rela
 
 /**
  * @memberof synthesizer
+ * @brief changes the repeat parameter of all activated grains
+ * 
+ * This method changes the repeat parameter of all activated grains to achieve freeze effect.
+ * by switched to 1, the synthesizer will not discard grains after being written over rather start from begining.
+ * 
+ * @param syn the synthesizer object that stores activate grains
+ * @param the repeat parameter want to assign to all activate grains
+ */
+void synthesizer_freeze_grains(synthesizer *syn, int repeat);
+
+/**
+ * @memberof synthesizer
  * @brief write out stream
  * 
  * This method writes activate grains to out stream at each dsp routine
@@ -120,3 +132,8 @@ void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep, int rela
  * @param n number of samples to write
  */
 void synthesizer_write_output(synthesizer *syn, float *out, int n);
+
+
+
+
+
