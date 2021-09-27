@@ -118,6 +118,17 @@ void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep, int rela
 }
 
 
+void synthesizer_freeze_grains(synthesizer *syn, int repeat){
+    activategrain *ag = NULL;
+    for (int i = 0; i < syn->length; i++){
+        if (syn->data[i] != NULL){
+            ag = syn->data[i];
+            ag->repeat = repeat;
+        }
+    }
+}
+
+
 float synthesizer_sum_samples(synthesizer *syn){
     float tmp = 0.0;
     activategrain *ag = NULL;
@@ -129,6 +140,9 @@ float synthesizer_sum_samples(synthesizer *syn){
             if (ag->pos >= ag->length && ag->repeat == 0){
                 activategrain_free(ag); 
                 syn->data[i] = NULL;
+            }
+            else if (ag->repeat == 1){
+                ag->pos = 0;
             }
         }
     }
