@@ -1,0 +1,15 @@
+name Many_Voices;
+
+# grain settings;
+param-set grainsize 0.165;
+param-set graindist -0.71;
+param-set graindelay 0.448;
+param-set grainpitch 2.551;
+
+# lfo settings;
+param-set rand1.frequency 50;
+param-set rand1.value 0;
+param-set rand1.variation 10;
+
+param-attach grainpitch 0 rand1;
+param-amount grainpitch 0 0.3;
