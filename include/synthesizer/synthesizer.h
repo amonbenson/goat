@@ -31,6 +31,7 @@
  * And other behaviour controll parameters
  */
 typedef struct {
+    grain origin;  /**> the original grain */
     float *data;   /**< The stored activate grain data itself */
     int pos;       /**< The position to read this activate grain */
     int length;    /**< The position to read this activate grain */

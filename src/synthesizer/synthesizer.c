@@ -18,6 +18,8 @@ activategrain *activategrain_new(grain* gn, evelope* ep, int repeat, int relativ
     activategrain *ag = malloc(sizeof(activategrain));
     if (!ag) return NULL;
 
+    memcpy(&ag->origin, gn, sizeof(grain));
+
     ag->data = malloc(sizeof(float) * gn->gb_size); // to store grain samples
     if (!ag->data) return NULL;
 

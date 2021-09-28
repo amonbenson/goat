@@ -16,6 +16,8 @@
 
 #define CIRCBUF_INRANGE(a, b, x) ((a) <= (b) ? ((x) >= (a) && (x) <= (b)) : ((x) >= (a) || (x) <= (b)))
 
+#define CIRCBUF_DIST(a, b, size) ((a) <= (b) ? (b) - (a) : (size) - (a) + (b))
+
 
 /**
  * @struct circbuf_writetap

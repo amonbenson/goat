@@ -52,6 +52,48 @@ static int goat_tilde_validate_slot(int slot) {
     return slot;
 }
 
+void goat_tilde_graintable_get(goat_tilde *x) {
+    granular *gran = x->g->gran;
+    int buffersize = gran->buffer->size;
+    int writepos = gran->buffer->writetap.position;
+    grain *gn;
+    activategrain *agn;
+
+    int i;
+    int argc = 4;
+    t_atom argv[argc];
+
+    outlet_anything(x->dataout, gensym("graintable"), 0, NULL);
+
+    // inactive grains
+    for (i = 0; i < graintable_get_len(gran->grains); i++) {
+        gn = &gran->grains->data[(gran->grains->front+i) % gran->grains->size];
+
+        SETFLOAT(&argv[0], 0); // inactive
+        SETFLOAT(&argv[1], CIRCBUF_DIST(gn->position, writepos, buffersize)
+            / (float) buffersize); // position
+        SETFLOAT(&argv[2], gn->duration / (float) buffersize); // duration
+        SETFLOAT(&argv[3], gn->speed); // speed
+
+        outlet_anything(x->dataout, gensym("grain"), argc, argv);
+    }
+
+    // active grains
+    for (i = 0; i < gran->synth->length; i++) {
+        agn = gran->synth->data[i];
+        if (agn == NULL) continue;
+        gn = &agn->origin;
+
+        SETFLOAT(&argv[0], 1); // active
+        SETFLOAT(&argv[1], CIRCBUF_DIST(gn->position, writepos, buffersize)
+            / (float) buffersize); // position
+        SETFLOAT(&argv[2], gn->duration / (float) buffersize); // duration
+        SETFLOAT(&argv[3], gn->speed); // speed
+
+        outlet_anything(x->dataout, gensym("grain"), argc, argv);
+    }
+}
+
 void goat_tilde_param_get(goat_tilde *x, t_symbol *paramname) {
     control_parameter *param;
 
@@ -67,7 +109,7 @@ void goat_tilde_param_get(goat_tilde *x, t_symbol *paramname) {
     if ((param = goat_tilde_validate_parameter(x, paramname->s_name)) == NULL) return;
 
     int argc = 2;
-    t_atom argv[2];
+    t_atom argv[argc];
     SETSYMBOL(&argv[0], paramname);
     SETFLOAT(&argv[1], param->offset);
     outlet_anything(x->dataout, gensym("param-get"), argc, argv);
@@ -192,6 +234,11 @@ void goat_tilde_setup(void) {
         sizeof(goat_tilde),
         CLASS_DEFAULT,
         0);
+    
+    class_addmethod(goat_tilde_class,
+        (t_method) goat_tilde_graintable_get,
+        gensym("graintable-get"),
+        A_NULL);
 
     class_addmethod(goat_tilde_class,
         (t_method) goat_tilde_param_get,
