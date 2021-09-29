@@ -1,8 +1,8 @@
 #N struct template-grain float color float x1 float y1 float x2 float
 y2;
-#N canvas 179 98 866 611 12;
+#N canvas 167 142 866 611 12;
 #X obj 42 248 goat~;
-#X obj 17 314 dac~;
+#X obj 16 361 dac~;
 #X obj 17 204 readsf~;
 #X msg 30 168 1;
 #X obj 19 78 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
@@ -19,9 +19,9 @@ y2;
 #X obj 259 725 s cmd;
 #X msg 232 629 param-reset;
 #X obj 73 511 r presetid;
-#N canvas 116 552 1045 704 gui 1;
+#N canvas 7 124 1045 701 gui 1;
 #X obj 25 153 hsl 128 15 0 1 0 0 grainsize grainsize_d Grain_Size -2
--8 0 10 -261682 -1 -1 635 1;
+-8 0 10 -261682 -1 -1 1535 1;
 #X obj 24 205 hsl 128 15 -1 1 0 0 graindist graindist_d Grain_Distance
 -2 -8 0 10 -261682 -1 -1 1587 1;
 #X obj 24 267 hsl 128 15 0 1 0 0 graindelay graindelay_d Grain_Delay
@@ -31,14 +31,14 @@ y2;
 #X obj 64 441 hradio 15 1 0 4 grainenv grainenv_d Grain_Envelope -44
 -8 0 10 -261682 -1 -1 2;
 #X obj 22 63 hradio 15 1 0 7 presetid empty Load_Preset 0 -8 0 10 -261234
--1 -1 6;
+-1 -1 0;
 #X text 20 112 GRANULAR ENGINE;
 #X text 19 13 GOAT;
 #X text 232 112 LFO 1;
 #X obj 237 150 hsl 128 15 0 50 0 0 lfo1.frequency lfo1.frequency_d
 Frequency -2 -8 0 10 -204786 -1 -1 254 1;
 #X obj 442 149 hsl 128 15 0 50 0 0 rand1.frequency rand1.frequency_d
-Interval -2 -8 0 10 -204800 -1 -1 2286 1;
+Interval -2 -8 0 10 -204800 -1 -1 254 1;
 #X text 437 110 RAND 1;
 #X obj 442 205 hsl 128 15 -10 10 0 0 rand1.value rand1.value_d Value
 -2 -8 0 10 -204800 -1 -1 6350 1;
@@ -54,11 +54,11 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 10 -261682 -1 -1 0 1;
 #X obj 160 321 vsl 15 20 0 1 0 0 grainpitch_dst empty empty 0 -9 0
 10 -261682 -1 -1 0 1;
-#X obj 967 50 vsl 15 20 0 1 0 0 empty empty empty 0 -9 0 10 -261682
+#X obj 984 515 vsl 15 20 0 1 0 0 empty empty empty 0 -9 0 10 -261682
 -1 -1 0 1;
-#X obj 938 31 bng 15 250 50 0 empty empty empty 17 7 0 10 -204786 -1
--1;
-#X text 640 30 to connect a modulator \, press its button \,;
+#X obj 955 496 bng 15 250 50 0 empty empty empty 17 7 0 10 -204786
+-1 -1;
+#X text 657 495 to connect a modulator \, press its button \,;
 #X obj 162 61 bng 15 250 50 0 global_detach empty Detach 0 -7 0 10
 -261234 -1 -1;
 #X obj 493 113 bng 15 250 50 0 rand1_src empty empty 17 7 0 10 -204800
@@ -71,7 +71,7 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 0 10 -204800 -1 -1 0 1;
 #X obj 578 251 vsl 15 20 0 10 0 0 rand1.variation_dst empty empty 0
 -9 0 10 -204800 -1 -1 0 1;
-#X text 641 51 then click the amount slider at the parameter;
+#X text 658 516 then click the amount slider at the parameter;
 #X text 20 586 PITCH DETECTOR;
 #X obj 131 587 bng 15 250 50 0 vodec_src empty empty 17 7 0 10 -262130
 -1 -1;
@@ -170,12 +170,15 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X floatatom 836 264 5 0 0 0 - - -;
 #X text 834 100 RAND 3;
 #N canvas 945 88 304 107 graingraph 0;
-#X scalar template-grain 955 0.00991821 0 0.0183296 0.167425 \;;
-#X scalar template-grain 955 0.01651 0 0.0249214 0.167425 \;;
-#X scalar template-grain 955 0.0143127 0 0.0227242 0.167425 \;;
-#X scalar template-grain 955 0.0121155 0 0.0205269 0.167425 \;;
+#X scalar template-grain 955 0.0208473 0 0.0407168 0.397389 \;;
+#X scalar template-grain 955 0.0311012 0 0.0509707 0.397389 \;;
+#X scalar template-grain 955 0.0259743 0 0.0458437 0.397389 \;;
+#X scalar template-grain 955 0.0362282 0 0.0560976 0.397389 \;;
 #X coords 0 1 0.2 -0.2 370 80 2 0 0;
-#X restore 231 19 pd graingraph;
+#X restore 437 17 pd graingraph;
+#X obj 236 61 hsl 128 15 0 1 0 1 drywet empty Dry/Wet -2 -8 0 10 -261234
+-1 -1 12700 1;
+#X floatatom 233 76 5 0 0 0 - - -;
 #X connect 0 0 34 0;
 #X connect 1 0 35 0;
 #X connect 2 0 36 0;
@@ -195,6 +198,7 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X connect 82 0 89 0;
 #X connect 83 0 90 0;
 #X connect 84 0 91 0;
+#X connect 94 0 95 0;
 #X restore 18 837 pd gui;
 #N canvas 75 876 333 91 cmdreceivers 0;
 #N canvas 166 729 580 549 granular_engine 0;
@@ -433,11 +437,11 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X restore 18 866 pd cmdreceivers;
 #X msg 764 825 param-post;
 #X obj 764 850 s cmd;
-#X obj 97 349 unpack s f;
-#X obj 97 374 t b s;
-#X obj 97 399 f;
-#X obj 97 424 s;
-#X msg 129 399 symbol \$1_d;
+#X obj 289 399 unpack s f;
+#X obj 289 424 t b s;
+#X obj 289 449 f;
+#X obj 289 474 s;
+#X msg 321 449 symbol \$1_d;
 #X obj 119 586 t b b b a b;
 #X msg 155 628 param-get;
 #X obj 741 414 r param-reset;
@@ -445,7 +449,7 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X obj 741 491 s cmd;
 #X obj 741 439 t b b;
 #X msg 698 464 param-get;
-#X text 103 327 handle param-get;
+#X text 295 377 handle param-get;
 #X text 762 802 debug print all parameters;
 #X text 716 392 handle param-reset;
 #X obj 748 61 r conn_src;
@@ -472,7 +476,7 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X obj 828 683 s cmd;
 #X obj 828 608 r param_set;
 #X msg 828 658 param-set \$1 \$2;
-#X obj 107 247 print cmd;
+#X obj 299 297 print cmd;
 #X obj 56 738 s presetname;
 #X obj 56 678 route name #;
 #X msg 119 562 read preset_\$1.txt;
@@ -482,15 +486,15 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X obj 73 535 route 0;
 #X obj 18 562 s param-reset;
 #X obj 147 52 s param-reset;
-#X obj 97 272 route param-get graintable grain;
+#X obj 289 322 route param-get graintable grain;
 #X msg 450 813 graintable-get;
 #X obj 450 838 s cmd;
 #X obj 450 738 loadbang;
 #X msg 450 763 1;
 #X text 440 714 update the grain graph;
-#X msg 249 328 clear;
-#X text 302 307 handle graintable-get;
-#X msg 299 328 grain \$1 \$2 \$3 \$4;
+#X msg 441 378 clear;
+#X text 494 357 handle graintable-get;
+#X msg 491 378 grain \$1 \$2 \$3 \$4;
 #X obj 145 838 r graphcontroller;
 #N canvas 181 94 632 474 graphcontroller 0;
 #X obj 28 31 inlet;
@@ -547,12 +551,23 @@ x2 float y2;
 #X connect 20 0 19 2;
 #X connect 21 0 20 0;
 #X restore 145 862 pd graphcontroller;
-#X obj 249 358 s graphcontroller;
+#X obj 441 408 s graphcontroller;
 #X msg 17 139 open piano.wav;
 #X obj 450 788 metro 20;
+#X obj 180 151 r drywet;
+#X obj 256 180 min 0.5;
+#X obj 256 205 * 2;
+#X floatatom 256 230 5 0 0 0 - - -;
+#X floatatom 180 253 5 0 0 0 - - -;
+#X obj 180 180 max 0.5;
+#X obj 180 205 - 1;
+#X obj 180 230 * -2;
+#X obj 42 316 *~;
+#X obj 17 315 *~;
 #X connect 0 0 10 0;
 #X connect 0 1 70 0;
 #X connect 2 0 0 0;
+#X connect 2 0 93 0;
 #X connect 2 1 4 0;
 #X connect 3 0 2 0;
 #X connect 4 0 5 0;
@@ -563,8 +578,7 @@ x2 float y2;
 #X connect 8 0 4 0;
 #X connect 8 0 9 0;
 #X connect 8 0 69 0;
-#X connect 10 0 1 1;
-#X connect 10 0 1 0;
+#X connect 10 0 92 0;
 #X connect 11 0 62 0;
 #X connect 11 1 13 1;
 #X connect 12 0 11 0;
@@ -633,3 +647,16 @@ x2 float y2;
 #X connect 79 0 80 0;
 #X connect 82 0 2 0;
 #X connect 83 0 71 0;
+#X connect 84 0 85 0;
+#X connect 84 0 89 0;
+#X connect 85 0 86 0;
+#X connect 86 0 87 0;
+#X connect 87 0 92 1;
+#X connect 88 0 93 1;
+#X connect 89 0 90 0;
+#X connect 90 0 91 0;
+#X connect 91 0 88 0;
+#X connect 92 0 1 1;
+#X connect 92 0 1 0;
+#X connect 93 0 1 1;
+#X connect 93 0 1 0;
