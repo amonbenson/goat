@@ -1,6 +1,6 @@
 #N struct template-grain float color float x1 float y1 float x2 float
 y2;
-#N canvas 167 142 866 611 12;
+#N canvas -1490 81 866 611 12;
 #X obj 42 248 goat~;
 #X obj 16 361 dac~;
 #X obj 17 204 readsf~;
@@ -19,35 +19,35 @@ y2;
 #X obj 259 725 s cmd;
 #X msg 232 629 param-reset;
 #X obj 73 511 r presetid;
-#N canvas 7 124 1045 701 gui 1;
+#N canvas 516 180 1045 701 gui 1;
 #X obj 25 153 hsl 128 15 0 1 0 0 grainsize grainsize_d Grain_Size -2
--8 0 10 -261682 -1 -1 1535 1;
+-8 0 10 -261682 -1 -1 2540 1;
 #X obj 24 205 hsl 128 15 -1 1 0 0 graindist graindist_d Grain_Distance
--2 -8 0 10 -261682 -1 -1 1587 1;
+-2 -8 0 10 -261682 -1 -1 2921 1;
 #X obj 24 267 hsl 128 15 0 1 0 0 graindelay graindelay_d Grain_Delay
 -2 -8 0 10 -261682 -1 -1 0 1;
 #X obj 24 329 hsl 128 15 -36 36 0 0 grainpitch grainpitch_d Grain_Pitch
 -2 -8 0 10 -261682 -1 -1 6350 1;
 #X obj 64 441 hradio 15 1 0 4 grainenv grainenv_d Grain_Envelope -44
 -8 0 10 -261682 -1 -1 2;
-#X obj 22 63 hradio 15 1 0 7 presetid empty Load_Preset 0 -8 0 10 -261234
--1 -1 0;
+#X obj 22 63 hradio 15 1 0 8 presetid empty Load_Preset 0 -8 0 10 -261234
+-1 -1 5;
 #X text 20 112 GRANULAR ENGINE;
 #X text 19 13 GOAT;
 #X text 232 112 LFO 1;
 #X obj 237 150 hsl 128 15 0 50 0 0 lfo1.frequency lfo1.frequency_d
-Frequency -2 -8 0 10 -204786 -1 -1 254 1;
+Frequency -2 -8 0 10 -204786 -1 -1 127 1;
 #X obj 442 149 hsl 128 15 0 50 0 0 rand1.frequency rand1.frequency_d
-Interval -2 -8 0 10 -204800 -1 -1 254 1;
+Frequency -2 -8 0 10 -204800 -1 -1 1580 1;
 #X text 437 110 RAND 1;
 #X obj 442 205 hsl 128 15 -10 10 0 0 rand1.value rand1.value_d Value
--2 -8 0 10 -204800 -1 -1 6350 1;
+-2 -8 0 10 -204800 -1 -1 8890 1;
 #X obj 442 259 hsl 128 15 0 10 0 0 rand1.variation rand1.variation_d
-Variation -2 -8 0 10 -204800 -1 -1 1270 1;
+Variation -2 -8 0 10 -204800 -1 -1 3099 1;
 #X obj 281 114 bng 15 250 50 0 lfo1_src empty empty 17 7 0 10 -204786
 -1 -1;
 #X obj 161 146 vsl 15 20 0 1 0 0 grainsize_dst empty empty 0 -9 0 10
--261682 -1 -1 0 1;
+-261682 -1 -1 432 1;
 #X obj 160 198 vsl 15 20 0 1 0 0 graindist_dst empty empty 0 -9 0 10
 -261682 -1 -1 0 1;
 #X obj 160 260 vsl 15 20 0 1 0 0 graindelay_dst empty empty 0 -9 0
@@ -91,14 +91,14 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X text 231 224 sin tri sqr sw1 sw2;
 #X text 18 454 none parab trap cos;
 #X obj 22 497 hsl 48 15 0 0.4 0 0 attacktime attacktime_d Attack -2
--8 0 10 -261682 -1 -1 1410 1;
+-8 0 10 -261682 -1 -1 705 1;
 #X obj 78 489 vsl 15 20 0 1 0 0 attacktime_dst empty empty 0 -9 0 10
 -261682 -1 -1 0 1;
 #X floatatom 19 512 5 0 0 0 - - -;
 #X obj 109 496 hsl 48 15 0 0.4 0 0 releasetime releasetime_d Release
--2 -8 0 10 -261682 -1 -1 1410 1;
-#X obj 165 488 vsl 15 20 -12 12 0 0 attacktime_dst empty empty 0 -9
-0 10 -261682 -1 -1 0 1;
+-2 -8 0 10 -261682 -1 -1 1058 1;
+#X obj 165 488 vsl 15 20 0 1 0 0 releasetime_dst empty empty 0 -9 0
+10 -261682 -1 -1 0 1;
 #X floatatom 106 511 5 0 0 0 - - -;
 #X obj 236 305 hsl 128 15 0 50 0 0 lfo2.frequency lfo2.frequency_d
 Frequency -2 -8 0 10 -204786 -1 -1 254 1;
@@ -133,47 +133,45 @@ Frequency -2 -8 0 10 -204786 -1 -1 254 1;
 #X text 409 535 sin tri sqr sw1 sw2;
 #X text 231 423 LFO 3;
 #X text 410 423 LFO 4;
-#X obj 631 144 hsl 128 15 0 50 0 0 rand2.frequency rand2.frequency_d
-Interval -2 -8 0 10 -204800 -1 -1 254 1;
-#X obj 631 200 hsl 128 15 -10 10 0 0 rand2.value rand2.value_d Value
+#X obj 631 148 hsl 128 15 0 50 0 0 rand2.frequency rand2.frequency_d
+Frequency -2 -8 0 10 -204800 -1 -1 457 1;
+#X obj 631 204 hsl 128 15 -10 10 0 0 rand2.value rand2.value_d Value
 -2 -8 0 10 -204800 -1 -1 6350 1;
-#X obj 631 254 hsl 128 15 0 10 0 0 rand2.variation rand2.variation_d
+#X obj 631 258 hsl 128 15 0 10 0 0 rand2.variation rand2.variation_d
 Variation -2 -8 0 10 -204800 -1 -1 1270 1;
-#X obj 682 108 bng 15 250 50 0 rand2_src empty empty 17 7 0 10 -204800
+#X obj 682 112 bng 15 250 50 0 rand2_src empty empty 17 7 0 10 -204800
 -1 -1;
-#X obj 767 137 vsl 15 20 0 50 0 0 rand2.frequency_dst empty empty 0
+#X obj 767 141 vsl 15 20 0 50 0 0 rand2.frequency_dst empty empty 0
 -9 0 10 -204800 -1 -1 0 1;
-#X obj 767 193 vsl 15 20 0 10 0 0 rand2.value_dst empty empty 0 -9
+#X obj 767 197 vsl 15 20 0 10 0 0 rand2.value_dst empty empty 0 -9
 0 10 -204800 -1 -1 0 1;
-#X obj 767 246 vsl 15 20 0 10 0 0 rand2.variation_dst empty empty 0
+#X obj 767 250 vsl 15 20 0 10 0 0 rand2.variation_dst empty empty 0
 -9 0 10 -204800 -1 -1 0 1;
-#X floatatom 628 159 5 0 0 0 - - -;
-#X floatatom 628 215 5 0 0 0 - - -;
-#X floatatom 628 269 5 0 0 0 - - -;
-#X text 626 105 RAND 2;
-#X obj 839 139 hsl 128 15 0 50 0 0 rand3.frequency rand3.frequency_d
-Interval -2 -8 0 10 -204800 -1 -1 254 1;
-#X obj 839 195 hsl 128 15 -10 10 0 0 rand3.value rand3.value_d Value
+#X floatatom 628 163 5 0 0 0 - - -;
+#X floatatom 628 219 5 0 0 0 - - -;
+#X floatatom 628 273 5 0 0 0 - - -;
+#X text 626 109 RAND 2;
+#X obj 839 149 hsl 128 15 0 50 0 0 rand3.frequency rand3.frequency_d
+Frequency -2 -8 0 10 -204800 -1 -1 254 1;
+#X obj 839 205 hsl 128 15 -10 10 0 0 rand3.value rand3.value_d Value
 -2 -8 0 10 -204800 -1 -1 6350 1;
-#X obj 839 249 hsl 128 15 0 10 0 0 rand3.variation rand3.variation_d
+#X obj 839 259 hsl 128 15 0 10 0 0 rand3.variation rand3.variation_d
 Variation -2 -8 0 10 -204800 -1 -1 1270 1;
-#X obj 890 103 bng 15 250 50 0 rand3_src empty empty 17 7 0 10 -204800
+#X obj 890 113 bng 15 250 50 0 rand3_src empty empty 17 7 0 10 -204800
 -1 -1;
-#X obj 975 132 vsl 15 20 0 10 0 0 rand3.frequency_dst empty empty 0
+#X obj 975 142 vsl 15 20 0 10 0 0 rand3.frequency_dst empty empty 0
 -9 0 10 -204800 -1 -1 0 1;
-#X obj 975 188 vsl 15 20 0 10 0 0 rand3.value_dst empty empty 0 -9
+#X obj 975 198 vsl 15 20 0 10 0 0 rand3.value_dst empty empty 0 -9
 0 10 -204800 -1 -1 0 1;
-#X obj 975 241 vsl 15 20 0 10 0 0 rand3.variation_dst empty empty 0
+#X obj 975 251 vsl 15 20 0 10 0 0 rand3.variation_dst empty empty 0
 -9 0 10 -204800 -1 -1 0 1;
-#X floatatom 836 154 5 0 0 0 - - -;
-#X floatatom 836 210 5 0 0 0 - - -;
-#X floatatom 836 264 5 0 0 0 - - -;
-#X text 834 100 RAND 3;
-#N canvas 945 88 304 107 graingraph 0;
-#X scalar template-grain 955 0.0208473 0 0.0407168 0.397389 \;;
-#X scalar template-grain 955 0.0311012 0 0.0509707 0.397389 \;;
-#X scalar template-grain 955 0.0259743 0 0.0458437 0.397389 \;;
-#X scalar template-grain 955 0.0362282 0 0.0560976 0.397389 \;;
+#X floatatom 836 164 5 0 0 0 - - -;
+#X floatatom 836 220 5 0 0 0 - - -;
+#X floatatom 836 274 5 0 0 0 - - -;
+#X text 834 110 RAND 3;
+#N canvas 945 88 387 119 graingraph 0;
+#X scalar template-grain 955 0.0655746 0 0.114303 0.974621 \;;
+#X scalar template-grain 955 0.0932579 0 0.147211 1.07912 \;;
 #X coords 0 1 0.2 -0.2 370 80 2 0 0;
 #X restore 437 17 pd graingraph;
 #X obj 236 61 hsl 128 15 0 1 0 1 drywet empty Dry/Wet -2 -8 0 10 -261234

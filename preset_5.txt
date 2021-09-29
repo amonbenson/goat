@@ -14,7 +14,7 @@ param-set lfo1.frequency 0.5;
 param-attach rand2.frequency 0 lfo1;
 param-amount rand2.frequency 0 0.6;
 
-#rand settings;
+# rand settings;
 param-set rand1.frequency 6.22;
 param-set rand1.value 4.0;
 param-set rand1.variation 2.44;
