@@ -15,7 +15,7 @@ param-set grainenv 3;
 # rand settings;
 
 
-# pitch detect settings
+# pitch detect settings;
 
 param-attach graindist 0 vodec;
 param-amount graindist 0 0.001;

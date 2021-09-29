@@ -13,8 +13,8 @@ typedef struct rand_mod {
     control_modulator super; /**< the modulator super class instance */
     goat_config *cfg;  /**< the goat configuration */
 
-    control_parameter   *mu;
-    control_parameter   *sigma; /**< mu: Expectation value; sigma: standard deviation*/
+    control_parameter   *mu; /**< Expectation value;*/
+    control_parameter   *sigma; /**< standard deviation*/
     control_parameter   *freq; /**< frequency of new random numbers*/
     float   rand_num; /**< a normal distributed random number*/
     int     seed; /**< Seed for the standard rand() function; needed for receiving different random numbers every time*/

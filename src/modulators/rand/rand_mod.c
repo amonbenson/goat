@@ -30,7 +30,7 @@ rand_mod *rand_mod_new(goat_config *cfg, const char *name){
 
     snprintf(namebuf, sizeof(namebuf), "%s.variation", name);
     rm->sigma = control_manager_parameter_add(cfg->mgr,
-        namebuf, 1.0f, 1.0f, 10.0f);
+        namebuf, 1.0f, 0.1f, 10.0f);
 
     return rm;
 }
@@ -67,7 +67,7 @@ void rand_setSeed(rand_mod *rm){
 }
 
 
-float rand_nn(rand_mod *rm) { //mu: Expectation value; sigma: standard deviation
+float rand_nn(rand_mod *rm) {
 
     float s, t, a, b; //Paramteres defining the distribution
     s = 0.449871;

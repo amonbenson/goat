@@ -1,0 +1,23 @@
+name Short_Delay;
+
+# grain settings;
+param-set grainsize 0.05;
+param-set graindist -0.75;
+param-set graindelay 0.1;
+param-set grainpitch 0;
+param-set attacktime 0.12;
+param-set releasetime 0.12;
+param-set grainenv 2;
+
+# lfo settings;
+
+
+# rand settings;
+param-set rand1.frequency 15.0;
+param-set rand1.value 0.0;
+param-set rand1.variation 0.5;
+
+param-attach graindelay 0 rand1;
+param-amount graindelay 0 0.07;
+
+# pitch detect settings;

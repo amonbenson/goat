@@ -17,7 +17,7 @@ low_frequency_oscillator *lfo_new(goat_config *cfg, const char *name) {
 
     snprintf(namebuf, sizeof(namebuf), "%s.frequency", name);
     lfo->frequency = control_manager_parameter_add(cfg->mgr,
-        namebuf, 1.0f, 0.01f, 10.0f);
+        namebuf, 1.0f, 0.01f, 50.0f);
     
     snprintf(namebuf, sizeof(namebuf), "%s.curve", name);
     lfo->curve = control_manager_parameter_add(cfg->mgr,
