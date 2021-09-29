@@ -9,7 +9,7 @@
  * @brief random number generator for modulation
  */
 
-typedef struct _rand_mod {
+typedef struct rand_mod {
     control_modulator super; /**< the modulator super class instance */
     goat_config *cfg;  /**< the goat configuration */
 
