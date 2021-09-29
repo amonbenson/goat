@@ -21,7 +21,7 @@ Klick the post_parameter button to post the current values of the parameters to 
  
 # Parameters
 
-##Granular Engine
+## Granular Engine
 grainsize: length of the grain in seconds
 graindistance: distance between the grains relative to the grainsize
 graindelay: delay of the grains relative to the original signal in seconds
