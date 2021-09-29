@@ -55,7 +55,7 @@ void granular_perform(granular *g, scheduler *s, vocaldetector *vd, float *in, f
         float speed = semitonefact(param(float, s->grainpitch));
         float duration = param(float, s->grainsize) * s->cfg->sample_rate;
         float delay = param(float, s->graindelay) * s->cfg->sample_rate;
-        float position = emod((int) (g->buffer->writetap.position - duration * speed), g->buffer->size);
+        float position = emod((int) (g->buffer->writetap.position - duration / speed), g->buffer->size);
 
         graintable_add_grain(g->grains,
             g->buffer,

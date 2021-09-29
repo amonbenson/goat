@@ -1,0 +1,32 @@
+name Under_Water;
+
+# grain settings;
+param-set grainsize 0.2;
+param-set graindist -0.54;
+param-set graindelay 0.0;
+param-set grainpitch 0;
+param-set attacktime 0.06;
+param-set releasetime 0.09;
+
+# lfo settings;
+param-set lfo1.frequency 0.5;
+
+param-attach rand2.frequency 0 lfo1;
+param-amount rand2.frequency 0 0.6;
+
+#rand settings;
+param-set rand1.frequency 6.22;
+param-set rand1.value 4.0;
+param-set rand1.variation 2.44;
+
+param-set rand2.frequency 1.8;
+param-set rand2.value 0;
+param-set rand2.variation 1;
+
+param-attach grainsize 0 rand1;
+param-amount grainsize 0 0.03;
+
+param-attach grainpitch 0 rand2;
+param-amount grainpitch 0 0.09;
+
+

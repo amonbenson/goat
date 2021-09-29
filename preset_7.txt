@@ -1,0 +1,30 @@
+name Deep_Echo;
+
+# grain settings;
+param-set grainsize 0.001;
+param-set graindist -0.9;
+param-set graindelay 0.0;
+param-set grainpitch 0;
+param-set attacktime 0.0;
+param-set releasetime 0.0;
+param-set grainenv 3;
+
+# lfo settings;
+
+
+# rand settings;
+
+
+# pitch detect settings
+
+param-attach graindist 0 vodec;
+param-amount graindist 0 0.001;
+
+param-attach attacktime 0 vodec;
+param-amount attacktime 0 0.0005;
+
+param-attach releasetime 0 vodec;
+param-amount releasetime 0 0.0005;
+
+param-attach grainsize 0 vodec;
+param-amount grainsize 0 0.003;
