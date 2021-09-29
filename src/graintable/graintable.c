@@ -13,7 +13,7 @@ grain *grain_init(grain *gn, circbuf *cb, circbuf *pb, float position, float dur
     gn->duration = duration;
     gn->delay = delay;
     gn->speed = speed;
-    gn->timeout = min(max_timeout, (size_t) (delay + duration * speed));
+    gn->timeout = min(max_timeout, (size_t) (delay + duration / speed));
     gn->evelope  = evelope;
     gn->lifetime  = 0;
 
@@ -79,13 +79,13 @@ void graintable_add_grain(graintable *gt, circbuf *cb, circbuf *pb, float positi
     }
 
     // do not create grains with invalid durations
-    float actualduration = duration * speed;
+    float actualduration = duration / speed;
     if (actualduration < 2.0f || actualduration >= cb->size) {
         fprintf(stderr, "graintable: invalid grain duration: %f\n", actualduration);
         return;
     }
 
-    size_t max_timeout = (size_t) (cb->size - delay - duration * speed);
+    size_t max_timeout = (size_t) (cb->size - delay - duration / speed);
 
     grain_init(&gt->data[gt->rear],
         cb,
