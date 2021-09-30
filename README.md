@@ -5,7 +5,7 @@ A granular delay effect using randomization of input parameters and pitch detect
 
 Move your soundfile (.wav) in the same folder as the PureData file.
 
-Type the name of your soundfile in the underlying 
+Type the name of your soundfile in the message box or use the three examples.
 
 There is small variety of presets given. Each one in a seperate textfile (.txt).
 In the upper left corner you can choose them, the first slot resets all values to default.
@@ -19,8 +19,10 @@ The resulting value for the parameter is given by:
 value = parameter + modulation * amount
 
 One modulator can be attached to several parameters and even the parameters of the modulators can be modulated.
-To detach the modulation from a parameter klick first on the detach button and second on the amount slider of the respective parameter.
+To detach the modulation from a parameter klick first on the detach button and second on the amount slider of the respective parameter. 
 Klick the post_parameter button to post the current values of the parameters to the PureData console.
+
+Use the wet/dry slider to mix the altered signal with the original sound.
  
 ## Parameters
 
