@@ -12,7 +12,7 @@ In the upper left corner you can choose them, the first slot resets all values t
 
 There are the parameters of the granular engine (orange) and three kinds of modulators, 4 LFOs (green), 3 random number generators with normal distribution and pitch detector.
 Every parameter with a slider can be controlled and modulated. 
-For modulation klick first on the button next to the modulator name and second on the vertical slider next to parameter which shall be modulated.
+For modulation click first on the button next to the modulator name and second on the vertical slider next to parameter which shall be modulated.
 The modulator is now attached to the parameter. The amount of modulation can be set with the vertical slider.
 The resulting value for the parameter is given by:
 
@@ -21,8 +21,8 @@ value = parameter + modulation * amount
 ```
 
 One modulator can be attached to several parameters and even the parameters of the modulators can be modulated.
-To detach the modulation from a parameter klick first on the detach button and second on the amount slider of the respective parameter. 
-Klick the post_parameter button to post the current values of the parameters to the PureData console.
+To detach the modulation from a parameter click first on the detach button and second on the amount slider of the respective parameter. 
+Click the post_parameter button to post the current values of the parameters to the PureData console.
 
 Use the wet/dry slider to mix the altered signal with the original sound.
  
