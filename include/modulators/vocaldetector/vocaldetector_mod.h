@@ -25,6 +25,7 @@ typedef struct {
     goat_config *cfg; /**< the global configuration */
 
     vocaldetector *vd; /**< the vocal detector to be used */
+    control_parameter *factor; /**< the factor to be used */
 } vocaldetector_mod;
 
 

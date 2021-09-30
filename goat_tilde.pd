@@ -1,6 +1,6 @@
 #N struct template-grain float color float x1 float y1 float x2 float
 y2;
-#N canvas -1928 -8 1536 821 12;
+#N canvas 8 63 1518 743 12;
 #X obj 42 248 goat~;
 #X obj 16 433 dac~;
 #X obj 17 204 readsf~;
@@ -18,7 +18,7 @@ y2;
 #X obj 259 725 s cmd;
 #X msg 232 629 param-reset;
 #X obj 73 511 r presetid;
-#N canvas 559 203 1045 701 gui 1;
+#N canvas 1302 648 1045 701 gui 1;
 #X obj 25 153 hsl 128 15 0 1 0 0 grainsize grainsize_d Grain_Size -2
 -8 0 10 -261682 -1 -1 635 1;
 #X obj 24 205 hsl 128 15 -1 1 0 0 graindist graindist_d Grain_Distance
@@ -30,7 +30,7 @@ y2;
 #X obj 64 441 hradio 15 1 0 4 grainenv grainenv_d Grain_Envelope -44
 -8 0 10 -261682 -1 -1 2;
 #X obj 22 63 hradio 15 1 0 10 presetid empty Load_Preset 0 -8 0 10
--261234 -1 -1 5;
+-261234 -1 -1 0;
 #X text 20 112 GRANULAR ENGINE;
 #X text 19 13 GOAT;
 #X text 232 112 LFO 1;
@@ -169,9 +169,10 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X floatatom 836 274 5 0 0 0 - - -;
 #X text 834 110 RAND 3;
 #N canvas 945 88 387 119 graingraph 0;
-#X scalar template-grain 955 0.0123177 0 0.0207291 0.168228 \;;
-#X scalar template-grain 955 0.0101204 0 0.0185318 0.168228 \;;
-#X scalar template-grain 955 0.0145149 0 0.0229263 0.168228 \;;
+#X scalar template-grain 955 0.00963211 0 0.0180435 0.168228 \;;
+#X scalar template-grain 955 0.0162239 0 0.0246353 0.168228 \;;
+#X scalar template-grain 955 0.0140266 0 0.022438 0.168228 \;;
+#X scalar template-grain 955 0.0118294 0 0.0202408 0.168228 \;;
 #X coords 0 1 0.2 -0.2 370 80 2 0 0;
 #X restore 437 17 pd graingraph;
 #X obj 236 61 hsl 128 15 0 1 0 1 drywet empty Dry_______________Wet
@@ -179,10 +180,9 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X floatatom 233 76 5 0 0 0 - - -;
 #X obj 235 586 bng 15 250 50 0 param_post empty post_parameters 17
 7 0 10 -261234 -1 -1;
-#X obj 27 617 hsl 128 15 0 50 0 0 lfo3.frequency lfo3.frequency_d Amount
--2 -8 0 10 -262130 -1 -1 254 1;
+#X obj 27 617 hsl 128 15 -0.1 0.1 0 0 vodec.factor vodec.factor_d Amount
+-2 -8 0 10 -262130 -1 -1 12700 1;
 #X floatatom 24 632 5 0 0 0 - - -;
-#X text 69 638 not working yet;
 #X obj 785 455 s filename;
 #X text 651 348 your filename -->;
 #X msg 810 419 oom.wav;
@@ -213,12 +213,12 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X connect 84 0 91 0;
 #X connect 94 0 95 0;
 #X connect 97 0 98 0;
-#X connect 102 0 100 0;
-#X connect 103 0 100 0;
-#X connect 107 0 100 0;
-#X connect 108 0 100 0;
+#X connect 101 0 99 0;
+#X connect 102 0 99 0;
+#X connect 106 0 99 0;
+#X connect 107 0 99 0;
 #X restore 18 837 pd gui;
-#N canvas -959 254 333 114 cmdreceivers 0;
+#N canvas 8 254 333 114 cmdreceivers 1;
 #N canvas -1636 123 580 549 granular_engine 0;
 #X obj 72 25 r grainsize;
 #X obj 72 80 r graindist;
@@ -287,7 +287,7 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X connect 32 0 21 0;
 #X connect 33 0 6 0;
 #X restore 28 29 pd granular_engine;
-#N canvas 24 764 873 561 lfos 0;
+#N canvas 1563 749 873 561 lfos 1;
 #X obj 177 81 r lfo1.frequency;
 #X msg 131 54 lfo1;
 #X obj 25 511 s conn_src;
@@ -356,7 +356,7 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X connect 33 0 34 0;
 #X connect 34 0 6 0;
 #X restore 170 30 pd lfos;
-#N canvas 787 266 824 639 rands 1;
+#N canvas 1058 609 824 639 rands 1;
 #X obj 78 94 r rand1.frequency;
 #X obj 78 147 r rand1.value;
 #X obj 79 200 r rand1.variation;
@@ -445,12 +445,17 @@ Variation -2 -8 0 10 -204800 -1 -1 1270 1;
 #X connect 43 0 44 0;
 #X connect 44 0 15 0;
 #X restore 236 31 pd rands;
-#N canvas 132 237 450 300 vodec 1;
+#N canvas 1204 630 450 300 vodec 1;
 #X obj 18 14 r vodec_src;
 #X msg 18 39 vodec;
 #X obj 18 241 s conn_src;
+#X obj 161 238 s param_set;
+#X obj 161 81 r vodec.factor;
+#X msg 161 106 vodec.factor \$1;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
+#X connect 4 0 5 0;
+#X connect 5 0 3 0;
 #X restore 28 60 pd vodec;
 #X restore 18 866 pd cmdreceivers;
 #X msg 764 825 param-post;
