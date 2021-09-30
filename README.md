@@ -16,7 +16,9 @@ For modulation klick first on the button next to the modulator name and second o
 The modulator is now attached to the parameter. The amount of modulation can be set with the vertical slider.
 The resulting value for the parameter is given by:
 
+```
 value = parameter + modulation * amount
+```
 
 One modulator can be attached to several parameters and even the parameters of the modulators can be modulated.
 To detach the modulation from a parameter klick first on the detach button and second on the amount slider of the respective parameter. 
@@ -24,33 +26,32 @@ Klick the post_parameter button to post the current values of the parameters to 
 
 Use the wet/dry slider to mix the altered signal with the original sound.
  
-## Parameters
+### Parameters and Modulators
 
-### Granular Engine
-grainsize: length of the grain in seconds  
-graindistance: distance between the grains relative to the grainsize  
-graindelay: delay of the grains relative to the original signal in seconds  
-grainpitch: added pitch in semitones  
-Use_Relative_Pitch: keeps the grain at a constant frequency  
-grain envelope: choose between four envelopes to shape the grains  
-attack and release time: in seconds, can be altered for trapezoidal and cosine bell envelopes  
+#### Granular Engine
+Parameter | Description
+--- | ---
+grainsize | length of the grain in seconds
+graindistance | distance between the grains relative to the grainsize
+graindelay | delay of the grains relative to the original signal in seconds  
+grainpitch | added pitch in semitones  
+use relative pitch | uses the pitch detector to keep the grain at a constant frequency  
+grain envelope | choose between four envelopes to shape the grains  
+attack and release time | in seconds, can be altered for trapezoidal and cosine bell envelopes  
 
-### LFO
-frequency: rate of the LFO  
-curve: choose between sine, triangle, square and two different saw waves  
+#### LFO
+Parameter | Description
+| --- | --- |
+frequency | rate of the LFO  
+curve | choose between sine, triangle, square and two different saw waves  
 
-### Random number generator
-frequency: rate of newly generated random numbers  
-value: expectation value of the normal distribution  
-variation: standard deviation of the normal distribution  
+#### Random number generator
+Parameter | Description
+| --- | --- |
+frequency | rate of newly generated random numbers  
+value | expectation value of the normal distribution  
+variation | standard deviation of the normal distribution  
 
-### Pitch Detector
+#### Pitch Detector
 Returns the current frequency multiplied by the factor which can be set with the slider.
 Use negative values for inverted modulation. 
-
-
-
-
-
-
-
