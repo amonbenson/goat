@@ -4,6 +4,9 @@ A granular delay effect using randomization of input parameters and pitch detect
 ## How To Use
 
 Move your soundfile (.wav) in the same folder as the PureData file.
+
+Type the name of your soundfile in the underlying 
+
 There is small variety of presets given. Each one in a seperate textfile (.txt).
 In the upper left corner you can choose them, the first slot resets all values to default.
 
