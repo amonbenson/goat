@@ -21,5 +21,17 @@
         "typeinfo": "c",
         "array": "c"
     },
-    "editor.rulers": [100]
+    "editor.rulers": [100],
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "(\\.c|\\.h)$",
+                "cmd": "make all"
+            },
+            {
+                "match": "(\\.dox|\\.md)$",
+                "cmd": "make docs"
+            }
+        ]
+    }
 }

@@ -2,6 +2,7 @@
     "recommendations": [
         "ms-vscode.cpptools-extension-pack",
         "augustocdias.tasks-shell-input",
-        "ms-vscode-remote.remote-wsl"
+        "ms-vscode-remote.remote-wsl",
+        "emeraldwalk.runonsave"
     ]
 }
