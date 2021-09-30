@@ -176,6 +176,8 @@ void evelopbuf_free(evelopbuf *eb);
  * @param eb evelopbuf object to store evelope object
  * @param type the type of the to be added evelope
  * @param length the length of the to be added evelope
+ * @param attacksamples attack time in samples
+ * @param releasesamples release time in samples
  */ 
 void evelopbuf_add_evelope(evelopbuf *eb, int type, int length, int attacksamples, int releasesamples); // todo: add all parameters 
 

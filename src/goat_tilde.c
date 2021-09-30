@@ -98,7 +98,7 @@ void goat_tilde_param_get(goat_tilde *x, t_symbol *paramname) {
     control_parameter *param;
 
     // get all parameters
-    if (paramname->s_name[0] == '\0') {
+    if (paramname == NULL || paramname->s_name == NULL || paramname->s_name[0] == '\0') {
         LL_FOREACH(x->g->cfg.mgr->parameters, param) {
             goat_tilde_param_get(x, gensym(param->name));
         }

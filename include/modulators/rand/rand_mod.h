@@ -1,3 +1,14 @@
+/**
+ * @file rand_mod.h
+ * @author Valentin Lux
+ * @brief 
+ * @version 0.1
+ * @date 2021-09-20
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #pragma once
 #include "control/manager.h"
 #include "goat_config.h"
@@ -8,8 +19,7 @@
  * @struct rand_mod
  * @brief random number generator for modulation
  */
-
-typedef struct rand_mod {
+typedef struct {
     control_modulator super; /**< the modulator super class instance */
     goat_config *cfg;  /**< the goat configuration */
 

@@ -53,11 +53,19 @@
     #error Unsupported compiler
 #endif
 
+/**
+ * @def util_popcount(x)
+ * @brief use the buildin function to count the number of set bits in @a x
+ */
 #define util_popcount(x) (_Generic((x), \
     unsigned int: __util_popcount, \
     unsigned long: __util_popcountl, \
     unsigned long long: __util_popcountll)(x))
 
+/**
+ * @def util_clz(x)
+ * @brief use the buildin function to compute the number of leading zeros in @a x
+ */
 #define util_clz(x) (_Generic((x), \
     unsigned int: __util_clz, \
     unsigned long: __util_clzl, \
@@ -82,7 +90,11 @@
  */
 #define is_pwrtwo(n) ((n) != 0 && !((n) & ((n) - 1)))
 
-#define next_pwrtwo(x) ((x) == 1 ? 1 : (__typeof__(x)) 1 << (sizeof(x) * 8 - util_clz((x) - 1)))
+/**
+ * @def next_pwrtwo(n)
+ * @brief find the next power of two greater than or equal to @a n
+ */
+#define next_pwrtwo(n) ((n) == 1 ? 1 : (__typeof__(n)) 1 << (sizeof(n) * 8 - util_clz((n) - 1)))
 
 
 #ifndef M_PI

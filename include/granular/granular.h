@@ -57,6 +57,7 @@ void granular_free(granular *g);
  * 
  * @param g the granular object
  * @param s the scheduler to be used
+ * @param vd the vocaldetector instance to be used
  * @param in the input buffer where data is read from
  * @param out the output buffer where data is written to
  * @param n the number of samples to be processed. This is also the size of the input and output buffers

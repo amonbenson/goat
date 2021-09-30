@@ -31,7 +31,7 @@
  * And other behaviour controll parameters
  */
 typedef struct {
-    grain origin;  /**> the original grain */
+    grain origin;  /**< the original grain */
     float *data;   /**< The stored activate grain data itself */
     int pos;       /**< The position to read this activate grain */
     int length;    /**< The position to read this activate grain */
@@ -60,6 +60,7 @@ typedef struct {
  * @param gn the grain object contains information for activation
  * @param ep the grain object contains evelope
  * @param repeat whether remove this activate grain after reading throught it 
+ * @param relativepitch whether to use relative pitch / speed on this grain
  * 
  * @return activategrain* a reference to the activategrain object or `NULL` if failed
  */
@@ -107,6 +108,7 @@ void synthesizer_free(synthesizer *syn);
  * @param syn the synthesizer object that stores activate grains
  * @param gn the grain object contains information for activation
  * @param ep the grain object contains evelope
+ * @param relativepitch wether to use relative pitch
  */
 void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep, int relativepitch);
 
@@ -118,7 +120,7 @@ void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep, int rela
  * by switched to 1, the synthesizer will not discard grains after being written over rather start from begining.
  * 
  * @param syn the synthesizer object that stores activate grains
- * @param the repeat parameter want to assign to all activate grains
+ * @param repeat the repeat parameter want to assign to all activate grains
  */
 void synthesizer_freeze_grains(synthesizer *syn, int repeat);
 

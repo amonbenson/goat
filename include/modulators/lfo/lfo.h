@@ -1,3 +1,14 @@
+/**
+ * @file lfo.h
+ * @author Amon Benson, Kai, Valentin Lux
+ * @brief 
+ * @version 0.1
+ * @date 2021-09-20
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #pragma once
 #include "goat_config.h"
 #include "control/manager.h"
@@ -5,19 +16,19 @@
 #include <math.h>
 
 
-#define LFO_CURVE_SINE 0
-#define LFO_CURVE_TRIANGLE 1
-#define LFO_CURVE_SQUARE 2
-#define LFO_CURVE_SAWTOOTH 3
-#define LFO_CURVE_SAWTOOTH_REVERSED 4
-#define LFO_NUM_CURVES 5
+#define LFO_CURVE_SINE 0 /**< sin shaped curve */
+#define LFO_CURVE_TRIANGLE 1 /**< triangle shaped curve */
+#define LFO_CURVE_SQUARE 2 /**< square shaped curve */
+#define LFO_CURVE_SAWTOOTH 3 /**< rising sawtooth curve */
+#define LFO_CURVE_SAWTOOTH_REVERSED 4 /**< falling sawtooth curve */
+#define LFO_NUM_CURVES 5 /**< total number of curves available */
 
 
 /**
  * @struct low_frequency_oscillator
  * @brief a generic lfo modulator.
  */
-typedef struct low_frequency_oscillator {
+typedef struct {
     control_modulator super; /**< the modulator super class instance */
     goat_config *cfg; /**< the goat configuration */
 

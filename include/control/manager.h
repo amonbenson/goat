@@ -1,3 +1,14 @@
+/**
+ * @file manager.h
+ * @author Amon Benson (amonkbenson@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-09-20
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #pragma once
 
 #include <stddef.h>
@@ -6,15 +17,12 @@
 #include "control/modulator.h"
 
 
-#define CONTROL_SLOTS 3
-
-
 /**
  * @struct control_manager
  * @brief manager to hold all parameters and modulators
  * 
  */
-typedef struct control_manager {
+typedef struct {
     control_parameter *parameters; /**< list of all parameters */
     control_modulator *modulators; /**< list of all modulators */
 } control_manager;

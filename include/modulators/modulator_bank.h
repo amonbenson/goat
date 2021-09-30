@@ -1,3 +1,14 @@
+/**
+ * @file circbuf.h
+ * @author Amon Benson, Valentin Lux
+ * @brief 
+ * @version 0.1
+ * @date 2021-09-20
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #pragma once
 #include "goat_config.h"
 #include "modulators/lfo/lfo.h"
@@ -28,6 +39,7 @@ typedef struct modulator_bank {
  * @brief creates a new modulator bank
  * 
  * @param cfg global goat configuration
+ * @param vd reference to the vocal detector instance
  * @return modulator_bank* a pointer to the new modulator bank or NULL if the allocation failed
  */
 modulator_bank *modulator_bank_new(goat_config *cfg, vocaldetector *vd);

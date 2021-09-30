@@ -1,3 +1,14 @@
+/**
+ * @file parameter.h
+ * @author Amon Benson (amonkbenson@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-09-20
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #pragma once
 
 #include "control/modulator.h"
@@ -5,8 +16,12 @@
 
 
 
-#define CONTROL_NUM_SLOTS 3
+#define CONTROL_NUM_SLOTS 3 /**< number of slots available to connect modulators to a parameter */
 
+/**
+ * @ref param(type, ...)
+ * @brief shorthand method to get a parameter cast to a specific type
+ */
 #define param(type, ...) control_parameter_get_ ## type(__VA_ARGS__)
 
 
@@ -14,13 +29,12 @@
  * @struct control_parameter_slot
  * @brief a slot where a modulator can be attached
  */
-typedef struct control_parameter_slot {
+typedef struct {
     control_modulator *mod; /**< the modulator */
     float amount; /**< the amount of influence (= factor) the modulator has */
 } control_parameter_slot;
 
 /**
- * @struct control_parameter
  * @brief a generic float parameter with a fixed number of slots to attach modulators to
  * 
  * For more detailed info on how the @ref control_parameter.value is calculated,
