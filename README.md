@@ -45,7 +45,8 @@ value: expectation value of the normal distribution
 variation: standard deviation of the normal distribution  
 
 ### Pitch Detector
-returns the current frequency
+Returns the current frequency multiplied by the factor which can be set with the slider.
+Use negative values for inverted modulation. 
 
 
 
