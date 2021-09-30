@@ -22,15 +22,15 @@ rand_mod *rand_mod_new(goat_config *cfg, const char *name){
 
     snprintf(namebuf, sizeof(namebuf), "%s.frequency", name);
     rm->freq = control_manager_parameter_add(cfg->mgr,
-        namebuf, 1.0f, 0.01f, 689.0f ); // 689=44100/64=Samplingrate/Blocksize
+        namebuf, 1.0f, 0.01f, 689.0f );
 
     snprintf(namebuf, sizeof(namebuf), "%s.value", name);
     rm->mu = control_manager_parameter_add(cfg->mgr,
-        namebuf, 100.0f, 0.01f, 20000.0f); //TODO: allow negatives... because modulators are summative
+        namebuf, 0.0f, -10.0f, 10.0f);
 
     snprintf(namebuf, sizeof(namebuf), "%s.variation", name);
     rm->sigma = control_manager_parameter_add(cfg->mgr,
-        namebuf, 5.0f, 0.0001f, 10000.0f);
+        namebuf, 1.0f, 0.1f, 10.0f);
 
     return rm;
 }
@@ -67,7 +67,7 @@ void rand_setSeed(rand_mod *rm){
 }
 
 
-float rand_nn(rand_mod *rm) { //mu: Expectation value; sigma: standard deviation
+float rand_nn(rand_mod *rm) {
 
     float s, t, a, b; //Paramteres defining the distribution
     s = 0.449871;

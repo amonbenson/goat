@@ -31,6 +31,7 @@
  * And other behaviour controll parameters
  */
 typedef struct {
+    grain origin;  /**< the original grain */
     float *data;   /**< The stored activate grain data itself */
     int pos;       /**< The position to read this activate grain */
     int length;    /**< The position to read this activate grain */
@@ -59,10 +60,11 @@ typedef struct {
  * @param gn the grain object contains information for activation
  * @param ep the grain object contains evelope
  * @param repeat whether remove this activate grain after reading throught it 
+ * @param relativepitch whether to use relative pitch / speed on this grain
  * 
  * @return activategrain* a reference to the activategrain object or `NULL` if failed
  */
-activategrain *activategrain_new(grain* gn, evelope* ep, int repeat);
+activategrain *activategrain_new(grain* gn, evelope* ep, int repeat, int relativepitch);
 
 /**
  * @memberof activategrain
@@ -106,8 +108,21 @@ void synthesizer_free(synthesizer *syn);
  * @param syn the synthesizer object that stores activate grains
  * @param gn the grain object contains information for activation
  * @param ep the grain object contains evelope
+ * @param relativepitch wether to use relative pitch
  */
-void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep);
+void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep, int relativepitch);
+
+/**
+ * @memberof synthesizer
+ * @brief changes the repeat parameter of all activated grains
+ * 
+ * This method changes the repeat parameter of all activated grains to achieve freeze effect.
+ * by switched to 1, the synthesizer will not discard grains after being written over rather start from begining.
+ * 
+ * @param syn the synthesizer object that stores activate grains
+ * @param repeat the repeat parameter want to assign to all activate grains
+ */
+void synthesizer_freeze_grains(synthesizer *syn, int repeat);
 
 /**
  * @memberof synthesizer
@@ -120,3 +135,8 @@ void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep);
  * @param n number of samples to write
  */
 void synthesizer_write_output(synthesizer *syn, float *out, int n);
+
+
+
+
+

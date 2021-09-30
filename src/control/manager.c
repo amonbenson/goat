@@ -101,7 +101,7 @@ void control_manager_perform(control_manager *mgr, float *in, int n) {
         v = p->offset;
 
         // apply each modulator slot weighted by its amount
-        for (i = 0; i < CONTROL_SLOTS; i++) {
+        for (i = 0; i < CONTROL_NUM_SLOTS; i++) {
             if (p->slots[i].mod != NULL) {
                 v += p->slots[i].amount * p->slots[i].mod->value;
             }

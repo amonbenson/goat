@@ -1,0 +1,15 @@
+name Basic_Vibrato;
+
+# grain settings;
+param-set grainsize 0.02;
+param-set graindist -0.7;
+param-set graindelay 0;
+param-set grainpitch 0;
+param-set grainenv 3;
+
+# lfo settings;
+param-set lfo1.frequency 6.62;
+
+# connect lfo 1 to the grain pitch;
+param-attach grainpitch 0 lfo1;
+param-amount grainpitch 0 1.5;

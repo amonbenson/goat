@@ -48,6 +48,13 @@ void *goat_tilde_new(void);
  */
 void goat_tilde_free(goat_tilde *x);
 
+/**
+ * @memberof goat_tilde
+ * @brief get a single or all parameter values from the goat object
+ * 
+ * @param x the goat object
+ * @param paramname the name of the parameter to get. If `NULL` or empty, all parameters are returned
+ */
 void goat_tilde_param_get(goat_tilde *x, t_symbol *paramname);
 
 /**

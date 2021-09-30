@@ -69,11 +69,12 @@ float circbuf_read_interp(circbuf *cb, size_t tap) {
 
     /// @todo use some interpolation
     circbuf_readtap *t = &cb->readtaps[tap];
-
     float sample = cb->data[(int) t->position];
 
     t->position += t->speed;
-    if (t->position > cb->size) t->position -= cb->size;
+
+    if (t->position < 0.0f) t->position += cb->size;
+    if (t->position >= cb->size) t->position -= cb->size;
 
     return sample;
 }

@@ -16,6 +16,7 @@
 #include "scheduler/scheduler.h"
 #include "modulators/modulator_bank.h"
 #include "control/manager.h"
+#include "pitch/vocaldetector.h"
 
 #include "params.h"
 
@@ -25,6 +26,7 @@
 typedef struct goat {
     goat_config cfg; /**< configuration parameters */
     modulator_bank *modbank; /**< the modulator bank */
+    vocaldetector *vd; /**< the vocal detector */
     granular *gran;     /**< the granular instance */
     scheduler *schdur;  /**< the scheduler instance */
     // analyzer *anlyz;    /**< the analyzer instance */

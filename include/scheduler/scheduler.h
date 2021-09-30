@@ -47,6 +47,7 @@ typedef struct {
     control_parameter *eveloptype; /**< type of evelop used for grain generation procedure */
     control_parameter *attacktime;  /**< attack time for envelope*/
     control_parameter *releasetime; /**< release time for envelope*/
+    control_parameter *relativepitch; /**< flag if relative pitch should be used */
 
     // configs that changed at each dsp routine
     size_t lastfetch; /**< the number of samples since the last grain was fetched */

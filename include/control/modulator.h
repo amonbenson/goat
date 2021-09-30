@@ -1,3 +1,14 @@
+/**
+ * @file modulator.h
+ * @author Amon Benson (amonkbenson@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-09-20
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #pragma once
 
 #include <stddef.h>
@@ -16,7 +27,6 @@ struct control_modulator;
 typedef void (*control_modulator_perform_method)(struct control_modulator *mod, float *in, int n);
 
 /**
- * @struct control_modulator
  * @brief a generic modulator interface
  * 
  * This struct can be used as a base class for any specific modulator

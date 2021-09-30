@@ -29,6 +29,7 @@
 typedef struct {
     // basic features of a grain
     circbuf *cb; /**< pointer to the buffer contains data to be sampled */
+    circbuf *pb; /**< pointer to the buffer containing the pitch data */
     size_t gb_size; /**< size of the grain buffer */
 
     float position;  /**< absolute start position of a grain at buffer */
@@ -62,14 +63,17 @@ typedef struct{
  * 
  * @param gn the grain to be initialized. Must not be `NULL`
  * @param cb the circle buffer object as the source of grains
+ * @param pb the pitch buffer
  * @param position absolute start position of a grain at buffer
  * @param duration length of a grain in sample
- * @param lifetime statue mark to tell if a grain still valid
+ * @param delay delay of a grain in samples
+ * @param speed the speed at which the grain should be read
+ * @param max_timeout time in samples when the grain can be removed
  * @param evelope type of evelope to be applied on this grain
  * 
  * @return grain* a reference to the grain object
  */
-grain *grain_init(grain *gn, circbuf *cb, float position, float duration, float delay, float speed, size_t max_timeout, int evelope);
+grain *grain_init(grain *gn, circbuf *cb, circbuf *pb, float position, float duration, float delay, float speed, size_t max_timeout, int evelope);
 
 /**
  * @memberof grain
@@ -125,10 +129,14 @@ void graintable_free(graintable *gt);
  * 
  * @param gt the graintable object to store the new grain
  * @param cb the circle buffer to sample grain
+ * @param pb the global pitch buffer
+ * @param position absolute start position of a grain at buffer
  * @param duration the size of grain
+ * @param delay the delay of the grain
+ * @param speed the speed of the grain
  * @param evelope the tyoe of evelope of grain
  */
-void graintable_add_grain(graintable *gt, circbuf *cb, float position, float duration, float delay, float speed, int evelope);
+void graintable_add_grain(graintable *gt, circbuf *cb, circbuf *pb, float position, float duration, float delay, float speed, int evelope);
 
 /**
  * @memberof graintable

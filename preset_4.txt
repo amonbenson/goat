@@ -1,0 +1,17 @@
+name Waving_Stutter;
+
+# grain settings;
+param-set grainsize 0.07;
+param-set graindist -0.3;
+param-set graindelay 0.023;
+param-set grainpitch 0;
+
+# lfo settings;
+param-set lfo1.frequency 1.0;
+param-set lfo2.frequency 3.5;
+
+param-attach graindist 0 lfo1;
+param-amount graindist 0 0.4;
+
+param-attach lfo1.frequency 0 lfo2;
+param-amount lfo1.frequency 0 0.4

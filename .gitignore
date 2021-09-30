@@ -13,3 +13,6 @@ latex
 
 # valgrind logs
 valgrind.log
+
+# apple ds store files
+.DS_Store

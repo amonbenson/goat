@@ -5,14 +5,15 @@
 #include "util/mem.h"
 #include "util/util.h"
 
-grain *grain_init(grain *gn, circbuf *cb, float position, float duration, float delay, float speed, size_t max_timeout, int evelope){
+grain *grain_init(grain *gn, circbuf *cb, circbuf *pb, float position, float duration, float delay, float speed, size_t max_timeout, int evelope){
     gn->cb = cb;
+    gn->pb = pb;
 
     gn->position = position;
     gn->duration = duration;
     gn->delay = delay;
     gn->speed = speed;
-    gn->timeout = min(max_timeout, (size_t) (delay + duration * speed));
+    gn->timeout = min(max_timeout, (size_t) (delay + duration / speed));
     gn->evelope  = evelope;
     gn->lifetime  = 0;
 
@@ -72,22 +73,23 @@ int graintable_is_empty(graintable *gt){
 }
 
 
-void graintable_add_grain(graintable *gt, circbuf *cb, float position, float duration, float delay, float speed, int evelope){  
+void graintable_add_grain(graintable *gt, circbuf *cb, circbuf *pb, float position, float duration, float delay, float speed, int evelope){  
     if (graintable_is_full(gt) == 1){
         return;
     }
 
     // do not create grains with invalid durations
-    float actualduration = duration * speed;
+    float actualduration = duration / speed;
     if (actualduration < 2.0f || actualduration >= cb->size) {
         fprintf(stderr, "graintable: invalid grain duration: %f\n", actualduration);
         return;
     }
 
-    size_t max_timeout = (size_t) (cb->size - delay - duration * speed);
+    size_t max_timeout = (size_t) (cb->size - delay - duration / speed);
 
     grain_init(&gt->data[gt->rear],
         cb,
+        pb,
         position,
         duration,
         delay,

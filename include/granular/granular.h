@@ -17,6 +17,7 @@
 #include "scheduler/scheduler.h"
 #include "evelopbuf/evelopbuf.h"
 #include "synthesizer/synthesizer.h"
+#include "pitch/vocaldetector.h"
 
 
 /**
@@ -28,6 +29,7 @@
  */
 typedef struct {
     circbuf *buffer;     /**< circular buffer used to sample the grains */
+    circbuf *pitchbuffer; /**< circular buffer used to store the pitch values */
     graintable *grains;  /**< queue used to store the registed grains' information */
     evelopbuf *evelopes;  /**< buffer to store all generated evelops */
     synthesizer *synth;   /**< arrange and combine grains to get final output stream */ 
@@ -55,8 +57,9 @@ void granular_free(granular *g);
  * 
  * @param g the granular object
  * @param s the scheduler to be used
+ * @param vd the vocaldetector instance to be used
  * @param in the input buffer where data is read from
  * @param out the output buffer where data is written to
  * @param n the number of samples to be processed. This is also the size of the input and output buffers
  */
-void granular_perform(granular *g, scheduler *s, float *in, float *out, int n);
+void granular_perform(granular *g, scheduler *s, vocaldetector *vd, float *in, float *out, int n);

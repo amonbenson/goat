@@ -1,0 +1,22 @@
+name Broken_Voice;
+
+# grain settings;
+param-set grainsize 0.05;
+param-set graindist -0.75;
+param-set graindelay 0.0;
+param-set grainpitch 0;
+param-set attacktime 0.12;
+param-set releasetime 0.12;
+param-set grainenv 2;
+
+# lfo settings;
+param-attach grainpitch 0 lfo1;
+param-amount grainpitch 0 0.5;
+
+
+# rand settings;
+
+# pitch detect settings;
+param-set relativepitch 1;
+param-attach lfo1.frequency 0 vodec;
+param-amount lfo1.frequency 0 0.01;

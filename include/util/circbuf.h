@@ -14,7 +14,17 @@
 #include <stddef.h>
 
 
+/**
+ * @def CIRCBUF_INRANGE(a, b, size)
+ * @brief checks if x is in the range [a, b) where x, a and b are indices of a circular buffer
+ */
 #define CIRCBUF_INRANGE(a, b, x) ((a) <= (b) ? ((x) >= (a) && (x) <= (b)) : ((x) >= (a) || (x) <= (b)))
+
+/**
+ * @def CIRCBUF_DIST(a, b, size)
+ * @brief calculate the distance between two indices in a circular buffer
+ */
+#define CIRCBUF_DIST(a, b, size) ((a) <= (b) ? (b) - (a) : (size) - (a) + (b))
 
 
 /**

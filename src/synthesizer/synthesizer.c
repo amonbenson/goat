@@ -6,19 +6,59 @@
 #include "util/mem.h"
 #include "util/util.h"
 
-activategrain *activategrain_new(grain* gn, evelope* ep, int repeat){
+
+#define SYNTH_MIN_SPEED 0.001f
+#define SYNTH_MAX_SPEED 1000.0f
+
+
+activategrain *activategrain_new(grain* gn, evelope* ep, int repeat, int relativepitch){
+    float pitch, pitch_median, pitch_sum;
+    float speed;
+
     activategrain *ag = malloc(sizeof(activategrain));
     if (!ag) return NULL;
+
+    memcpy(&ag->origin, gn, sizeof(grain));
 
     ag->data = malloc(sizeof(float) * gn->gb_size); // to store grain samples
     if (!ag->data) return NULL;
 
-    gn->cb->readtaps->position = emod((int) (gn->position - gn->delay), gn->cb->size);
-    gn->cb->readtaps->speed = gn->speed;
-    circbuf_read_block(gn->cb, 0, ag->data, gn->gb_size); //can only use the first readtap
+    int bufstart = emod((int) (gn->position - gn->delay), gn->cb->size);
 
-    for (size_t i = 0; i < gn->gb_size; i++){
-        ag->data[i] = ag->data[i] * ep->data[i]; // multiply the evelope
+    // determine the speed of the grain
+    if (relativepitch) {
+        // get the median pitch
+        gn->pb->readtaps->position = bufstart;
+
+        pitch_median = 0.0f;
+        pitch_sum = 0.0f;
+        for (size_t i = 0; i < gn->gb_size; i++) {
+            pitch = circbuf_read_interp(gn->pb, 0);
+            if (pitch == -1) continue; // ignore unvoiced samples
+
+            pitch_median += pitch;
+            pitch_sum++;
+        }
+
+        if (pitch_sum == 0) {
+            // no pitch information available
+            speed = 1.0f;
+        } else {
+            pitch_median /= pitch_sum;
+            speed = 220.0f / pitch_median * gn->speed;
+        }
+    } else {
+        speed = gn->speed;
+    }
+
+    // read the data block with the specific speed
+    gn->cb->readtaps->position = bufstart;
+    gn->cb->readtaps->speed = speed;
+    circbuf_read_block(gn->cb, 0, ag->data, gn->gb_size);
+
+    // apply the grain envelope
+    for (size_t i = 0; i < gn->gb_size; i++) {
+        ag->data[i] *= ep->data[i];
     }
 
     ag->pos = 0;
@@ -66,8 +106,8 @@ void synthesizer_free(synthesizer *syn){
 }
 
 
-void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep){
-    activategrain *ag = activategrain_new(gn, ep, 0); // set repeat to 0
+void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep, int relativepitch){
+    activategrain *ag = activategrain_new(gn, ep, 0, relativepitch); // set repeat to 0
     if (!ag) return;
 
     for (int i = 0; i < syn->length; i++){
@@ -77,6 +117,17 @@ void synthesizer_active_grain(synthesizer *syn, grain* gn, evelope* ep){
         }
     }
     // post("synthesizer_active_grain: no more space for another activated grain, discard");
+}
+
+
+void synthesizer_freeze_grains(synthesizer *syn, int repeat){
+    activategrain *ag = NULL;
+    for (int i = 0; i < syn->length; i++){
+        if (syn->data[i] != NULL){
+            ag = syn->data[i];
+            ag->repeat = repeat;
+        }
+    }
 }
 
 
@@ -91,6 +142,9 @@ float synthesizer_sum_samples(synthesizer *syn){
             if (ag->pos >= ag->length && ag->repeat == 0){
                 activategrain_free(ag); 
                 syn->data[i] = NULL;
+            }
+            else if (ag->repeat == 1){
+                ag->pos = 0;
             }
         }
     }

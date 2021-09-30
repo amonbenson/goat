@@ -1,3 +1,14 @@
+/**
+ * @file rand_mod.h
+ * @author Valentin Lux
+ * @brief 
+ * @version 0.1
+ * @date 2021-09-20
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #pragma once
 #include "control/manager.h"
 #include "goat_config.h"
@@ -8,13 +19,12 @@
  * @struct rand_mod
  * @brief random number generator for modulation
  */
-
-typedef struct _rand_mod {
+typedef struct {
     control_modulator super; /**< the modulator super class instance */
     goat_config *cfg;  /**< the goat configuration */
 
-    control_parameter   *mu;
-    control_parameter   *sigma; /**< mu: Expectation value; sigma: standard deviation*/
+    control_parameter   *mu; /**< Expectation value;*/
+    control_parameter   *sigma; /**< standard deviation*/
     control_parameter   *freq; /**< frequency of new random numbers*/
     float   rand_num; /**< a normal distributed random number*/
     int     seed; /**< Seed for the standard rand() function; needed for receiving different random numbers every time*/

@@ -1,0 +1,25 @@
+name Alien_Groove;
+
+# grain settings;
+param-set grainsize 0.05;
+param-set graindist -0.75;
+param-set graindelay 0.0;
+param-set grainpitch 0;
+param-set attacktime 0.12;
+param-set releasetime 0.12;
+
+# lfo settings;
+param-set lfo1.frequency 1.0;
+
+param-attach rand1.variation 0 lfo1;
+param-amount rand1.variation 0 2.0;
+
+# rand settings;
+param-set rand1.frequency 9.0;
+param-set rand1.value 0.0;
+param-set rand1.variation 1.0;
+
+param-attach grainpitch 0 rand1;
+param-amount grainpitch 0 0.37;
+
+
