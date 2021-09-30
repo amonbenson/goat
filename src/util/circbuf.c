@@ -67,7 +67,6 @@ float circbuf_read_interp(circbuf *cb, size_t tap) {
             tap, cb->num_readtaps);
     }
 
-    /// @todo use some interpolation
     circbuf_readtap *t = &cb->readtaps[tap];
     float sample = cb->data[(int) t->position];
 
@@ -85,6 +84,5 @@ void circbuf_read_block(circbuf *cb, size_t tap, float *dst, size_t n) {
             n, cb->size);
     }
 
-    /// @todo when using interpolation, it is propably faster to store the previous value than to call @ref circbuf_read_interp each time
     while (n--) *dst++ = circbuf_read_interp(cb, tap);
 }

@@ -45,7 +45,7 @@ void granular_perform(granular *g, scheduler *s, vocaldetector *vd, float *in, f
     // Delayline load input stream
     circbuf_write_block(g->buffer, in, n); //load input stream into circbuf constantly @todo add parameter to stop and continue loading 
 
-    // load pitch buffer @todo smooth per block
+    // load pitch buffer
     for (int i = 0; i < n; i++) {
         circbuf_write_block(g->pitchbuffer, &vd->frequency, 1);
     }

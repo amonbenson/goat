@@ -55,3 +55,24 @@ variation | standard deviation of the normal distribution
 #### Pitch Detector
 Returns the current frequency multiplied by the factor which can be set with the slider.
 Use negative values for inverted modulation. 
+
+## Directory Layout and Architecture
+G.O.A.T is separated into multiple separate components. The file `src/goat.c` bundles all these components into a single struct. `src/goat_tilde` defines a pure data object wrapper around the main goat struct.
+
+`src/util` contains a few utility constants, definitions and functions. This is also where the `circbuf` resides, a generic purpose circular buffer with one writetap and a variable number of readtaps. This buffer is used by the main algorithm and the pitch detection.
+
+`src/control` defines three classes for the control system: A `control_parameter` which can be seen as a single knob in the final audio application. Each parameter has slots for three `control_modulator`. These can be used to alter the parameters as described in the formula above. The `control_manager` keeps track of all parameters and modulators and calls their update methods.
+
+`src/modulators` contains all the predefined modulators. Each struct "extends" the `control_modulator` struct.
+
+`src/scheduler` contains all parameter definitions for the granular core. The main purpose of the `scheduler` class is to mark the position when a new grain should be created by the `granular` class.
+
+`src/graintable` buffers all the grains *before* they are synthesized. This way we can have grains with different speeds overlapping each other.
+
+`src/synthesizer` generates the audio output by creating active grains and reading their audio data from the main buffer
+
+`src/envelopbuf` stores envelope information used by the grains.
+
+`src/granular` contains references to the `scheduler`, `graintable`, `envelopbuf` and `synthesizer`. This also contains the main buffer with around 5 seconds of audio and the pitch buffer with the corresponding frequency information.
+
+`src/pitch` contains classes regarding the pitch and vocal detection. Implemented is the bitstream autocorrelation algorithm as described here: https://github.com/cycfi/bitstream_autocorrelation .
