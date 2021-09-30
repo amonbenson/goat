@@ -2,7 +2,7 @@
 A granular delay effect using randomization of input parameters and pitch detection to alter the grain size.
 
 ## Demo Video
-![](Demovideo.mp4)
+https://github.com/schlegelflegel/rtapic-project/blob/main/Demovideo.mp4?raw=true
 
 ## How To Use
 
