@@ -15,7 +15,7 @@ vocaldetector_mod *vdmod_new(goat_config *cfg, vocaldetector *vd, const char *na
 
     snprintf(namebuf, sizeof(namebuf), "%s.factor", name);
     vdmod->factor = control_manager_parameter_add(cfg->mgr,
-        namebuf, 1.0f, -1.0f, 1.0f);
+        namebuf, 0.001f, -1.0f, 1.0f);
 
     return vdmod;
 }
