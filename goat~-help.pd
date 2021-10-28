@@ -1,0 +1,41 @@
+#N canvas 507 168 686 793 12;
+#X obj 44 594 goat~;
+#X obj 44 84 readsf~;
+#X text 130 85 soundfile into inlet of goat~;
+#X obj 43 700 dac~;
+#X text 88 700 first outlet contains signal;
+#X msg 170 525 param-post;
+#X msg 126 179 param-set graindelay 0.1;
+#X obj 248 19 goat~;
+#X text 75 179 e.g.;
+#X msg 170 564 param-reset;
+#X msg 152 281 param-attach graindelay 0 lfo1;
+#X msg 161 368 param-amount graindelay 0 0.5;
+#X text 146 223 add modulation to parameter: 1st arg is parameter name
+\, 2nd arg is modulation slot \, 3rd arg is modulator name. up to 4
+modulators can be attached;
+#X text 121 123 set parameters with param-set messages: 1st arg is
+parameter name \, 2nd arg is value (see param-post for list of parameters)
+;
+#X text 112 281 e.g.;
+#X text 122 369 e.g.;
+#X text 159 324 set modulation amount: 1st arg is parameter name \,
+2nd arg is modulation slot \, 3rd arg is modulatoion amount;
+#X text 141 459 e.g.;
+#X msg 182 457 param-detach graindelay 0;
+#X text 172 414 remove modulation from parameter: 1st arg is parameter
+name \, 2nd arg is modulation slot to be cleared;
+#X text 264 524 post all parameters and modulators;
+#X text 271 562 resets all values to default;
+#X obj 138 613 route param-get graintable grain;
+#X text 72 634 second outlet contains data of the graintable and grains
+to create their graphical representation in the pd gui;
+#X connect 0 0 3 0;
+#X connect 0 1 22 0;
+#X connect 1 0 0 0;
+#X connect 5 0 0 0;
+#X connect 6 0 0 0;
+#X connect 9 0 0 0;
+#X connect 10 0 0 0;
+#X connect 11 0 0 0;
+#X connect 18 0 0 0;

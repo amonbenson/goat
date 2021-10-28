@@ -285,5 +285,7 @@ void goat_tilde_setup(void) {
         gensym("dsp"),
         A_CANT,
         A_NULL);
+
+    class_sethelpsymbol(goat_tilde_class, gensym("goat~"));
     CLASS_MAINSIGNALIN(goat_tilde_class, goat_tilde, f);
 }
